@@ -9,12 +9,13 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -50,8 +51,8 @@ public class GroupDepartment implements Serializable {
     @NotNull
     @Column(name = "groupDep_Status")
     private short groupDepStatus;
-    @ManyToMany(mappedBy = "groupDepartmentCollection")
-    private Collection<Department> departmentCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "groupDepId")
+    private Collection<GroupDepartmentDetail> groupDepartmentDetailCollection;
 
     public GroupDepartment() {
     }
@@ -91,12 +92,12 @@ public class GroupDepartment implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Department> getDepartmentCollection() {
-        return departmentCollection;
+    public Collection<GroupDepartmentDetail> getGroupDepartmentDetailCollection() {
+        return groupDepartmentDetailCollection;
     }
 
-    public void setDepartmentCollection(Collection<Department> departmentCollection) {
-        this.departmentCollection = departmentCollection;
+    public void setGroupDepartmentDetailCollection(Collection<GroupDepartmentDetail> groupDepartmentDetailCollection) {
+        this.groupDepartmentDetailCollection = groupDepartmentDetailCollection;
     }
 
     @Override

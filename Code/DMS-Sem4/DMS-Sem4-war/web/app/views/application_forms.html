@@ -1,0 +1,26 @@
+﻿<div class="modal-content full-height">
+    <div class="modal-header" style="padding-bottom: 30px !important">
+        <div class="col-sm-9">
+            <h3><!-- ko text: LOCALIZATION.APPLICATION.FORMS --><!-- /ko --></h3>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox-tools">
+                <button class="btn btn-outline btn-xs btn-primary" type="button" data-bind="click: print" title="In biểu mẫu đang mở"><i class="fa fa-print"></i></button>
+                <button class="btn btn-outline btn-xs btn-primary" type="button" data-bind="click: printAll" title="In toàn bộ biểu mẫu"><i class="fa fa-copy"></i></button>
+                <button class="btn btn-outline btn-xs btn-danger" type="button" data-bind="click: cancel" title="Hủy"><i class="fa fa-remove"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body" style="height: calc(100vh - 200px)">
+        <div class="col-md-12">
+            <!-- ko foreach: model.forms -->
+            <button class="btn btn-primary btn-xs btn-outline" data-bind="css: {active: Id == $root.model.activeid()}, click: $root.change_form.bind($data, Id)"><!-- ko text: Name --><!-- /ko --></button>
+            <!-- /ko -->
+        </div>
+        <hr/>
+        <div class="col-sm-12 form-container" style="height: calc(100vh - 200px)">
+            <iframe class="holds-the-iframe" style="width: 100%; height: 100%" frameborder="0" data-bind="attr: {src: model.link}"></iframe>
+        </div>
+    </div>
+</div>
+<textarea></textarea>

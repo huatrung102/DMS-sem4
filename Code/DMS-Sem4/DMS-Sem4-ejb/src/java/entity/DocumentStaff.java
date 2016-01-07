@@ -42,10 +42,10 @@ public class DocumentStaff implements Serializable {
     @Column(name = "docStaff_IsActive")
     private Boolean docStaffIsActive;
     @JoinColumn(name = "docDep_Id", referencedColumnName = "docDep_Id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private DocumentDepartment docDepId;
     @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User userId;
 
     public DocumentStaff() {

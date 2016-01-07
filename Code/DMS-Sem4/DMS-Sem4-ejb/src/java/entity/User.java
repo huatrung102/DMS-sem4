@@ -91,19 +91,17 @@ public class User implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "user_Email")
     private String userEmail;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<DocumentStorage> documentStorageCollection;
     @JoinColumn(name = "dep_Id", referencedColumnName = "dep_Id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Department depId;
     @JoinColumn(name = "role_Id", referencedColumnName = "role_Id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Role roleId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Collection<DraftStorage> draftStorageCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Document> documentCollection;
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<DocumentStaff> documentStaffCollection;
 
     public User() {
@@ -226,15 +224,6 @@ public class User implements Serializable {
 
     public void setRoleId(Role roleId) {
         this.roleId = roleId;
-    }
-
-    @XmlTransient
-    public Collection<DraftStorage> getDraftStorageCollection() {
-        return draftStorageCollection;
-    }
-
-    public void setDraftStorageCollection(Collection<DraftStorage> draftStorageCollection) {
-        this.draftStorageCollection = draftStorageCollection;
     }
 
     @XmlTransient

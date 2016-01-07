@@ -45,8 +45,6 @@ public class DocumentType implements Serializable {
     private String docTypeName;
     @OneToMany(mappedBy = "docTypeId")
     private Collection<Document> documentCollection;
-    @OneToMany(mappedBy = "docTypeId")
-    private Collection<Draft> draftCollection;
 
     public DocumentType() {
     }
@@ -78,15 +76,6 @@ public class DocumentType implements Serializable {
 
     public void setDocumentCollection(Collection<Document> documentCollection) {
         this.documentCollection = documentCollection;
-    }
-
-    @XmlTransient
-    public Collection<Draft> getDraftCollection() {
-        return draftCollection;
-    }
-
-    public void setDraftCollection(Collection<Draft> draftCollection) {
-        this.draftCollection = draftCollection;
     }
 
     @Override

@@ -10,8 +10,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,47 +32,38 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DocumentStorage.findAll", query = "SELECT d FROM DocumentStorage d"),
-    @NamedQuery(name = "DocumentStorage.findByDocId", query = "SELECT d FROM DocumentStorage d WHERE d.documentStoragePK.docId = :docId"),
-    @NamedQuery(name = "DocumentStorage.findByUserId", query = "SELECT d FROM DocumentStorage d WHERE d.documentStoragePK.userId = :userId"),
-    @NamedQuery(name = "DocumentStorage.findByDocStoCreateDate", query = "SELECT d FROM DocumentStorage d WHERE d.docStoCreateDate = :docStoCreateDate")})
+    @NamedQuery(name = "DocumentStorage.findByDocStoCreateDate", query = "SELECT d FROM DocumentStorage d WHERE d.docStoCreateDate = :docStoCreateDate"),
+    @NamedQuery(name = "DocumentStorage.findByDocStoId", query = "SELECT d FROM DocumentStorage d WHERE d.docStoId = :docStoId")})
 public class DocumentStorage implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected DocumentStoragePK documentStoragePK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "docSto_CreateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date docStoCreateDate;
-    @JoinColumn(name = "doc_Id", referencedColumnName = "doc_Id", insertable = false, updatable = false)
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 36)
+    @Column(name = "docSto_Id")
+    private String docStoId;
+    @JoinColumn(name = "doc_Id", referencedColumnName = "doc_Id")
     @ManyToOne(optional = false)
-    private Document document;
-    @JoinColumn(name = "user_Id", referencedColumnName = "user_Id", insertable = false, updatable = false)
+    private Document docId;
+    @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
     @ManyToOne(optional = false)
-    private User user;
+    private User userId;
 
     public DocumentStorage() {
     }
 
-    public DocumentStorage(DocumentStoragePK documentStoragePK) {
-        this.documentStoragePK = documentStoragePK;
+    public DocumentStorage(String docStoId) {
+        this.docStoId = docStoId;
     }
 
-    public DocumentStorage(DocumentStoragePK documentStoragePK, Date docStoCreateDate) {
-        this.documentStoragePK = documentStoragePK;
+    public DocumentStorage(String docStoId, Date docStoCreateDate) {
+        this.docStoId = docStoId;
         this.docStoCreateDate = docStoCreateDate;
-    }
-
-    public DocumentStorage(String docId, String userId) {
-        this.documentStoragePK = new DocumentStoragePK(docId, userId);
-    }
-
-    public DocumentStoragePK getDocumentStoragePK() {
-        return documentStoragePK;
-    }
-
-    public void setDocumentStoragePK(DocumentStoragePK documentStoragePK) {
-        this.documentStoragePK = documentStoragePK;
     }
 
     public Date getDocStoCreateDate() {
@@ -82,26 +74,34 @@ public class DocumentStorage implements Serializable {
         this.docStoCreateDate = docStoCreateDate;
     }
 
-    public Document getDocument() {
-        return document;
+    public String getDocStoId() {
+        return docStoId;
     }
 
-    public void setDocument(Document document) {
-        this.document = document;
+    public void setDocStoId(String docStoId) {
+        this.docStoId = docStoId;
     }
 
-    public User getUser() {
-        return user;
+    public Document getDocId() {
+        return docId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setDocId(Document docId) {
+        this.docId = docId;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (documentStoragePK != null ? documentStoragePK.hashCode() : 0);
+        hash += (docStoId != null ? docStoId.hashCode() : 0);
         return hash;
     }
 
@@ -112,7 +112,7 @@ public class DocumentStorage implements Serializable {
             return false;
         }
         DocumentStorage other = (DocumentStorage) object;
-        if ((this.documentStoragePK == null && other.documentStoragePK != null) || (this.documentStoragePK != null && !this.documentStoragePK.equals(other.documentStoragePK))) {
+        if ((this.docStoId == null && other.docStoId != null) || (this.docStoId != null && !this.docStoId.equals(other.docStoId))) {
             return false;
         }
         return true;
@@ -120,7 +120,7 @@ public class DocumentStorage implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.DocumentStorage[ documentStoragePK=" + documentStoragePK + " ]";
+        return "entity.DocumentStorage[ docStoId=" + docStoId + " ]";
     }
     
 }

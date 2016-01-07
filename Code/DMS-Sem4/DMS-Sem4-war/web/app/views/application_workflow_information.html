@@ -1,0 +1,31 @@
+﻿<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5><!-- ko text: LOCALIZATION.APPLICATION.WORKFLOW_INFORMATION --><!-- /ko --></h5>
+        <div class="pull-right">
+            <button class="btn btn-outline btn-xs btn-primary" type="button" data-bind="click: show_history"><!-- ko text: LOCALIZATION.APPLICATION.HISTORY --><!-- /ko --></button>
+            <button style="margin-left: 5px" class="btn btn-outline btn-xs btn-primary" type="button" data-bind="click: show_workflow"><!-- ko text: LOCALIZATION.WORKFLOW.TITLE --><!-- /ko --></button>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="dl-horizontal">
+                    <dt><!-- ko text: LOCALIZATION.APPLICATION.CURRENT_PHASE --><!-- /ko --></dt>
+                    <dd><!-- ko text: PhaseName --><!-- /ko --></dd>
+                    <dt><!-- ko text: LOCALIZATION.APPLICATION.CURRENT_STAGE --><!-- /ko --></dt>
+                    <dd><!-- ko text: StageName --><!-- /ko --></dd>                    
+                    <dt><!-- ko text: LOCALIZATION.APPLICATION.USER_ASSIGNED --><!-- /ko --></dt>
+                    <dd>
+                        <!-- ko text: AssignedUserName --><!-- /ko --> -
+                        <!-- ko text: AssignedDepartmentName --><!-- /ko --> -
+                        <!-- ko text: AssignedBranchName --><!-- /ko -->
+                    </dd>
+                    <dt><!-- ko text: LOCALIZATION.APPLICATION.SEND_USER --><!-- /ko --></dt>
+                    <dd><!-- ko text: SendUserName --><!-- /ko --> - <!-- ko text: SendDepartmentName --><!-- /ko --> - <!-- ko text: SendBranchName --><!-- /ko --></dd>
+                    <dt><!-- ko text: LOCALIZATION.APPLICATION.COMMENT --><!-- /ko --></dt>
+                    <dd><!-- ko text: LastComment --><!-- /ko --></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

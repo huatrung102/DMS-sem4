@@ -1,0 +1,20 @@
+﻿<div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name">DMS</h1>
+            </div>
+            <h3>DMS</h3>
+            <div class="m-t">
+                <div class="form-group">
+                    <input type="text"  data-bind="value: username, valueUpdate: 'afterkeydown', event: { keypress: loginInput }, attr: { placeholder: LOCALIZATION.ACCOUNT.LOGIN_USERNAME }" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="password" data-bind="value: password, valueUpdate: 'afterkeydown', event: { keypress: loginInput }, attr: { placeholder: LOCALIZATION.ACCOUNT.LOGIN_PASSWORD }" autocomplete="off" class="form-control">
+                </div>
+                <div class="form-group has-error" data-bind="visible: loginFailed">
+                    <label class="control-label"><!-- ko text: LOCALIZATION.ACCOUNT.LOGIN_FAILED --><!-- /ko --></label>
+                </div>
+                <button class="btn btn-primary block full-width m-b" data-bind="click: login, enable: enableLogin() && $.trim(username()).length > 0 && password().length > 0" ><!-- ko text: LOCALIZATION.ACCOUNT.LOGIN --><!-- /ko --></button>
+            </div>           
+        </div>
+    </div>

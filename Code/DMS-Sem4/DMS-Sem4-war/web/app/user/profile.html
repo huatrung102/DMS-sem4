@@ -1,0 +1,162 @@
+﻿<div class="row" style="height: calc(100vh - 93px);">
+    <div class="col-lg-4">
+        <div class="ibox-title">
+            <h2 data-bind="text: 'Profile ' + model.Users.FullName()"></h2>
+            <div class="form-horizontal">
+                <div class="form-group" style="margin-bottom: 0px!important">
+                    <div class="col-lg-5">
+                        <span class="fa fa-user"></span>
+                        <label>Tên đăng nhập</label>
+                    </div>
+                    <div class="col-lg-7">
+                        <span data-bind="text: model.Users.LoginName()">Login name</span>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0px!important">
+                    <div class="col-lg-5">
+                        <span class="fa fa-envelope"></span>
+                        <label>Email</label>
+                    </div>
+                    <div class="col-lg-7">
+                        <span data-bind="text: model.Users.Email()">Email</span>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0px!important">
+                    <div class="col-lg-5">
+                        <span class="fa fa-home"></span>
+                        <label>Phòng ban</label>
+                    </div>
+                    <div class="col-lg-7">
+                        <span data-bind="text: model.Users.DepartmentName()"></span>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0px!important">
+                    <div class="col-lg-5">
+                        <span class="fa fa-trophy"></span>
+                        <label>Chức vụ</label>
+                    </div>
+                    <div class="col-lg-7">
+                        <span data-bind="text: model.Users.IsLeader() == 'true' ? 'Lãnh đạo' : 'Nhân viên'"></span>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0px!important">
+                    <div class="col-lg-5">
+                        <span class="fa fa-star"></span>
+                        <label>Trạng thái</label>
+                    </div>
+                    <div class="col-lg-7">
+                        <span data-bind="text: model.Users.Status() == 'true' ? 'Kích hoạt' : 'Khóa'"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of widget-->
+        <div class="ibox-content">
+            <h5>Setting</h5>
+            <ul class="folder-list nav" style="padding: 0">
+                <li></li>
+                <li data-bind="css:{active : model.nvaSelected() == 0}">
+                    <a data-bind="click: edit_Info({code: 0})"><i class="fa fa-users"></i>Chỉnh sửa thông tin</a>
+                </li>
+                <li data-bind="css:{active : model.nvaSelected() == 1}">
+                    <a data-bind="click: edit_Info({code: 1})"><i class="fa fa-unlock-alt"></i>Thay đổi mật khẩu</a>
+                </li>
+                <li data-bind="click: edit_Info({code: 0})"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="ibox-title">
+            <h5 data-bind="text: model.heading()"></h5>
+            <div class="ibox-tools " data-bind="visible: model.nvaSelected() == 0">
+                <button class="btn btn-white btn-xs">Hủy bỏ</button>
+                <button class="btn btn-primary btn-xs" data-bind="click: users_edit">Lưu</button>
+            </div>
+            <div class="ibox-tools" data-bind="visible: model.nvaSelected() == 1">
+                <button class="btn btn-white btn-xs">Hủy bỏ</button>
+                <button class="btn btn-primary btn-xs" data-bind="click:users_changepassword">Lưu</button>
+            </div>
+        </div>
+        <div class="ibox-content" style="height: calc(100vh - 146px);">
+            <div class="form-horizontal" data-bind="visible: model.nvaSelected() == 0">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Tên đăng nhập</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" data-bind="value: model.Users.LoginName">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Họ và tên</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" data-bind="value: model.Users.FullName">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Email</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" data-bind="value: model.Users.Email">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Phòng ban</label>
+                    <div class="col-sm-8">
+                        <label data-bind="text: model.Users.DepartmentName()" class="checkbox-inline" style="padding-left: 0px!important;"></label>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Quản trị chi nhánh</label>
+                    <div class="col-sm-8">
+                        <div class="radio-inline" style="padding-left: 0px;">
+                            <label>
+                                <input type="checkbox" name="admin" data-bind="value: 1, checked: model.Users.Type" disabled="disabled">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Chức vụ</label>
+                    <div class="col-sm-8">
+                        <label class="checkbox-inline col-sm-2" style="padding-left: 0px!important;">
+                            <input type="radio" name="leader" data-bind="value: false, checked: model.Users.IsLeader" value="false" disabled="disabled"> <!-- ko text: LOCALIZATION.USER.STAFF --><!-- /ko -->
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="leader" data-bind="value: true, checked: model.Users.IsLeader" value="true" disabled="disabled"> <!-- ko text: LOCALIZATION.USER.LEADER --><!-- /ko -->
+                        </label>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Trạng thái</label>
+                    <div class="col-sm-8">
+                        <label class="checkbox-inline col-sm-2" style="padding-left: 0px!important;">
+                            <input type="radio" name="status" data-bind="value: 'false', checked: model.Users.Status" value="false" disabled="disabled"><!-- ko text: LOCALIZATION.USER.PROPERTY_STATUS_FALSE --><!-- /ko -->
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="status" data-bind="value: 'true', checked: model.Users.Status" value="true" disabled="disabled"> <!-- ko text: LOCALIZATION.USER.PROPERTY_STATUS_TRUE --><!-- /ko -->
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-horizontal" data-bind="visible: model.nvaSelected() == 1">
+                <div class="form-group" data-bind="css: $.trim(model.Users.Password()).length > 0 && model.Users.Password() == model.Users.Password_Retype() ? '' : 'has-error'">
+                    <label class="col-sm-3 control-label">Mật khẩu</label>
+                    <div class="col-sm-8">
+                        <input type="password" placeholder="Enter password" data-bind="value: model.Users.Password, valueUpdate: 'afterkeydown'" class="form-control">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group" data-bind="css: $.trim(model.Users.Password_Retype()).length > 0 && model.Users.Password_Retype() == model.Users.Password() ? '' : 'has-error'">
+                    <label class="col-sm-3 control-label">Nhập lại mật khẩu</label>
+                    <div class="col-sm-8">
+                        <input type="password" placeholder="Enter password retype" data-bind="value: model.Users.Password_Retype, valueUpdate: 'afterkeydown'" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

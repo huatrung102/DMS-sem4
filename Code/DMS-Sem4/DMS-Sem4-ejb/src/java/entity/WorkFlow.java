@@ -8,6 +8,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,7 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsSetViewed", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsSetViewed = :workFlowIsSetViewed"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsSubmit", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsSubmit = :workFlowIsSubmit"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsTransferMultiple", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsTransferMultiple = :workFlowIsTransferMultiple"),
-    @NamedQuery(name = "WorkFlow.findByWorkFlowIsGenerateNumber", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsGenerateNumber = :workFlowIsGenerateNumber")})
+    @NamedQuery(name = "WorkFlow.findByWorkFlowIsGenerateNumber", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsGenerateNumber = :workFlowIsGenerateNumber"),
+    @NamedQuery(name = "WorkFlow.findByWorkFlowCreateDate", query = "SELECT w FROM WorkFlow w WHERE w.workFlowCreateDate = :workFlowCreateDate")})
 public class WorkFlow implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -91,8 +95,9 @@ public class WorkFlow implements Serializable {
     @NotNull
     @Column(name = "workFlow_IsGenerateNumber")
     private boolean workFlowIsGenerateNumber;
-    @OneToMany(mappedBy = "workFlowId")
-    private Collection<DraftDetail> draftDetailCollection;
+    @Column(name = "workFlow_CreateDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date workFlowCreateDate;
     @OneToMany(mappedBy = "workFlowId")
     private Collection<DocumentDetail> documentDetailCollection;
     @JoinColumn(name = "app_Id", referencedColumnName = "app_Id")
@@ -217,13 +222,12 @@ public class WorkFlow implements Serializable {
         this.workFlowIsGenerateNumber = workFlowIsGenerateNumber;
     }
 
-    @XmlTransient
-    public Collection<DraftDetail> getDraftDetailCollection() {
-        return draftDetailCollection;
+    public Date getWorkFlowCreateDate() {
+        return workFlowCreateDate;
     }
 
-    public void setDraftDetailCollection(Collection<DraftDetail> draftDetailCollection) {
-        this.draftDetailCollection = draftDetailCollection;
+    public void setWorkFlowCreateDate(Date workFlowCreateDate) {
+        this.workFlowCreateDate = workFlowCreateDate;
     }
 
     @XmlTransient

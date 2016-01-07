@@ -46,7 +46,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Document.findByDocIsValid", query = "SELECT d FROM Document d WHERE d.docIsValid = :docIsValid"),
     @NamedQuery(name = "Document.findByDocValidFrom", query = "SELECT d FROM Document d WHERE d.docValidFrom = :docValidFrom"),
     @NamedQuery(name = "Document.findByDocValidTo", query = "SELECT d FROM Document d WHERE d.docValidTo = :docValidTo"),
-    @NamedQuery(name = "Document.findByDocDate", query = "SELECT d FROM Document d WHERE d.docDate = :docDate")})
+    @NamedQuery(name = "Document.findByDocDate", query = "SELECT d FROM Document d WHERE d.docDate = :docDate"),
+    @NamedQuery(name = "Document.findByDocType", query = "SELECT d FROM Document d WHERE d.docType = :docType")})
 public class Document implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,9 +73,8 @@ public class Document implements Serializable {
     private String docContent;
     @Column(name = "doc_Status")
     private Short docStatus;
-    @Size(max = 10)
     @Column(name = "doc_IsValid")
-    private String docIsValid;
+    private Boolean docIsValid;
     @Size(max = 10)
     @Column(name = "doc_ValidFrom")
     private String docValidFrom;
@@ -84,7 +84,9 @@ public class Document implements Serializable {
     @Size(max = 10)
     @Column(name = "doc_Date")
     private String docDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "document")
+    @Column(name = "doc_Type")
+    private Short docType;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "docId")
     private Collection<DocumentStorage> documentStorageCollection;
     @JoinColumn(name = "app_Id", referencedColumnName = "app_Id")
     @ManyToOne
@@ -161,11 +163,11 @@ public class Document implements Serializable {
         this.docStatus = docStatus;
     }
 
-    public String getDocIsValid() {
+    public Boolean getDocIsValid() {
         return docIsValid;
     }
 
-    public void setDocIsValid(String docIsValid) {
+    public void setDocIsValid(Boolean docIsValid) {
         this.docIsValid = docIsValid;
     }
 
@@ -191,6 +193,14 @@ public class Document implements Serializable {
 
     public void setDocDate(String docDate) {
         this.docDate = docDate;
+    }
+
+    public Short getDocType() {
+        return docType;
+    }
+
+    public void setDocType(Short docType) {
+        this.docType = docType;
     }
 
     @XmlTransient

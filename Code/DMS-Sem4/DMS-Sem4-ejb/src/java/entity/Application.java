@@ -65,8 +65,6 @@ public class Application implements Serializable {
     private Boolean appisVisible;
     @OneToMany(mappedBy = "appId")
     private Collection<Document> documentCollection;
-    @OneToMany(mappedBy = "appId")
-    private Collection<Draft> draftCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appId")
     private Collection<WorkFlow> workFlowCollection;
 
@@ -140,15 +138,6 @@ public class Application implements Serializable {
 
     public void setDocumentCollection(Collection<Document> documentCollection) {
         this.documentCollection = documentCollection;
-    }
-
-    @XmlTransient
-    public Collection<Draft> getDraftCollection() {
-        return draftCollection;
-    }
-
-    public void setDraftCollection(Collection<Draft> draftCollection) {
-        this.draftCollection = draftCollection;
     }
 
     @XmlTransient

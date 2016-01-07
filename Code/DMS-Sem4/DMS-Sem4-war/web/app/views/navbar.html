@@ -1,0 +1,39 @@
+﻿<div class="border-bottom white-bg">
+    <nav role="navigation" class="navbar navbar-static-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <a class="navbar-brand" href="#">DMS</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#inbox" role="button" aria-expanded="false"><!-- ko text: LOCALIZATION.APPLICATION.INBOX --><!-- /ko -->  <span class="label label-warning-light" data-bind="visible: model.total()>0"><!-- ko text: model.total --><!-- /ko --></span></a>
+                </li>
+                <li>
+                    <a href="#sendbox" role="button" aria-expanded="false"><!-- ko text: LOCALIZATION.APPLICATION.SENDBOX --><!-- /ko --></a>
+                </li>
+                <li>
+                    <a href="#tools" role="button" aria-expanded="false"><!-- ko text: LOCALIZATION.APPLICATION.TOOLS --><!-- /ko --></a>
+                </li>
+                <li>
+                    <a href="#organization" role="button" data-bind="visible: model.userRole() === 'IT'" aria-expanded="false"><!-- ko text: LOCALIZATION.ORGANIZATION.TITLE --><!-- /ko --></a>
+                </li>
+                <li>
+                    <a href="#product" role="button" data-bind="visible: model.userRole() === 'IT'" aria-expanded="false"><!-- ko text: LOCALIZATION.PRODUCT.TITLE --><!-- /ko --></a>
+                </li>
+            </ul>
+            <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <a data-bind="click: profile"><!-- ko text: model.userName --><!-- /ko --></a>
+                </li>
+                <li>
+                    <a data-bind="click: signout, attr: { title: LOCALIZATION.ACCOUNT.SIGNOUT }">
+                        <i class="fa fa-sign-out"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

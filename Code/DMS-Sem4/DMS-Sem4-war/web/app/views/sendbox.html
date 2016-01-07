@@ -1,0 +1,66 @@
+﻿<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>
+            <!-- ko text: LOCALIZATION.APPLICATION.SENDBOX -->
+            <!-- /ko -->
+        </h5>     
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-sm-9 m-b-xs">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-sm btn-outline btn-primary" data-bind="click: model.change_view.bind($data, CONSTANT.APPLICATION_TYPE_SEND), css: { active: model.type() === CONSTANT.APPLICATION_TYPE_SEND }">
+                        <input type="radio" name="options">
+                        <!-- ko text: LOCALIZATION.APPLICATION.SENDBOX -->
+                        <!-- /ko -->
+                    </label>
+                    <label class="btn btn-sm btn-outline btn-primary" data-bind="click: model.change_view.bind($data, CONSTANT.APPLICATION_TYPE_DEPARTMENT_SEND), visible: model.isleader, css: { active: model.type() == CONSTANT.APPLICATION_TYPE_DEPARTMENT_SEND }">
+                        <input type="radio" name="options">
+                        <!-- ko text: LOCALIZATION.APPLICATION.DEPARTMENT_SEND -->
+                        <!-- /ko -->
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-xs btn-outline btn-primary pull-right" type="button" data-bind="visible: model.ipage() < model.total_page() - 1, click: next_page"><i class="fa fa-caret-right"></i></button>
+                <button class="btn btn-xs btn-outline btn-primary pull-right" style="margin-right: 5px" type="button" data-bind="visible: model.ipage() != 0, click: previous_page"><i class="fa fa-caret-left"></i></button>
+            </div>
+        </div>
+        <div class="project-list">
+            <table class="table table-hover">
+                <tbody data-bind="foreach: model.applications">
+                    <tr>
+                        <td class="project-title col-md-3">
+                            <a><!-- ko text: Name --><!-- /ko --></a>
+                            <br />
+                            <small>(<!-- ko text: ProductName --><!-- /ko -->)</small>
+                            <br>
+                            <small><!-- ko text: CreatedDate --><!-- /ko --></small>
+                            <br />
+                            <small><!-- ko text: CreatedUserName --><!-- /ko --> - <!-- ko text: CreatedDepartmentName --><!-- /ko --> - <!-- ko text: CreatedBranchName --><!-- /ko --> </small>
+                            <div>
+                                <span data-bind="visible: New" class="label label-primary"><!-- ko text: LOCALIZATION.APPLICATION.IS_NEW --><!-- /ko --></span>
+                                <span data-bind="visible: Urgent" class="label label-danger"><!-- ko text: LOCALIZATION.APPLICATION.IS_URGENT --><!-- /ko --></span>
+                                <span data-bind="visible: Append" class="label label-warning"><!-- ko text: LOCALIZATION.APPLICATION.IS_APPEND --><!-- /ko --></span>
+                            </div>
+                        </td>
+                        <td class="project-title col-md-8" data-bind="click: $root.view_detail.bind($data, { id: Id })">
+                            <a><!-- ko text: CustomerName --><!-- /ko --> - <!-- ko text: SendBranchName --><!-- /ko --></a>
+                            <br />
+                            <small>(<!-- ko text: StageName --><!-- /ko -->)</small>
+                            <br />
+                            <small><!-- ko text: LastUpdatedDate --><!-- /ko --></small>
+                            <br>
+                            <small><!-- ko text: AssignedUserName --><!-- /ko --> - <!-- ko text: AssignedDepartmentName --><!-- /ko --> - <!-- ko text: AssignedBranchName --><!-- /ko --></small>
+                            <br />
+                            <small><!-- ko text: LastComment --><!-- /ko --></small>
+                        </td>
+                        <td class="project-actions" style="width: 80px;">
+                            <button class="btn btn-outline btn-primary btn-sm" data-bind="click: $root.view_detail.bind($data, { id: Id })"><!-- ko text: LOCALIZATION.APPLICATION.VIEW --><!-- /ko --></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

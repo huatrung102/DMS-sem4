@@ -1,0 +1,44 @@
+﻿<div class="modal-content">
+    <div class="modal-header" style="padding-bottom: 30px !important">
+        <div class="col-sm-9">
+            <h3><!-- ko text: LOCALIZATION.APPLICATION.FILES --><!-- /ko --></h3>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox-tools">
+                <button class="btn btn-outline btn-xs btn-danger" type="button" data-bind="click: cancel"><i class="fa fa-remove"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="dd">
+            <ol class="dd-list">
+                <!-- ko foreach: model.files -->
+                <li class="dd-item">
+                    <div class="dd-handle">
+                        <!-- ko text: $index() + 1 --><!-- /ko -->.&nbsp;
+                        <!-- ko text: Name --><!-- /ko -->
+                        <span class="pull-right">
+                            <a class="btn btn-primary btn-xs btn-outline" data-bind="attr: {href: Link}, visible: Link.length > 0"><i class="fa fa-link"></i></a>
+                            <button class="btn btn-primary btn-xs btn-outline" data-bind="visible: Link.length > 0, click: $root.view_file.bind($data, Id)"><i class="fa fa-search-plus"></i></button>
+                        </span>
+                    </div>
+                    <ol class="dd-list">
+                        <!-- ko foreach: Children -->
+                        <li class="dd-item">
+                            <div class="dd-handle">
+                                <!-- ko text: Name --><!-- /ko -->
+                                <span class="pull-right">
+                                    <a class="btn btn-primary btn-xs btn-outline" data-bind="attr: { href: Link }, visible: Link.length > 0"><i class="fa fa-link"></i></a>
+                                    <button class="btn btn-primary btn-xs btn-outline" data-bind="visible: Link.length > 0, click: $root.view_file.bind($data, Id)"><i class="fa fa-search-plus"></i></button>
+                                </span>
+                            </div>
+
+                        </li>
+                        <!-- /ko -->
+                    </ol>
+                </li>
+                <!-- /ko -->
+            </ol>
+        </div>
+    </div>
+</div>

@@ -13,9 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -58,15 +55,12 @@ public class Department implements Serializable {
     @Size(max = 10)
     @Column(name = "dep_Code")
     private String depCode;
-    @JoinTable(name = "GroupDepartmentDetail", joinColumns = {
-        @JoinColumn(name = "dep_Id", referencedColumnName = "dep_Id")}, inverseJoinColumns = {
-        @JoinColumn(name = "groupDep_Id", referencedColumnName = "groupDep_Id")})
-    @ManyToMany
-    private Collection<GroupDepartment> groupDepartmentCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId")
     private Collection<DocumentDepartment> documentDepartmentCollection;
-    @OneToMany(mappedBy = "depId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId")
     private Collection<User> userCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId")
+    private Collection<GroupDepartmentDetail> groupDepartmentDetailCollection;
 
     public Department() {
     }
@@ -114,15 +108,6 @@ public class Department implements Serializable {
     }
 
     @XmlTransient
-    public Collection<GroupDepartment> getGroupDepartmentCollection() {
-        return groupDepartmentCollection;
-    }
-
-    public void setGroupDepartmentCollection(Collection<GroupDepartment> groupDepartmentCollection) {
-        this.groupDepartmentCollection = groupDepartmentCollection;
-    }
-
-    @XmlTransient
     public Collection<DocumentDepartment> getDocumentDepartmentCollection() {
         return documentDepartmentCollection;
     }
@@ -138,6 +123,15 @@ public class Department implements Serializable {
 
     public void setUserCollection(Collection<User> userCollection) {
         this.userCollection = userCollection;
+    }
+
+    @XmlTransient
+    public Collection<GroupDepartmentDetail> getGroupDepartmentDetailCollection() {
+        return groupDepartmentDetailCollection;
+    }
+
+    public void setGroupDepartmentDetailCollection(Collection<GroupDepartmentDetail> groupDepartmentDetailCollection) {
+        this.groupDepartmentDetailCollection = groupDepartmentDetailCollection;
     }
 
     @Override

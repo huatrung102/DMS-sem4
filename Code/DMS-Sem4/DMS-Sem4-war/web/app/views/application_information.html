@@ -1,0 +1,34 @@
+﻿<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5><!-- ko text: LOCALIZATION.APPLICATION.INFORMATION --><!-- /ko --></h5>
+        <div class="pull-right">
+            <button class="btn btn-outline btn-xs btn-primary" type="button" data-bind="click: view_files"><!-- ko text: LOCALIZATION.APPLICATION.FILES --><!-- /ko --></button>
+            <button style="margin-left: 5px" class="btn btn-outline btn-xs btn-primary" type="button" data-bind="click: view_forms"><!-- ko text: LOCALIZATION.APPLICATION.FORMS --><!-- /ko --></button>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+            <div class="col-md-12">
+                <dl class="dl-horizontal">
+                    <dt><!-- ko text: LOCALIZATION.APPLICATION.PROPERTY_NAME --><!-- /ko --></dt>
+                    <dd><!-- ko text: Name --><!-- /ko --></dd>
+                    <dt><!-- ko text: LOCALIZATION.PRODUCT.TITLE --><!-- /ko --></dt>
+                    <dd><!-- ko text: ProductName --><!-- /ko --></dd>
+                    <dt><!-- ko text: LOCALIZATION.APPLICATION.CREATED_USER --><!-- /ko --></dt>
+                    <dd><!-- ko text: CreatedUserName --><!-- /ko --> - <!-- ko text: CreatedDepartmentName --><!-- /ko --> - <!-- ko text: CreatedBranchName --><!-- /ko --></dd>
+                    <dt>Biểu mẫu</dt>
+                    <dd data-bind="foreach: beforeFormTask">
+                        <button data-bind="click: $root.view_forms_before.bind($data)" type="button" class="btn btn-outline btn-xs btn-primary"><span data-bind="text: Name"></span></button>
+                    </dd>
+                    <dt>File đính kèm</dt>
+                    <dd data-bind="foreach: beforeFilesTask">
+                        <a class="btn btn-primary btn-xs btn-outline" data-bind="attr: {href: 'FileAttachment/DownloadFile/'  + $root.appid + '?fileid='+ Id()}">
+                            <i class="fa fa-link" data-bind="text: Name"></i>
+                        </a>
+                        <!--<button data-bind="click: $root.view_files_before.bind($data)" type="button" class="btn btn-outline btn-xs btn-primary"><span data-bind="text: Name"></span></button>-->
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

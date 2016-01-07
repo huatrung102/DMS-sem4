@@ -1,0 +1,25 @@
+﻿<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5><!-- ko text: LOCALIZATION.APPLICATION.DISBURSEMENT_INFO --><!-- /ko --></h5>
+    </div>
+    <div class="ibox-content" data-bind="foreach: Disbursements">        
+        <div class="row">
+            <dl class="dl-horizontal">
+                <dt>Ngày giải ngân:</dt>
+                <dd><!-- ko text: CreatedDate --><!-- /ko --></dd>
+                <dt>Biểu mẫu:</dt>
+                <dd>
+                    <!-- ko foreach: Forms -->
+                    <button class="btn btn-xs btn-primary btn-outline" data-bind="text: Name, click: $root.view_disbursementForm.bind($data, { disbursementid: $parent.Id(), form_id: Id() })"></button>
+                    <!-- /ko -->
+                </dd>
+                <dt>File đính kèm:</dt>
+                <dd>
+                    <!-- ko foreach: Files -->
+                    <a class="btn btn-xs btn-primary btn-outline" data-bind="text: Name, attr: {href: Link}"></a>
+                    <!-- /ko -->
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
