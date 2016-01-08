@@ -7,6 +7,7 @@
 package manager;
 
 import entity.Application;
+
 import java.util.List;
 import javax.ejb.Local;
 
@@ -26,8 +27,9 @@ public interface ApplicationFacadeLocal {
     Application find(Object id);
 
     List<Application> findAll();
+    List<Application> getAll();
 
-    List<Application> findRange(int[] range);
+   
 
     int count();
     

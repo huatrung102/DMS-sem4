@@ -11,7 +11,7 @@
             self.model.total(total);
         });
         this.signout = function() {
-            http.get("/user/Logout").then(function () {
+            http.get("rest/users/logout").then(function () {
                 data.clear();
                 router.navigate("#login");
             });

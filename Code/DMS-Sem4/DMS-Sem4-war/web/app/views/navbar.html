@@ -12,17 +12,13 @@
                     <a href="#inbox" role="button" aria-expanded="false"><!-- ko text: LOCALIZATION.APPLICATION.INBOX --><!-- /ko -->  <span class="label label-warning-light" data-bind="visible: model.total()>0"><!-- ko text: model.total --><!-- /ko --></span></a>
                 </li>
                 <li>
-                    <a href="#sendbox" role="button" aria-expanded="false"><!-- ko text: LOCALIZATION.APPLICATION.SENDBOX --><!-- /ko --></a>
+                    <a href="#draft" role="button" aria-expanded="false"><!-- ko text: LOCALIZATION.APPLICATION.DRAFT --><!-- /ko --></a>
                 </li>
-                <li>
-                    <a href="#tools" role="button" aria-expanded="false"><!-- ko text: LOCALIZATION.APPLICATION.TOOLS --><!-- /ko --></a>
-                </li>
+               
                 <li>
                     <a href="#organization" role="button" data-bind="visible: model.userRole() === 'IT'" aria-expanded="false"><!-- ko text: LOCALIZATION.ORGANIZATION.TITLE --><!-- /ko --></a>
                 </li>
-                <li>
-                    <a href="#product" role="button" data-bind="visible: model.userRole() === 'IT'" aria-expanded="false"><!-- ko text: LOCALIZATION.PRODUCT.TITLE --><!-- /ko --></a>
-                </li>
+              
             </ul>
             <ul class="nav navbar-top-links navbar-right">
                 <li>

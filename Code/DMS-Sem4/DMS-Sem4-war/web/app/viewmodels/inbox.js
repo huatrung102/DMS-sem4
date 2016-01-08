@@ -20,9 +20,9 @@
                 switch (this.type()) {
                     case CONSTANT.APPLICATION_TYPE_PROCESSING:
                     {
-                        return "Application/GetInbox";
+                        return "PublishedDocument/GetProcessing";
                     }
-                    case CONSTANT.APPLICATION_TYPE_NEED_ASSIGN:
+                    case CONSTANT.APPLICATION_TYPE_SENT:
                     {
                         return "Application/GetDepartmentAssign";
                     }
@@ -53,7 +53,8 @@
             self.get_applications();
         }
         this.activate = function () {
-            http.get('application/getAll').then(function(data) {
+            http.get('rest/application/getAll').then(function(data) {
+                console.log('data :' + JSON.stringify(data));
                 self.model.products = data;
             });
             if (typeof data.get(DATAKEY) === 'undefined')
@@ -90,6 +91,7 @@
         this.view_detail = function(param) {
             router.navigate(String.format('#application/detail/{0}', param.id));            
         }
+        
         this.assign = function(param) {
             var application = $.Enumerable.From(self.model.applications()).Single(function(x) {
                 return x.Id === param.id;

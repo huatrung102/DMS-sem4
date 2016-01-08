@@ -1,0 +1,104 @@
+﻿<div class="modal-content">
+    <div class="modal-header">
+        <h3><!-- ko text: LOCALIZATION.USER.STAFF --><!-- /ko --></h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group" data-bind="css: $.trim(model.Users.LoginName()).length > 0 ? '' : 'has-error'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.USER.PROPERTY_LOGIN_NAME --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <input type="text" placeholder="Enter name" data-bind="value: model.Users.LoginName, valueUpdate: 'afterkeydown'" class="form-control">
+                </div>
+            </div>
+            
+            <div class="form-group" data-bind="visible: model.isEdit() == 0,css: $.trim(model.Users.Password()).length > 0 && model.Users.Password() == model.Users.Password_Retype() ? '' : 'has-error'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.USER.PROPERTY_PASSWORD --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <input type="password" placeholder="Enter password" data-bind="value: model.Users.Password, valueUpdate: 'afterkeydown'" class="form-control">
+                </div>
+            </div>
+            <div class="form-group" data-bind="visible: model.isEdit() == 0,css: $.trim(model.Users.Password_Retype()).length > 0 && model.Users.Password_Retype() == model.Users.Password() ? '' : 'has-error'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.USER.PROPERTY_PASSWORD_RETYPE --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <input type="password" placeholder="Enter password retype" data-bind="value: model.Users.Password_Retype, valueUpdate: 'afterkeydown'" class="form-control">
+                </div>
+            </div>
+            <div class="form-group" data-bind="css: $.trim(model.Users.FullName()).length > 0 ? '' : 'has-error'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.USER.PROPERTY_FULLNAME --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <input type="text" placeholder="Enter name" data-bind="value: model.Users.FullName, valueUpdate: 'afterkeydown'" class="form-control">
+                </div>
+            </div>
+            <div class="form-group" data-bind="css: $.trim(model.Users.Email()).length > 0 && CheckEmail() == true ? '' : 'has-error'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.USER.PROPERTY_EMAIL --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <input type="text" placeholder="Enter name" data-bind="value: model.Users.Email, valueUpdate: 'afterkeydown'" class="form-control">
+                </div>
+            </div>
+            <div class="form-group" data-bind="visible: model.MoveBranchCheck().length == 0">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.DEPARTMENT.TITLE --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <select class="form-control branches_filter" data-bind="options: model.Department, optionsText: 'Name', optionsValue: 'Id', value: model.Users.Department.Id"></select>
+                </div>
+            </div>
+            <div class="form-group" data-bind="visible: model.Users.Department.DepartmentPositionId() === '00000000-0000-0000-0000-000000000000' && model.Users.IsLeader() != 'true'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.POSITION.TITLE --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <select class="form-control" data-bind="options: model.Position, optionsText: 'Name', optionsValue: 'Id', value: model.Users.PositionId"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.USER.PROPERTY_BRANCH_ADMIN --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <label class="radio-inline" style="padding-left: 0px!important"> <input type="checkbox" value="1" name="admin" data-bind="value: 1, checked: model.Type"> </label>
+                </div>
+            </div>
+            <div class="form-group" data-bind="visible: model.isEdit() == 1">
+                <label class="col-sm-3 control-label">Luân chuyển chi nhánh</label>
+                <div class="col-sm-1">
+                    <label class="radio-inline" style="padding-left: 0px!important">
+                        <input type="checkbox" value="1" name="movebranch" data-bind="value: 1, checked: model.MoveBranchCheck">
+                    </label>
+                </div>
+                <div class="col-sm-4" data-bind="visible: model.MoveBranchCheck().length > 0">
+                    <label class="col-sm-4 control-label">Chi nhánh</label>
+                    <div class="col-sm-8" style="padding:0px!important;">
+                        <select class="form-control branches_filter" data-bind="options: model.Branches, optionsText: 'Name', optionsValue: 'Id', value: model.BranchId"></select><!--, optionsCaption: 'Chọn chi nhánh...'-->
+                    </div>
+                </div>
+                <div class="col-sm-4" data-bind="visible: model.MoveBranchCheck().length > 0 && model.BranchId() != undefined">
+                    <label class="col-sm-4 control-label">Phòng ban</label>
+                    <div class="col-sm-8" style="padding:0px!important;">
+                        <select class="form-control branches_filter" data-bind="options: model.DepartmentMove, optionsText: 'Name', optionsValue: 'Id', value: model.DepartmentIdMove"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" data-bind="css: $.trim(model.Users.IsLeader()).length > 0 ? '' : 'has-error'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.USER.PROPERTY_LEADER --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <label class="checkbox-inline col-sm-2" style="padding-left: 0px!important;">
+                        <input type="radio" name="leader" data-bind="value: 'false', checked: model.Users.IsLeader"> <!-- ko text: LOCALIZATION.USER.STAFF --><!-- /ko -->
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="leader" data-bind="value: 'true', checked: model.Users.IsLeader"> <!-- ko text: LOCALIZATION.USER.LEADER --><!-- /ko --> 
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" data-bind="css: $.trim(model.Users.IsLeader()).length > 0 ? '' : 'has-error'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.USER.PROPERTY_STATUS --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <label class="checkbox-inline col-sm-2" style="padding-left: 0px!important;">
+                        <input type="radio" name="status" data-bind="value: 'false', checked: model.Users.Status"> <!-- ko text: LOCALIZATION.USER.PROPERTY_STATUS_FALSE --><!-- /ko -->
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="status" data-bind="value: 'true', checked: model.Users.Status"> <!-- ko text: LOCALIZATION.USER.PROPERTY_STATUS_TRUE --><!-- /ko --> 
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-bind="enable: $.trim(model.Users.LoginName()).length > 0, click: save"><!-- ko text: LOCALIZATION.COMMON.SAVE --><!-- /ko --></button>
+        <button class="btn btn-default" data-bind="click: cancel"><!-- ko text: LOCALIZATION.COMMON.CANCEL --><!-- /ko --></button>
+    </div>
+</div>

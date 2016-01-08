@@ -1,0 +1,25 @@
+﻿<div class="modal-content">
+    <div class="modal-header">
+        <h3><!-- ko text: LOCALIZATION.COMMON.DETAIL_TITLE --><!-- /ko --><!-- ko text: LOCALIZATION.POSITION.TITLE --><!-- /ko --></h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-group" data-bind="css: $.trim(model.Name()).length > 0 ? '' : 'has-error'">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.POSITION.PROPERTY_NAME --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <input type="text" placeholder="Enter name" data-bind="value: model.Name, valueUpdate: 'afterkeydown'" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.POSITION.CODE --><!-- /ko --></label>
+                <div class="col-sm-9">
+                    <input type="text" placeholder="Enter code" data-bind="value: model.Code, valueUpdate: 'afterkeydown'" class="form-control">
+                </div>
+            </div>
+        </div>       
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-bind="enable: $.trim(model.Name()).length > 0, click: save"><!-- ko text: LOCALIZATION.COMMON.SAVE --><!-- /ko --></button>
+        <button class="btn btn-default" data-bind="click: cancel"><!-- ko text: LOCALIZATION.COMMON.CANCEL --><!-- /ko --></button>
+    </div>
+</div>

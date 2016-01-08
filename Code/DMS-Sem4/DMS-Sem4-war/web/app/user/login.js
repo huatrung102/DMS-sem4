@@ -12,25 +12,20 @@
             return true;
         }
         this.login = function () {
-            self.enableLogin(false);
-            //http.post("/SBank/GetData", { cif: "0400005849" }).then(function (data) {
-                
-            });
-
-
-            http.post("/user/Login", { username: self.username(), password: self.password() }).then(function(data) {
+            self.enableLogin(false);           
+            http.post("rest/users/login", { username: self.username(), password: self.password() }).then(function(data) {
+                console.log('data login:' + JSON.stringify(data));
                 self.enableLogin(true);
                 if (data) {
                     self.loginFailed(false);
-                    authenticate.isAuthenticated();
+                  //  authenticate.isAuthenticated();
                     router.navigate("#inbox");
                 }
                 else
                     self.loginFailed(true);
-            });                      
+            });          
+            self.enableLogin(true);
         }
-
-      
     }
     return vm;
 })

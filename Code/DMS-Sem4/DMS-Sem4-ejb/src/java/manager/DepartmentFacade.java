@@ -7,9 +7,11 @@
 package manager;
 
 import entity.Department;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,12 @@ public class DepartmentFacade extends AbstractFacade<Department> implements Depa
 
     public DepartmentFacade() {
         super(Department.class);
+    }
+    
+    @Override
+    public List<Department> getAll(){
+        Query q = em.createQuery("SELECT d FROM Department d ORDER BY d.depName");
+        return  (List<Department>) q.getResultList();
     }
     
 }

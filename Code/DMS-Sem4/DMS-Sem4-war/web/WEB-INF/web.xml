@@ -11,14 +11,21 @@
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
-        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
+    <servlet-name>DMSRest</servlet-name>
+    <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+     <!-- Register resources and providers under com.vogella.jersey.first package. -->
+    <init-param>
+        <param-name>jersey.config.server.provider.packages</param-name>
+        <param-value>services</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DMSRest</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+   
+   
     <session-config>
         <session-timeout>
             30

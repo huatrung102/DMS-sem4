@@ -133,6 +133,7 @@
         PROPERTY_LOGIN_NAME: "Tên đăng nhập",
         STAFF: "Nhân viên",
         LEADER:"Lãnh đạo",
+        
         PROPERTY_EMAIL: "Email",
         PROPERTY_STATUS: "Trạng thái",
         PROPERTY_PASSWORD: "Mật khẩu",
@@ -151,7 +152,9 @@
         PROPERTY_VALUE: "Giá trị"
     },
     APPLICATION: {
-        PROCESSING: "Hồ sơ đang xử lý",
+        PROCESSING: "Processing",
+        DRAFT : "Draft",
+        
         NEED_ASSIGN: "Hồ sơ cần phân công",
         MANAGEMENT: "Kiểm soát Hồ sơ",
         CREATE_SUCCESSFUL: "Tạo hồ sơ thành công",
@@ -191,11 +194,11 @@
         FORMS: "Danh sách Biểu mẫu",
         FORM: "Biểu mẫu",
         FORM_DATA: "Thông tin Hồ sơ",
-        INBOX: "Hồ sơ đến",
+        INBOX: "Published Document",
         ALLINBOX:"Tất cả hồ sơ",
-        DISBURSEMENT: "Hồ sơ Giải ngân",
-        DISBURSEMENT_INFO: "Thông tin Giải ngân",
-        SENDBOX: "Hồ sơ đã gửi",
+        
+        
+        SENDBOX: "Sent Box",
         DEPARTMENT_SEND: "Hồ sơ Phòng gửi",
         BOOKMARK: "Hồ sơ đánh dấu",
         DO_BOOKMARK: "Đánh dấu Hồ sơ",
@@ -205,39 +208,34 @@
         USER_ASSIGNED: "Người xử lý",
         USER_CC: "CC",
         UNASSIGNED: "Đang chờ phân công",
-        TOOLS: "Công cụ tư vấn",
-        TOOLS_PRICING: "Tính thu nhập Khách hàng",
-        TOOLS_PAYMENT1: "Lịch trả nợ dần",
-        TOOLS_PAYMENT2: "Lịch trả góp",
-        TOOLS_PAYMENT3: "Lịch trả nợ tự do",
-        TOOLS_CUSTOMER_CONSULTING: "Tư vấn Tài chính Cá nhân",
         
+               
         COMPLETE_PERCENT: "Hoàn thành",
-        LOOKUPCR: "liên kết với CR",
+        
         ISFINISHED: "Hồ sơ đã kết thúc",
         SEARCH: "Tìm kiếm Hồ sơ",
         SEARCH_NOT_FOUND: "Không tìm thấy hồ sơ",
-        IS_NEW: "Mới",
-        IS_URGENT: "khẩn",
-        IS_ROLLBACK: "Chỉnh sửa",
-        IS_APPEND: "Bổ sung",
+        IS_NEW: "New",
+        IS_URGENT: "Urgent",
+        IS_ROLLBACK: "Backed",
+        IS_APPEND: "Append",
         TIME: "Thời gian đến",
-        SEND_USER: "Cán bộ trình",
-        CREATED_USER: "Cán bộ tạo",
+        SEND_USER: "User Sent",
+        CREATED_USER: "User Created",
         EXISTING_FILE: "Xem file có sẵn"
     },
     ACCOUNT: {
-        LOGIN: "Đăng nhập",
-        LOGIN_FAILED: "Tên đăng nhập hoặc Mật khẩu không đúng.",
-        LOGIN_USERNAME: "Tên đăng nhập",
-        LOGIN_PASSWORD: "Mật khẩu",
-        CHANGE_PASSWORD: "Thay đổi Mật khẩu",
-        OLD_PASSWORD: "Mật khẩu cũ",
-        NEW_PASSWORD: "Mật khẩu mới",
-        RETYPE_PASSWORD: "Nhập lại Mật khẩu",
-        WRONG_PASSWORD: "Sai mật khẩu",
-        CHANGE_PASSWORD_SUCCESS: "Thay đổi mật khẩu thành công",
-        SIGNOUT: "Thoát"
+        LOGIN: "Login",
+        LOGIN_FAILED: "User name or password is wrong.",
+        LOGIN_USERNAME: "User name",
+        LOGIN_PASSWORD: "Password",
+        CHANGE_PASSWORD: "Change password",
+        OLD_PASSWORD: "Old Password",
+        NEW_PASSWORD: "New Password",
+        RETYPE_PASSWORD: "Retype Password",
+        WRONG_PASSWORD: "Old Password is wrong",
+        CHANGE_PASSWORD_SUCCESS: "Changed password successfully!",
+        SIGNOUT: "Sign out"
     },
     REPORT: {
         BRANCH: "Báo cáo theo Chi nhánh",
@@ -250,10 +248,7 @@
         PROPERTY_BEGIN: "Từ ngày",
         PROPERTY_END: "Đến ngày"
     },
-    ECM: {
-        TITLE: "ECM",
-        FILE_NAME: "Tên File"
-    }
+   
 }
 var EVENT = {    
     SHOW_USERS: "organization:detail",
@@ -266,7 +261,7 @@ var SETTING = {
 
 var CONSTANT = {
     APPLICATION_TYPE_PROCESSING: 1,
-    APPLICATION_TYPE_NEED_ASSIGN: 2,
+    APPLICATION_TYPE_SENT: 2,
     APPLICATION_TYPE_MANAGEMENT: 3,
     APPLICATION_TYPE_SEND: 1,
     APPLICATION_TYPE_DEPARTMENT_SEND: 2,

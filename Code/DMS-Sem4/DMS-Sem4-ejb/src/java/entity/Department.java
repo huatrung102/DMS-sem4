@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -29,12 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "Department")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
-    @NamedQuery(name = "Department.findByDepId", query = "SELECT d FROM Department d WHERE d.depId = :depId"),
-    @NamedQuery(name = "Department.findByDepName", query = "SELECT d FROM Department d WHERE d.depName = :depName"),
-    @NamedQuery(name = "Department.findByDepStatus", query = "SELECT d FROM Department d WHERE d.depStatus = :depStatus"),
-    @NamedQuery(name = "Department.findByDepCode", query = "SELECT d FROM Department d WHERE d.depCode = :depCode")})
+
 public class Department implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,11 +52,11 @@ public class Department implements Serializable {
     @Size(max = 10)
     @Column(name = "dep_Code")
     private String depCode;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId",fetch = FetchType.LAZY)
     private Collection<DocumentDepartment> documentDepartmentCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId")
-    private Collection<User> userCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId",fetch = FetchType.LAZY)
+    private Collection<Users> usersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId",fetch = FetchType.LAZY)
     private Collection<GroupDepartmentDetail> groupDepartmentDetailCollection;
 
     public Department() {
@@ -108,6 +105,7 @@ public class Department implements Serializable {
     }
 
     @XmlTransient
+    @JsonIgnore
     public Collection<DocumentDepartment> getDocumentDepartmentCollection() {
         return documentDepartmentCollection;
     }
@@ -115,17 +113,19 @@ public class Department implements Serializable {
     public void setDocumentDepartmentCollection(Collection<DocumentDepartment> documentDepartmentCollection) {
         this.documentDepartmentCollection = documentDepartmentCollection;
     }
-
+    
     @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
+  //  @JsonIgnore
+    public Collection<Users> getUsersCollection() {
+        return usersCollection;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setUsersCollection(Collection<Users> usersCollection) {
+        this.usersCollection = usersCollection;
     }
 
     @XmlTransient
+    @JsonIgnore
     public Collection<GroupDepartmentDetail> getGroupDepartmentDetailCollection() {
         return groupDepartmentDetailCollection;
     }
@@ -134,29 +134,5 @@ public class Department implements Serializable {
         this.groupDepartmentDetailCollection = groupDepartmentDetailCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (depId != null ? depId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Department)) {
-            return false;
-        }
-        Department other = (Department) object;
-        if ((this.depId == null && other.depId != null) || (this.depId != null && !this.depId.equals(other.depId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entity.Department[ depId=" + depId + " ]";
-    }
     
 }

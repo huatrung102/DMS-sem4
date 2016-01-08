@@ -7,6 +7,7 @@
 package session;
 
 import additional.DMSException;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,24 +21,25 @@ public class SessionUtils {
         return SessionListener.getSessionAttribute("userId", false) != null;
     }
 
-    public static Long getUserId() {
-        Long uId = ((Long) SessionListener.getSessionAttribute("userId", true));
+    public static UUID getUserId() {
+        UUID uId = ((UUID) SessionListener.getSessionAttribute("userId", true));        
         return uId;
     }
 
-    public static Long getCurrentUserId(HttpServletRequest req) {
+    public static UUID getCurrentUserId(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
-        Long userId = (Long) session.getAttribute("userId");
+        UUID userId = (UUID) session.getAttribute("userId");
         return userId;
     }
 
-    public static Long getCurrentUserIdThrowingException(HttpServletRequest req) 
+    public static UUID getCurrentUserIdThrowingException(HttpServletRequest req) 
             throws DMSException {
         HttpSession session = req.getSession(false);
-        Long userId = (Long) session.getAttribute("userId");
+        UUID userId = (UUID) session.getAttribute("userId");
         if (userId == null) {
             throw new DMSException("You are not logged in");
         }
+        
         return userId;
     }
 }

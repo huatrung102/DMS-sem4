@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -96,7 +97,7 @@ public class Document implements Serializable {
     private DocumentType docTypeId;
     @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
     @ManyToOne
-    private User userId;
+    private Users userId;
     @OneToMany(mappedBy = "docId")
     private Collection<DocumentDetail> documentDetailCollection;
 
@@ -204,6 +205,7 @@ public class Document implements Serializable {
     }
 
     @XmlTransient
+    @JsonIgnore
     public Collection<DocumentStorage> getDocumentStorageCollection() {
         return documentStorageCollection;
     }
@@ -228,15 +230,16 @@ public class Document implements Serializable {
         this.docTypeId = docTypeId;
     }
 
-    public User getUserId() {
+    public Users getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Users userId) {
         this.userId = userId;
     }
 
     @XmlTransient
+    @JsonIgnore
     public Collection<DocumentDetail> getDocumentDetailCollection() {
         return documentDetailCollection;
     }

@@ -1,0 +1,103 @@
+﻿<div class="ibox" style="height: calc(100vh - 93px);">
+    <div class="ibox-title">
+        <div>
+            <h5>
+                <!-- ko text: LOCALIZATION.USER.TITLE --><!-- /ko -->
+            </h5>
+            <div style="text-align: center;">
+                <div class="col-md-2 forum-info label label-success" style="top: -9px">
+                    <span class="views-number" data-bind="text: model.CountStaff">0</span>
+                    <div>
+                        <small>nhân viên</small>
+                    </div>
+                </div>
+            </div>
+            <span class="pull-right">
+                <button class="btn btn-primary btn-xs btn-outline" type="button" data-bind="click: users_add"><i class="fa fa-plus"></i></button>
+            </span>
+        </div>
+    </div>
+    <div class="ibox-content" style="padding-bottom: 15px">
+        <div class="form-group" style="margin-bottom: 0px">
+            <select style="" class="form-control user-filter" multiple="multiple" data-bind="options: model.AllUsers, optionsText: 'FullName', optionsValue: 'Id', selectedOptions: model.filter_users, attr: { 'data-placeholder': LOCALIZATION.COMMON.FILTER }"></select>
+        </div>
+    </div>
+    <div class="ibox-content full-height-scroll" style="margin-bottom: 0px !important">
+        <div class="col-lg-12" data-bind="foreach: model.Users">
+            <div class="contact-box">
+                <div>
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            <div class="m-t-xs img-responsive">
+                                <button class="btn btn-outline" type="button" data-bind="click: $root.users_active.bind($data, { Id: Id() }), css:{'btn-primary' : Status() == true, 'btn-warning' : Status() == false }, text: Status() == true ? 'Kích hoạt' : '&nbsp;&nbsp;&nbsp; Khóa  &nbsp;&nbsp;&nbsp;' "></button>
+                                <button class="btn btn-outline btn-default m-t-xs img-responsive btn-danger" type="button" data-bind="click: $root.users_remove.bind($data, { Id: Id() })"> &nbsp;&nbsp;&nbsp;&nbsp; Xóa  &nbsp;&nbsp;&nbsp;&nbsp;</button>
+                            </div>
+                            <div class="m-t-xs font-bold" data-bind="text: PositionName()"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8" data-bind="click: $root.users_edit.bind($data, {Id: Id(), DepartmentId: DepartmentId(), PositionId: PositionId()})" style="cursor: pointer">
+                        <h3>
+                            <i class="fa fa-user"></i> <strong data-bind="text: FullName()">HALLO</strong>
+                        </h3>
+                        <p>
+                            <i class="fa fa-sign-in"></i> <span data-bind="text: LoginName()"></span>
+                        </p>
+                        <p>
+                            <i class="fa fa-envelope"></i> <span data-bind="text: Email()"></span>
+                        </p>
+                        <p>
+                            <i class="fa fa-sitemap"></i> <span data-bind="text: DepartmentName()"></span>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="display: none">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-lg-1">#</th>
+                    <th class="col-lg-8" style="text-align: center">Info</th>
+                    <th class="col-lg-3" style="text-align: center">Action</th>
+                </tr>
+                </thead>
+                <tbody data-bind="foreach: model.Users">
+                <tr>
+                    <td data-bind="text: $index() + 1"></td>
+                    <td>
+                        <div class="row">
+                            <span class=" col-lg-4">Họ và tên</span>
+                            <span class="col-lg-8" data-bind="text: FullName()"></span>
+                        </div>
+                        <div class="row">
+                            <span class=" col-lg-4">Tên đăng nhập</span>
+                            <span class="col-lg-8" data-bind="text: LoginName()"></span>
+                        </div>
+                        <div class="row">
+                            <span class=" col-lg-4">Email</span>
+                            <span class="col-lg-8" data-bind="text: Email()"></span>
+                        </div>
+                        <div class="row">
+                            <span class=" col-lg-4">Bộ phận</span>
+                            <span class="col-lg-8" data-bind="text: DepartmentName()"></span>
+                        </div>
+                        <div class="row">
+                            <span class=" col-lg-4">Phòng ban</span>
+                            <span class="col-lg-8" data-bind="text: PositionName()"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="pull-right">
+                                <button class="btn btn-xs btn-primary" type="button" data-bind="click: $root.users_active.bind($data, { Id: Id() }), text: Status() == true ? 'Acttive' : 'Lock' "></button>
+                                <button class="btn btn-primary btn-xs btn-outline" type="button" data-bind="click: $root.users_edit.bind($data, {Id: Id(), DepartmentId: DepartmentId(), PositionId: PositionId()})"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-danger btn-xs btn-outline" data-bind="click: $root.users_remove.bind($data, { Id: Id() })" type="button"><i class="fa fa-times"></i></button>
+                            </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -46,7 +46,7 @@ public class DocumentStaff implements Serializable {
     private DocumentDepartment docDepId;
     @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
     @ManyToOne(optional = false)
-    private User userId;
+    private Users userId;
 
     public DocumentStaff() {
     }
@@ -79,11 +79,11 @@ public class DocumentStaff implements Serializable {
         this.docDepId = docDepId;
     }
 
-    public User getUserId() {
+    public Users getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Users userId) {
         this.userId = userId;
     }
 

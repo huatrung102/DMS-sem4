@@ -7,15 +7,15 @@
 package test;
 
 import entity.Role;
-import entity.User;
+import entity.Users;
 
 /**
  *
  * @author TrungHTH
  */
 public class TestClass {
-    public static User getTestUser(){
-         User userSession = new User();
+    public static Users getTestUser(){
+         Users userSession = new Users();
             userSession.setUserName("testTrunghth");
             userSession.setUserFullName("Hua Tran Huu Trung");
             userSession.setUserId("6D96CBEC-079C-4C33-BCB3-8DCC7D7054CC");

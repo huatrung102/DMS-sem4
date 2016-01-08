@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -56,7 +57,7 @@ public class Role implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date roleCreateDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Collection<User> userCollection;
+    private Collection<Users> usersCollection;
     @OneToMany(mappedBy = "roleId")
     private Collection<WorkFlow> workFlowCollection;
 
@@ -100,15 +101,17 @@ public class Role implements Serializable {
     }
 
     @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    @JsonIgnore
+    public Collection<Users> getUsersCollection() {
+        return usersCollection;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setUsersCollection(Collection<Users> usersCollection) {
+        this.usersCollection = usersCollection;
     }
 
     @XmlTransient
+    @JsonIgnore
     public Collection<WorkFlow> getWorkFlowCollection() {
         return workFlowCollection;
     }

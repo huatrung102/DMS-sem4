@@ -3,25 +3,27 @@
         var self = this;
         self.model = {
             Users: {                
-                Id: ko.observable(""),
-                FullName: ko.observable(""),
-                LoginName: ko.observable(""),
-                Password: ko.observable(""),
-                Password_Retype: ko.observable(""),
-                Type: 0,
-                IsLeader: ko.observable(""),
-                Status: ko.observable(""),
-                Email: ko.observable(""),
-                Department:{ Id: ko.observable('0')},	            
-	            DepartmentName: ko.observable(""),
-                PositionId: ko.observable(""),
-	            PositionName: ko.observable("")
+                userId: ko.observable(""),
+                userFullName: ko.observable(""),
+                userName: ko.observable(""),
+                userPassword: ko.observable(""),
+                userNewPassword: ko.observable(""),
+                userPassword_Retype: ko.observable(""),
+               // Type: 0,
+               // IsLeader: ko.observable(""),
+                userStatus: ko.observable(true),
+                userEmail: ko.observable(""),
+                Department:{ depId: ko.observable(""),	            
+	            depName: ko.observable("")},
+                Role : {roleId:  ko.observable("0"),
+                    roleName: ko.observable("0")},
+               
             },
             userId: ko.observable(""),
-            Department: ko.observableArray([]),
-            Position: ko.observableArray([]),
+            //Department: ko.observableArray([]),
+           // Position: ko.observableArray([]),
             heading: ko.observable('Chỉnh sửa thông tin'),
-            nvaSelected: ko.observable("0")
+            nvaSelected: ko.observable(0)
         };
         this.activate = function(obj) {
             self.model.userId(obj);
@@ -31,7 +33,7 @@
             self.loadData();
         }
         this.loadData = function () {
-            http.post("/User/GetUsersId").then(function (data) {
+            http.post("/users/getUserById").then(function (data) {
                 if (typeof data !== "undefined") {
                     self.model.Users.Id(data[0].Id);
                     self.model.Users.FullName(data[0].FullName);

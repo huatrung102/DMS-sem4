@@ -6,12 +6,13 @@
 
 package manager;
 
-import additional.DMSException;
 import entity.Application;
+import entity.Department;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -30,16 +31,12 @@ public class ApplicationFacade extends AbstractFacade<Application> implements Ap
     public ApplicationFacade() {
         super(Application.class);
     }
-    public Application getApplicationById(String uid) throws DMSException{
-         if(uid == null)
-             throw new DMSException("ApplicationId Null");
-         Application app = find(uid);
-         if(app == null)
-             throw new DMSException("Application not found");
-         return app;
-     }
-     
-     public List<Application> getAll(){
-        return findAll();
+    
+     @Override
+    public List<Application> getAll(){
+        Query q = em.createQuery("SELECT a FROM Application a ORDER BY a.appName");
+        return  (List<Application>) q.getResultList();
     }
+
+    
 }

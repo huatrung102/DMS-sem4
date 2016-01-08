@@ -1,0 +1,81 @@
+﻿<div class="ibox" style="height: calc(100vh - 93px);">
+    <div class="ibox-title">
+        <div>
+            <h5><!-- ko text: LOCALIZATION.BRANCH.TITLE --><!-- /ko --></h5>
+            <div style="text-align: center;">               
+                <div class="col-md-2 forum-info label label-success" style="top: -9px">
+                    <span class="views-number" data-bind="text: model.TotalDepartments"> </span>
+                    <div>
+                        <small>Department</small>
+                    </div>
+                </div>
+                <div class="col-md-2 forum-info label label-success" style="top: -9px">
+                    <span class="views-number" data-bind="text: model.TotalStaff"> </span>
+                    <div>
+                        <small>Employee</small>
+                    </div>
+                </div>
+            </div>
+            <span class="pull-right">
+                <button class="btn btn-primary btn-xs btn-outline" type="button" data-bind="click: branch_add"><i class="fa fa-plus"></i></button>
+            </span>
+        </div>
+    </div>
+    <div class="ibox-content" style="padding-bottom: 15px">
+        <div class="form-group" style="margin-bottom: 0px">
+            <select style="display: none" class="form-control branch-filter" multiple="multiple" data-bind="options: model.Branches, optionsText: 'Name', optionsValue: 'Id', selectedOptions: model.filter_branches, attr: { 'data-placeholder': LOCALIZATION.COMMON.FILTER }"></select>
+        </div>
+    </div>
+    <div class="ibox-content full-height-scroll">
+        <div class="dd">
+            <ol class="dd-list" > 
+                <li class="dd-item node-item" data-bind="attr: {dataid: '00000000-0000-0000-0000-000000000000'}, style: { display: Filter() == 1 ? 'block' : 'none' }">
+                    <div class=" dd-handle" data-bind="click: $root.selectItem.bind($data, { Id: '00000000-0000-0000-0000-000000000000', Type: CONSTANT.ORGANIZATION_TYPE_BRANCH, BranchId:  '00000000-0000-0000-0000-000000000000' }), css: { selected: Id == $root.model.SeletedItem() },text : 'All Department'">
+                      
+                    </div>
+                    <ol class="dd-list">
+                        <li class="dd-item node-item" data-bind="attr: { dataid: Id  + CONSTANT.ORGANIZATION_TYPE_DEPARTMENTS}">
+                            <div class="dd-handle">
+                                <!-- ko text: LOCALIZATION.DEPARTMENT.TITLE --><!-- /ko -->
+                                <span class="pull-right">
+                                    <button class="btn btn-primary btn-xs btn-outline" type="button" data-bind="clickBubble: false, click: $root.department_add.bind($data, {BranchId: Id})"><i class="fa fa-plus"></i></button>
+                                </span>
+                            </div>
+                            <ol class="dd-list" data-bind="foreach: Departments">
+                                <li class="dd-item">
+                                    <div class="dd-handle" data-bind="click: $root.selectItem.bind($data, { Id: Id, DepartmentPositionId: PositionId, Type: CONSTANT.ORGANIZATION_TYPE_DEPARTMENT, BranchId:  $parent.Id}), css: { selected: Id == $root.model.SeletedItem() }">
+                                        <!-- ko text: Name --><!-- /ko --><br />
+                                        (<!-- ko text: PositionName --><!-- /ko -->)
+                                        <span class="pull-right">
+                                            <button class="btn btn-primary btn-xs btn-outline" type="button" data-bind="clickBubble: false, click: $root.department_edit.bind($data, { Id: Id, Name: Name, BranchId: $parent.Id, PositionId: PositionId, Code: Code, Address: Address })"><i class="fa fa-pencil"></i></button>
+                                            <button class="btn btn-danger btn-xs btn-outline" type="button" data-bind="clickBubble: false, click: $root.department_remove.bind($data, { Id: Id })"><i class="fa fa-times"></i></button>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ol>
+                        </li>
+                        <li class="dd-item node-item" data-bind="attr: { dataid: Id + CONSTANT.ORGANIZATION_TYPE_SUBDEPARTMENTS }">
+                            <div class="dd-handle">
+                                <!-- ko text: LOCALIZATION.SUBDEPARTMENT.TITLE --><!-- /ko -->
+                                <span class="pull-right">
+                                    <button class="btn btn-primary btn-xs btn-outline" type="button" data-bind="clickBubble: false, click: $root.subdepartment_add.bind($data, {BranchId: Id})"><i class="fa fa-plus"></i></button>
+                                </span>
+                            </div>
+                            <ol class="dd-list" data-bind="foreach: Subdepartments">
+                                <li class="dd-item">
+                                    <div class="dd-handle" data-bind="click: $root.selectItem.bind($data, { Id: Id, DepartmentPositionId: PositionId, Type: CONSTANT.ORGANIZATION_TYPE_SUBDEPARTMENT, BranchId:  $parent.Id }), css: { selected: Id == $root.model.SeletedItem() }">
+                                        <!-- ko text: Name --><!-- /ko -->
+                                        <span class="pull-right">
+                                            <button class="btn btn-primary btn-xs btn-outline" type="button" data-bind="clickBubble: false, click: $root.department_edit.bind($data, { Id: Id, Name: Name, BranchId: $parent.Id, PositionId: PositionId, Code: Code, Address: Address  })"><i class="fa fa-pencil"></i></button>
+                                            <button class="btn btn-danger btn-xs btn-outline" type="button" data-bind="clickBubble: false, click: $root.department_remove.bind($data, { Id: Id })"><i class="fa fa-times"></i></button>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>

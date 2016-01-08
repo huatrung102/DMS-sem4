@@ -5,14 +5,7 @@
                 <!-- ko text: LOCALIZATION.APPLICATION.INBOX -->
                 <!-- /ko -->
             </h5>
-            <div class="col-sm-3">
-                <label class="checkbox-inline">
-                    <input type="radio" name="disbursement" value="false" data-bind="checked: model.filter_Disbursement"> <!-- ko text: LOCALIZATION.APPLICATION.ALLINBOX --><!-- /ko -->
-                </label> 
-                <label class="checkbox-inline">
-                    <input type="radio" name="disbursement" value="true" data-bind="checked: model.filter_Disbursement"> <!-- ko text: LOCALIZATION.APPLICATION.DISBURSEMENT --><!-- /ko -->
-                </label> 
-            </div>
+            
             <div class="ibox-tools">
                 <button class="btn btn-outline btn-xs btn-primary" type="button" data-bind="visible: model.allow_create, click: app_create"><!-- ko text: LOCALIZATION.APPLICATION.CREATE --><!-- /ko --></button>
                 <!--<button class="btn btn-outline btn-xs btn-success" type="button" data-bind1="click: app_create">--><!--</button>-->
@@ -30,13 +23,13 @@
                         <!-- /ko -->
                         <span class="label label-warning-light" data-bind="visible: model.information.PC()>0"><!-- ko text: model.information.PC --><!-- /ko --></span>
                     </label>
-                    <label class="btn btn-sm btn-outline btn-primary" data-bind="click: model.change_view.bind($data, CONSTANT.APPLICATION_TYPE_NEED_ASSIGN), visible: model.isleader, css: { active: model.type() == CONSTANT.APPLICATION_TYPE_NEED_ASSIGN }">
+                    <label class="btn btn-sm btn-outline btn-primary" data-bind="click: model.change_view.bind($data, CONSTANT.APPLICATION_TYPE_SENT), css: { active: model.type() == CONSTANT.APPLICATION_TYPE_SENT }">
                         <input type="radio" name="options">
-                        <!-- ko text: LOCALIZATION.APPLICATION.NEED_ASSIGN -->
+                        <!-- ko text: LOCALIZATION.APPLICATION.SENDBOX -->
                         <!-- /ko -->
                         <span class="label label-warning-light" data-bind="visible: model.information.AC() > 0"><!-- ko text: model.information.AC --><!-- /ko --></span>
                     </label>
-                    <label class="btn btn-sm btn-outline btn-primary" data-bind="click: model.change_view.bind($data, CONSTANT.APPLICATION_TYPE_MANAGEMENT), visible: model.isleader, css: { active: model.type() == CONSTANT.APPLICATION_TYPE_MANAGEMENT }">
+                    <label class="btn btn-sm btn-outline btn-primary" data-bind="click: model.change_view.bind($data, CONSTANT.APPLICATION_TYPE_MANAGEMENT), visible: (model.userRole === 'Manager' || model.userRole === 'Top Manager'), css: { active: model.type() == CONSTANT.APPLICATION_TYPE_MANAGEMENT }">
                         <input type="radio" name="options">
                         <!-- ko text: LOCALIZATION.APPLICATION.MANAGEMENT -->
                         <!-- /ko -->
