@@ -71,20 +71,23 @@ public class UsersResource {
     @GET
     @Produces("application/json")    
     @Path("logout")
-    public void logout(@Context HttpServletRequest req) {
+    public String logout(@Context HttpServletRequest req) {
        //call remove all session 
         WebSession.logout(req.getSession());
         //call remove userid test it
         SessionListener.setSessionAttribute(req.getSession(true), "userId", null);
+        return "#login";
     }
     
     @POST
     @Produces("application/json")
     @Consumes("application/json")    
-    @Path("login")
+    @Path("isAuthenticate")
     //add to session web
     public Users isAuthenticate(String data ,@Context HttpServletRequest req) {
-       return WebSession.getUserSession(req.getSession());
+       Users user = WebSession.getUserSession(req.getSession());
+       user = user == null || "".equals(user.getUserId()) ? userLocal.getUserById("0BEE30CF-CA7D-4E9A-B504-38D4CEAE3327") : user;
+       return user;
        
     }
     

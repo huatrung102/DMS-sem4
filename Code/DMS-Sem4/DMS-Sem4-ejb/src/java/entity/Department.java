@@ -6,6 +6,9 @@
 
 package entity;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -55,6 +58,8 @@ public class Department implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId",fetch = FetchType.LAZY)
     private Collection<DocumentDepartment> documentDepartmentCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId",fetch = FetchType.LAZY)
+    
+    @JsonBackReference
     private Collection<Users> usersCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "depId",fetch = FetchType.LAZY)
     private Collection<GroupDepartmentDetail> groupDepartmentDetailCollection;
@@ -115,7 +120,7 @@ public class Department implements Serializable {
     }
     
     @XmlTransient
-  //  @JsonIgnore
+  //  @JsonManagedReference
     public Collection<Users> getUsersCollection() {
         return usersCollection;
     }

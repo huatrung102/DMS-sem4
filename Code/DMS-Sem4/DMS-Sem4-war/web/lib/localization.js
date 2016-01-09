@@ -135,7 +135,7 @@
         LEADER:"Lãnh đạo",
         
         PROPERTY_EMAIL: "Email",
-        PROPERTY_STATUS: "Trạng thái",
+        PROPERTY_STATUS: "Status",
         PROPERTY_PASSWORD: "Mật khẩu",
         PROPERTY_PASSWORD_RETYPE: "Nhập lại mật khẩu",
         PROPERTY_BRANCH_ADMIN: "Quản trị Chi nhánh",

@@ -3,22 +3,19 @@
         var self = this;
         this.model = {
             User: {
-                Id: uuid.empty,
+                userId: uuid.empty,
                 DepartmentPositionId: uuid.empty,
                 Type: 1,
                 BranchId: ''
-            },
-            BranchId: ko.observable('0'),
-            CountStaff: ko.observable('0'),
+            },           
+            CountEmployee: ko.observable('0'),
             Users: ko.observableArray([]),
-            AllUsers: ko.observableArray([]),
-            AllBranches: ko.observableArray([]),
-            AllDepartment: ko.observableArray([]),
-            AllPosition: ko.observableArray([]),
+            AllUsers: ko.observableArray([]),            
+            AllDepartment: ko.observableArray([]),            
             filter_users: ko.observableArray([]),
             filter_users_backup: ko.observableArray([]),
             filter_users_status: ko.observable('false')
-        }
+        };
 
         app.on(EVENT.SHOW_USERS).then(function (data) {
             self.model.User = data;
@@ -27,36 +24,36 @@
         this.attached = function (view) {
             self.view = view;
             self.loadData();
-
             var userFilter = $(self.view).find(".user-filter");
             userFilter.css({ display: 'none' });//inline
             userFilter.chosen().change(function () { self.filter_users_handler(); });
-
         }
 
         this.loadData = function () {
             $.ajax({
-                url: '/Organization/GetUsers',
-                data: self.model.User,
+                url: 'rest/users/getAll',                
                 async: false,
                 success: function (data) {
                     if (self.model.CountStaff() !== data.length) {
                         self.model.filter_users_status('true');
-                        self.model.CountStaff(data.length);
+                        self.model.CountEmployee(data.length);
                     }
                     self.model.AllUsers.removeAll();
                     self.model.AllUsers.push({
-                        Id: 0,
-                        FullName: 0,
-                        LoginName: 0,
-                        Type: 0,
-                        IsLeader: 0,
-                        Status: 0,
-                        Email: 0,
-                        DepartmentId: 0,
-                        DepartmentName: 0,
-                        PositionId: 0,
-                        PositionName: 0
+                        userId: param.userId,
+                        userName: ko.observable(param.LoginName),
+                        userFullName: ko.observable(param.FullName),
+                        userPassword: ko.observable(param.Password),
+                        userNewPassword: ko.observable(param.Password),
+                        userPassword_Retype: ko.observable(param.Password),                
+                        depId: param.depId,
+                        depName : param.depName,                
+                        userRole : ko.observable(param.userRole),
+                        userStatus: ko.observable(param.userStatus),
+                        userEmail: ko.observable(param.userEmail),
+                        userDOB : ko.observable(param.userDOB),
+                        roleId: param.roleId,
+                        roleName: param.roleName,
                     });
                     self.model.Users.removeAll();
                     $(data).each(function (idx, item) {

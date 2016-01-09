@@ -1,0 +1,17 @@
+﻿<div class="modal-content full-height">
+    <div class="modal-header" style="padding-bottom: 30px !important">
+        <div class="col-sm-9">
+            <h3><!-- ko text: LOCALIZATION.APPLICATION.FORMS --><!-- /ko --></h3>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox-tools">
+                <button class="btn btn-outline btn-xs btn-danger" type="button" data-bind="click: cancel"><i class="fa fa-remove"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body" style="height: calc(100vh - 200px)">
+        <div class="col-sm-12" style="height: calc(100vh - 200px)">
+            <iframe class="holds-the-iframe" style="width: 100%; height: 100%" frameborder="0" data-bind="attr: {src: model.link}"></iframe>
+        </div>
+    </div>
+</div>

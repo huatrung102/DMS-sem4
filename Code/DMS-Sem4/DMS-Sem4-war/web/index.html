@@ -40,7 +40,11 @@ and open the template in the editor.
 
         <link href="lib/kendo/css/kendo.common.min.css" rel="stylesheet" />
         <link href="lib/kendo/css/kendo.metro.min.css" rel="stylesheet"/>
-
+        
+        
+       
+    <link href="lib/jquery_plugins/glDatePicker.default.css" rel="stylesheet"/>
+    
         <script type="text/javascript">
             if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
                 var msViewportStyle = document.createElement("style");
@@ -48,10 +52,11 @@ and open the template in the editor.
                 msViewportStyle.appendChild(document.createTextNode(mq));
                 document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
             }
+        
         </script>
 
         <script src="lib/localization.js"></script>
-
+        
         <style type="text/css">          
                 li.hint {
                     background-color: #52aef7;
@@ -153,7 +158,9 @@ and open the template in the editor.
                 -ms-flex-pack : center;
                 -webkit-justify-content : center;
                 justify-content : center;
+                
             }
+            ui-datepicker-div { font-size:11px; }
         </style>
     </head>
    <body class="full-height-layout top-navigation">
@@ -163,5 +170,6 @@ and open the template in the editor.
         </div>
     </div>
 <script src="lib/require/require.js" data-main="app/main"></script>
+
 </body>
 </html>

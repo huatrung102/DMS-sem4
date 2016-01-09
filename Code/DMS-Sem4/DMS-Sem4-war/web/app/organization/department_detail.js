@@ -2,7 +2,7 @@
     var vm = function (param) {        
         var self = this;
         this.model = {
-            depId: param.depId === undefined ? uuid.v4() : param.Id,
+            depId: param.depId === undefined ? uuid.v4() : param.depId,
             depName: ko.observable(param.depName),       
             depCode: ko.observable(param.depCode),
             depStatus: ko.observable(param.depStatus)

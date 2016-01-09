@@ -23,9 +23,8 @@
         'k': '../lib/kendo/js',
         'kinetic': '../lib/kinetic-v5.1.0.min',
         'visjs': '../lib/visjs/vis.min',
-        'tinymce': '../lib/tinymce/tinymce.min',
-        'moment': '../lib/fullcalendar/lib/moment.min',
-        'calendar': '../lib/fullcalendar/fullcalendar.min'
+        'tinymce': '../lib/tinymce/tinymce.min',        
+        'glDatePicker': '../lib/jquery_plugins/glDatePicker.min'
     },
     shim: {
         'bootstrap': {
@@ -61,6 +60,10 @@
             exports: 'komapping'
         },
         'easyui': {
+            deps: ['jquery'],
+            exports: '$'
+        },
+        'glDatePicker': {
             deps: ['jquery'],
             exports: '$'
         },

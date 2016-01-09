@@ -858,6 +858,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.log4j-1.2.16.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.mimepull.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.org.apache.commons.fileupload.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.com.fasterxml.jackson.annotations.jar}" todir="${build.classes.dir}"/>
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
         <basename file="${file.reference.apache-logging-log4j.jar}" property="manifest.file.reference.apache-logging-log4j.jar"/>
@@ -880,8 +881,9 @@ exists or setup the property manually. For example like this:
         <basename file="${file.reference.log4j-1.2.16.jar}" property="manifest.file.reference.log4j-1.2.16.jar"/>
         <basename file="${file.reference.mimepull.jar}" property="manifest.file.reference.mimepull.jar"/>
         <basename file="${file.reference.org.apache.commons.fileupload.jar}" property="manifest.file.reference.org.apache.commons.fileupload.jar"/>
+        <basename file="${file.reference.com.fasterxml.jackson.annotations.jar}" property="manifest.file.reference.com.fasterxml.jackson.annotations.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 jar-9 jar-10 jar-11 jar-12 jar-13 jar-14 jar-15 jar-16 jar-17 jar-18 jar-19 jar-20 "/>
+            <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 jar-9 jar-10 jar-11 jar-12 jar-13 jar-14 jar-15 jar-16 jar-17 jar-18 jar-19 jar-20 jar-21 "/>
             <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.apache-logging-log4j.jar}"/>
             <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.gson-2.2.2.jar}"/>
             <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.ant-4.0.jar}"/>
@@ -902,6 +904,7 @@ exists or setup the property manually. For example like this:
             <attribute name="jar-18-Extension-Name" value="${manifest.file.reference.log4j-1.2.16.jar}"/>
             <attribute name="jar-19-Extension-Name" value="${manifest.file.reference.mimepull.jar}"/>
             <attribute name="jar-20-Extension-Name" value="${manifest.file.reference.org.apache.commons.fileupload.jar}"/>
+            <attribute name="jar-21-Extension-Name" value="${manifest.file.reference.com.fasterxml.jackson.annotations.jar}"/>
         </manifest>
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
@@ -925,6 +928,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.log4j-1.2.16.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.mimepull.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.org.apache.commons.fileupload.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.com.fasterxml.jackson.annotations.jar}" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target name="-copy-meta-inf">

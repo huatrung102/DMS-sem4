@@ -2,10 +2,11 @@
     var vm = function () {
         var self = this;
         self.model = {
-            total: ko.observable(authenticate.userRole()),
-            userName: ko.observable(authenticate.userName()),
-            userId: ko.observable(authenticate.userId()),
-            userRole: ko.observable(authenticate.userRole())
+            total: ko.observable(0),
+            userId: ko.observable(authenticate.userId() === undefined? '':authenticate.userId()),
+            userName: ko.observable(authenticate.userId() === undefined? '':authenticate.userName()),
+            
+            userRole: ko.observable(authenticate.userId() === undefined? '':authenticate.userRole())
         }
         app.on(EVENT.APPLICATION_INBOX_TOTAL).then(function(total) {
             self.model.total(total);

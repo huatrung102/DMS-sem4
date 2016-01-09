@@ -26,6 +26,7 @@
             <included-library dirs="200">file.reference.log4j-1.2.16.jar</included-library>
             <included-library dirs="200">file.reference.mimepull.jar</included-library>
             <included-library dirs="200">file.reference.org.apache.commons.fileupload.jar</included-library>
+            <included-library dirs="200">file.reference.com.fasterxml.jackson.annotations.jar</included-library>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>

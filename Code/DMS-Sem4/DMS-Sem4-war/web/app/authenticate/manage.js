@@ -2,6 +2,7 @@
     var vm = {
         userId: ko.observable(),
         userName: ko.observable(),
+        userRole: ko.observable(),
        // userRole: ko.observable(0),
        // isleader: ko.observable(false),
        // createapp: ko.observable(false),
@@ -15,6 +16,7 @@
                     isAuthen = result.userId.length > 0;
                     vm.userId(result.userId);
                     vm.userName(result.userName);
+                    vm.userName(result.userRole);
                 //    vm.userRole(result.Type);
                 //    vm.createapp(result.CreateApp);
                 //    vm.isleader(result.IsLeader);

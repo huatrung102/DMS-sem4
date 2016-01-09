@@ -3,13 +3,13 @@
         var self = this;
         var DATAKEY = "DATA_INBOX";
         self.model = {
-            userRole: authenticate.userRole(),
+            userRole: authenticate.userId() === undefined? '':authenticate.userRole(),
             ipp: 10,
             total_page: ko.observable(1),
             ipage: ko.observable(0),
-            filter_Disbursement: ko.observable("false"),
+            
             type: ko.observable(CONSTANT.APPLICATION_TYPE_PROCESSING),
-            applications: ko.observableArray([]),
+            documents: ko.observableArray([]),
             allow_create: true,//authenticate.createapp(),
             products: [],
             change_view: function (view_name) {
@@ -20,11 +20,11 @@
                 switch (this.type()) {
                     case CONSTANT.APPLICATION_TYPE_PROCESSING:
                     {
-                        return "PublishedDocument/GetProcessing";
+                        return "Document/GetPublishedProcessing";
                     }
                     case CONSTANT.APPLICATION_TYPE_SENT:
                     {
-                        return "Application/GetDepartmentAssign";
+                        return "Application/GetPublishedSent";
                     }
                     case CONSTANT.APPLICATION_TYPE_MANAGEMENT:
                     {
@@ -41,9 +41,7 @@
         self.model.type.subscribe(function() {
             self.get_applications();
         });
-        self.model.filter_Disbursement.subscribe(function () {
-            self.get_applications();
-        });
+        
         this.next_page = function() {
             self.model.ipage(self.model.ipage() + 1);
             self.get_applications();
@@ -54,7 +52,7 @@
         }
         this.activate = function () {
             http.get('rest/application/getAll').then(function(data) {
-                console.log('data :' + JSON.stringify(data));
+                
                 self.model.products = data;
             });
             if (typeof data.get(DATAKEY) === 'undefined')
@@ -69,7 +67,7 @@
         this.app_create = function() {
             application_create.show({ products: self.model.products }).then(function (dialogResult) {
                 if(dialogResult.result)
-                    http.post('document/Create', { ProductId: dialogResult.model.productid }).then(function () {
+                    http.post('rest/document/create', { ProductId: dialogResult.model.productid }).then(function () {
                         self.get_applications();
                         toastr["info"](LOCALIZATION.APPLICATION.CREATE_SUCCESSFUL);
                     });
@@ -78,8 +76,8 @@
         this.get_applications = function () {
             data.get(DATAKEY).type = self.model.type();
             data.get(DATAKEY).ipage = self.model.ipage();
-            http.post(self.model.application_url(), { ItemsPerPage: self.model.ipp, PageIndex: self.model.ipage(), FilterDisbursement: self.model.filter_Disbursement() }).then(function(result) {
-                self.model.applications(result.Items);
+            http.post(self.model.application_url(), { ItemsPerPage: self.model.ipp, PageIndex: self.model.ipage() }).then(function(result) {
+                self.model.documents(result.Items);
                 self.model.total_page(result.TotalPage);
                 self.model.information.PC(result.InboxInformation.PC);
                 self.model.information.AC(result.InboxInformation.AC);
@@ -90,30 +88,7 @@
 
         this.view_detail = function(param) {
             router.navigate(String.format('#application/detail/{0}', param.id));            
-        }
-        
-        this.assign = function(param) {
-            var application = $.Enumerable.From(self.model.applications()).Single(function(x) {
-                return x.Id === param.id;
-            });
-            if (application.CanDoQuickAssignment) {
-                application_approve.show({ title: String.format("{0} & {1}", LOCALIZATION.APPLICATION.ASSIGN, LOCALIZATION.APPLICATION.APPROVE), nextstages:application.NextStages }).then(function (dialogResult) {
-                    if (dialogResult.result) {
-                        http.post("/Application/Approve", { ApplicationId: param.id, BeforeStageId: application.StageId, StageId: dialogResult.model.stage().Id, AssignedDepartmentId: dialogResult.model.department().Id, Comment: dialogResult.model.comment, AssignedUserId: dialogResult.model.user() ? dialogResult.model.user().Id : null }).then(function (data) {
-                            self.get_applications();
-                        });
-                    }
-                });
-            } else {
-                application_assign.show({ title: LOCALIZATION.APPLICATION.ASSIGN, assigned_users: application.AssignedUsers, userid: authenticate.userid() }).then(function(dialogResult) {
-                    if (dialogResult.result) {
-                        http.post("/Application/Assign", { ApplicationId: param.id, AssignedUserId: dialogResult.model.userid() }).then(function() {
-                            self.get_applications();
-                        });
-                    }
-                });
-            }
-        }
+        }        
     }
     return vm;
 })

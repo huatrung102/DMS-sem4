@@ -9,11 +9,81 @@
                 <div class="col-sm-9">
                     <select class="form-control" data-bind="options: model.products, optionsText: 'appName', optionsValue: 'appId', value: model.appId"></select>                    
                 </div>
-			</div>
+            </div>
+            <!--vb ban hanh - den can phuc dap -->
+            <div class="form-group">
+            <label class="col-sm-3 control-label">Source number</label>
+            <div class="col-sm-3">
+                <input type="text" data-bind="value: model.Document.docSourceNumber"  class="form-control" >               
+            </div>
+            <label class="col-sm-3 control-label">Document number</label>
+            <div class="col-sm-3">
+                <input type="text" data-bind="value: model.Document.docNumber"  class="form-control" >               
+            </div>
+            </div>
+            <div class="form-group">
+            <label class="col-sm-3 control-label">Content</label>
+            <div class="col-sm-9">
+                <textarea type="text" data-bind="value: model.Document.docContent"  class="form-control" ></textarea>               
+            </div>
+            
+            </div>
+            <div class="form-group">
+            <label class="col-sm-3 control-label">Type</label>
+            <div class="col-sm-3">
+               <select class="form-control" data-bind="options: model.DocumentType, optionsText: 'docTypeName', optionsValue: 'docTypeId', value: model.documentTypeId"></select>               
+            </div>
+            <label class="col-sm-3 control-label">Date</label>
+            <div class="col-sm-3">
+                <input type="text" data-bind="value: model.Document.docDate"  class="date form-control" >               
+            </div>
+            </div>
+            <div class="form-group">
+            <label class="col-sm-3 control-label">Valid From</label>
+            <div class="col-sm-3">
+               <input type="text" data-bind="value: model.Document.docValidFrom"  class="form-control" >   
+            </div>
+            <label class="col-sm-3 control-label">Valid To</label>
+            <div class="col-sm-3">
+                <input type="text" data-bind="value: model.Document.docValidTo"  class="form-control" >               
+            </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Upload File</label>
+              <div class="col-sm-6">
+             <table class="table table-hover col-sm-6">                        
+                <tr>
+                    <td style="width: 130px" >
+                        <button  class="btn btn-sm btn-white">
+                               <i class="fa fa-search-plus"></i>
+                            </button>
+                        <button  class="btn btn-sm btn-white">
+                            <i class="fa fa-link"></i>
+                        </button>
+                        <button  class="btn btn-sm btn-white">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <!-- ko if: $root.AllowEdit -->
+                        <input data-bind="attr: { filename: model.DocumentDetail.docDetailFileName}" data-url="rest/document/upload" type="file"/>
+                        <!-- /ko -->
+                        <!-- ko ifnot: $root.AllowEdit -->
+                        <span data-bind="text: model.DocumentDetail.docDetailFileName"></span>
+                        <!-- /ko -->
+                    </td>
+                </tr>
+                       
+                    </table>
+              </div>
+            </div>
         </div>       
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" data-bind="click: save"><!-- ko text: LOCALIZATION.APPLICATION.CREATE --><!-- /ko --></button>
         <button class="btn btn-default" data-bind="click: cancel"><!-- ko text: LOCALIZATION.COMMON.CANCEL --><!-- /ko --></button>
     </div>
+    <script type="text/javascript">
+       
+    </script>
 </div>

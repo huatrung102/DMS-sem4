@@ -29,7 +29,7 @@ define(['plugins/http', 'plugins/router', 'knockout'], function (http, router, k
                 { route: 'login', moduleId: 'user/login' },
                 { route: 'profile', moduleId: 'account/profile' },
                 { route: 'tools', moduleId: 'tools/tools', title: "Công cụ tư vấn" },
-                { route: 'sbank/:id', moduleId: 'service_mapping/manage' },
+               
                 { route: 'productoverview', moduleId: 'productoverview/manage', title: "Product Overview" },
                 { route: 'search', moduleId: 'search/manage', title: "Search" }
             ]).buildNavigationModel()

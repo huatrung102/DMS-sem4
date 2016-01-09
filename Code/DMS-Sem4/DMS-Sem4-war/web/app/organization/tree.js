@@ -1,22 +1,16 @@
-﻿define(['./branch_detail', './department_detail', 'uuid', 'knockout', 'plugins/http', 'durandal/app', 'plugins/dialog', 'plugins/router', 'slimscroll', 'nestable', 'chosen', 'ma'], function (branch_detail, department_detail, uuid, ko, http, app, dialog, router) {
+﻿define(['./department_detail', 'uuid', 'knockout', 'plugins/http', 'durandal/app', 'plugins/dialog', 'plugins/router', 'slimscroll', 'nestable', 'chosen', 'ma'], function ( department_detail, uuid, ko, http, app, dialog, router) {
     var vm = function () {
         var self = this;
-        this.model = {
-            Organization: {
-                Branches: ko.observableArray([]),
-                Positions: [],
-                CenterBankId: uuid.empty
-            },
-            Branches: ko.observableArray([]),
+        this.model = {            
+            Departments: ko.observableArray([]),
             filter_branches: ko.observableArray([]),
             filter_branches_backup: ko.observableArray([]),
             filter_branches_status:ko.observable('false'),
             ExpandItems: [],
-            SeletedItem: ko.observable(uuid.empty),
-            TotalBranch: ko.observable('0'),
+            SeletedItem: ko.observable(uuid.empty),           
             TotalDepartments: ko.observable('0'),
-            TotalStaff: ko.observable('0'),
-            Regions: ko.observableArray([])
+            TotalUser: ko.observable('0'),
+            
         };
         app.on("userUpdateTree: updateTree").then(function () {
             self.loadData();
@@ -28,36 +22,33 @@
             var branchFilter = $(self.view).find('.branch-filter');
             branchFilter.css({ display: 'none' });//inline
             branchFilter.chosen().change(function() {self.filter_handler(); });
-        }
+        };
         this.bindingComplete = function (view) {
             
-        }
+        };
         this.loadData = function () {
             $.ajax({
                 url: 'rest/department/getAll',
                 async: false,
                 success: function (data) {
                     self.backupState();
-                    if (self.model.TotalBranch() !== data.length) {
+                    if (self.model.TotalDepartments() !== data.length) {
                         self.model.filter_branches_status('true');
-                        //self.model.Department.removeAll();
-                        self.model.Department(data);
+                        self.model.Departments.removeAll();
+                        self.model.Departments(data);
                     }
-                    self.model.TotalDepartment(data.length);                    
+                    self.model.TotalDepartments(data.length);                    
                    
-                    self.model.TotalEmployee(data.TotalEmployee);
+                    self.model.TotalUser(data.TotalUser);
 
-                    self.model.Regions(data.Regions);
-
-                    self.model.Department.removeAll();
-                    $(data.Department).each(function (idx, item) {
-                        self.model.Department.push({
-                            depId: item.Id,
-                            depName: item.Name,
-                            depCode: item.Code,                            
-                            Filter: ko.observable(1),
-                            Departments: item.Departments,
-                            Subdepartments: item.Subdepartments
+                    self.model.Departments.removeAll();
+                    $(data).each(function (idx, item) {
+                        self.model.Departments.push({
+                            depId: item.depId,
+                            depName: item.depName,
+                            depCode: item.depCode,                            
+                            Filter: ko.observable(1),                            
+                            depStatus : item.depStatus,   
                         });
                     });
 
@@ -95,7 +86,7 @@
                     self.model.ExpandItems.push($(item).attr("dataid"));
                 });
             }
-        }
+        };
 
         this.restoreState = function () {
             $(self.model.ExpandItems).each(function (idx, item) {
@@ -119,7 +110,7 @@
             
             if (self.model.filter_branches().length > 0) {                
                 this.selectItem({ Id: self.model.filter_branches()[0], Type: 1, BranchId: self.model.filter_branches()[0] });
-                $(self.model.Organization.Branches()).each(function (idx, item) {
+                $(self.model.Departments()).each(function (idx, item) {
                     if (self.model.filter_branches().indexOf(item.Id) !== -1) {
                         item.Filter(1);
                     } else {
@@ -127,7 +118,7 @@
                     }
                 });
             } else {
-                $(self.model.Organization.Branches()).each(function (idx, item) {
+                $(self.model.Departments()).each(function (idx, item) {
                     item.Filter(1);
                 });
             }
@@ -143,9 +134,9 @@
         };
 
         this.department_update = function (param) {
-            department_detail.show($.extend(param, {Positions: self.model.Positions })).then(function (dialogResult) {
+            department_detail.show($.extend(param)).then(function (dialogResult) {
                 if (dialogResult.result) {
-                    http.post("/de/Save", { obj: dialogResult.model }).then(function () {
+                    http.post("rest/department/save", { obj: dialogResult.model }).then(function () {
                         self.loadData();
                     });
                 }
@@ -155,7 +146,7 @@
         this.department_remove = function(param) {
             dialog.showMessage(LOCALIZATION.COMMON.CONFIRM_DELETE_MESSAGE, LOCALIZATION.COMMON.CONFIRM_TITLE, [LOCALIZATION.COMMON.ACCEPT, LOCALIZATION.COMMON.CANCEL]).then(function (dialogResult) {
                 if (dialogResult === LOCALIZATION.COMMON.ACCEPT) {
-                    http.post('/Department/Delete', { id: param.Id }).then(function () {
+                    http.post('rest/department/delete', { id: param.depId }).then(function () {
                         self.loadData();
                     });
                 }
@@ -163,7 +154,7 @@
         }
 
         this.selectItem = function(param) {
-            self.model.SeletedItem(param.Id);
+            self.model.SeletedItem(param.depId);
             app.trigger(EVENT.SHOW_USERS, param);
         }
 

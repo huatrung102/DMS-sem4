@@ -43,8 +43,8 @@ public class DepartmentResource {
     @GET
     @Path("getAll")
     @Produces("application/json")
-    public List<Department> getAll() {     
-      
+    public List<Department> getAll() {
+     //   new ObjectMapper().writeValueAsString(item);
         return depLocal.getAll();
 
     }

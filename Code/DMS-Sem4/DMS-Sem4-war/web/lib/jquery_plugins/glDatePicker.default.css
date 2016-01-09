@@ -1,7 +1,9 @@
 .gldp-default {
 	position: absolute;
 	font-family: 'helvetica';
-}
+       // width : 205px !important;
+       z-index:9000 !important;
+}   
 
 /* Core style for every cell */
 .gldp-default .core {

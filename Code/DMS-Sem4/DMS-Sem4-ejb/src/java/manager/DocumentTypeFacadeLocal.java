@@ -26,6 +26,7 @@ public interface DocumentTypeFacadeLocal {
     DocumentType find(Object id);
 
     List<DocumentType> findAll();
+    List<DocumentType> getAll();
 
     List<DocumentType> findRange(int[] range);
 

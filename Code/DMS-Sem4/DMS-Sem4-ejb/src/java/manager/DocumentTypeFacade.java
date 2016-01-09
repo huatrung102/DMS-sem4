@@ -6,10 +6,13 @@
 
 package manager;
 
+import entity.Department;
 import entity.DocumentType;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,11 @@ public class DocumentTypeFacade extends AbstractFacade<DocumentType> implements 
 
     public DocumentTypeFacade() {
         super(DocumentType.class);
+    }
+    @Override
+    public List<DocumentType> getAll(){
+        Query q = em.createQuery("SELECT d from DocumentType d ORDER BY d.docTypeName");
+        return  (List<DocumentType>) q.getResultList();
     }
     
 }

@@ -6,6 +6,9 @@
 
 package entity;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -85,6 +88,7 @@ public class Users implements Serializable {
     private Collection<DocumentStorage> documentStorageCollection;
     @JoinColumn(name = "dep_Id", referencedColumnName = "dep_Id")
     @ManyToOne(optional = false)
+    @JsonManagedReference
     private Department depId;
     @JoinColumn(name = "role_Id", referencedColumnName = "role_Id")
     @ManyToOne(optional = false)
@@ -200,7 +204,9 @@ public class Users implements Serializable {
     public void setDocumentStorageCollection(Collection<DocumentStorage> documentStorageCollection) {
         this.documentStorageCollection = documentStorageCollection;
     }
-
+   // @XmlTransient
+   // @JsonBackReference
+    
     public Department getDepId() {
         return depId;
     }
