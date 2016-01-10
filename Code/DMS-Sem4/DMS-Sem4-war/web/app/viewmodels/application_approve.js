@@ -3,7 +3,7 @@
         var self = this;
         self.model = {
             title: params.title,
-            comment: '',            
+            description: '',            
             nextstages: params.nextstages,
             stage: ko.observable(),
             department: ko.observable(),

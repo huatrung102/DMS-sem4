@@ -41,7 +41,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Application.findByAppCreateDate", query = "SELECT a FROM Application a WHERE a.appCreateDate = :appCreateDate"),
     @NamedQuery(name = "Application.findByAppIsWorkFlow", query = "SELECT a FROM Application a WHERE a.appIsWorkFlow = :appIsWorkFlow"),
     @NamedQuery(name = "Application.findByAppType", query = "SELECT a FROM Application a WHERE a.appType = :appType"),
-    @NamedQuery(name = "Application.findByAppisVisible", query = "SELECT a FROM Application a WHERE a.appisVisible = :appisVisible")})
+    @NamedQuery(name = "Application.findByAppisReply", query = "SELECT a FROM Application a WHERE a.appisReply = :appisReply")})
 public class Application implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,12 +62,12 @@ public class Application implements Serializable {
     private Boolean appIsWorkFlow;
     @Column(name = "app_Type")
     private Short appType;
-    @Column(name = "app_isVisible")
-    private Boolean appisVisible;
-    @OneToMany(mappedBy = "appId")
-    private Collection<Document> documentCollection;
+    @Column(name = "app_isReply")
+    private Boolean appisReply;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appId")
     private Collection<WorkFlow> workFlowCollection;
+    @OneToMany(mappedBy = "appId")
+    private Collection<Document> documentCollection;
 
     public Application() {
     }
@@ -124,22 +124,12 @@ public class Application implements Serializable {
         this.appType = appType;
     }
 
-    public Boolean getAppisVisible() {
-        return appisVisible;
+    public Boolean getAppisReply() {
+        return appisReply;
     }
 
-    public void setAppisVisible(Boolean appisVisible) {
-        this.appisVisible = appisVisible;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Document> getDocumentCollection() {
-        return documentCollection;
-    }
-
-    public void setDocumentCollection(Collection<Document> documentCollection) {
-        this.documentCollection = documentCollection;
+    public void setAppisReply(Boolean appisReply) {
+        this.appisReply = appisReply;
     }
 
     @XmlTransient
@@ -150,6 +140,16 @@ public class Application implements Serializable {
 
     public void setWorkFlowCollection(Collection<WorkFlow> workFlowCollection) {
         this.workFlowCollection = workFlowCollection;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<Document> getDocumentCollection() {
+        return documentCollection;
+    }
+
+    public void setDocumentCollection(Collection<Document> documentCollection) {
+        this.documentCollection = documentCollection;
     }
 
     @Override

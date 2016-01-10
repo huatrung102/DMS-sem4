@@ -6,9 +6,6 @@
 
 package entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -38,7 +35,18 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "Users")
 @XmlRootElement
-
+@NamedQueries({
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findByUserId", query = "SELECT u FROM Users u WHERE u.userId = :userId"),
+    @NamedQuery(name = "Users.findByUserName", query = "SELECT u FROM Users u WHERE u.userName = :userName"),
+    @NamedQuery(name = "Users.findByUserPassword", query = "SELECT u FROM Users u WHERE u.userPassword = :userPassword"),
+    @NamedQuery(name = "Users.findByUserCreateDate", query = "SELECT u FROM Users u WHERE u.userCreateDate = :userCreateDate"),
+    @NamedQuery(name = "Users.findByUserUpdateDate", query = "SELECT u FROM Users u WHERE u.userUpdateDate = :userUpdateDate"),
+    @NamedQuery(name = "Users.findByUserGender", query = "SELECT u FROM Users u WHERE u.userGender = :userGender"),
+    @NamedQuery(name = "Users.findByUserDOB", query = "SELECT u FROM Users u WHERE u.userDOB = :userDOB"),
+    @NamedQuery(name = "Users.findByUserFullName", query = "SELECT u FROM Users u WHERE u.userFullName = :userFullName"),
+    @NamedQuery(name = "Users.findByUserStatus", query = "SELECT u FROM Users u WHERE u.userStatus = :userStatus"),
+    @NamedQuery(name = "Users.findByUserEmail", query = "SELECT u FROM Users u WHERE u.userEmail = :userEmail")})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -86,17 +94,16 @@ public class Users implements Serializable {
     private String userEmail;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<DocumentStorage> documentStorageCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<DocumentStaff> documentStaffCollection;
     @JoinColumn(name = "dep_Id", referencedColumnName = "dep_Id")
     @ManyToOne(optional = false)
-    @JsonManagedReference
     private Department depId;
     @JoinColumn(name = "role_Id", referencedColumnName = "role_Id")
     @ManyToOne(optional = false)
     private Role roleId;
     @OneToMany(mappedBy = "userId")
     private Collection<Document> documentCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<DocumentStaff> documentStaffCollection;
 
     public Users() {
     }
@@ -204,9 +211,17 @@ public class Users implements Serializable {
     public void setDocumentStorageCollection(Collection<DocumentStorage> documentStorageCollection) {
         this.documentStorageCollection = documentStorageCollection;
     }
-   // @XmlTransient
-   // @JsonBackReference
-    
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<DocumentStaff> getDocumentStaffCollection() {
+        return documentStaffCollection;
+    }
+
+    public void setDocumentStaffCollection(Collection<DocumentStaff> documentStaffCollection) {
+        this.documentStaffCollection = documentStaffCollection;
+    }
+
     public Department getDepId() {
         return depId;
     }
@@ -231,16 +246,6 @@ public class Users implements Serializable {
 
     public void setDocumentCollection(Collection<Document> documentCollection) {
         this.documentCollection = documentCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<DocumentStaff> getDocumentStaffCollection() {
-        return documentStaffCollection;
-    }
-
-    public void setDocumentStaffCollection(Collection<DocumentStaff> documentStaffCollection) {
-        this.documentStaffCollection = documentStaffCollection;
     }
 
     @Override

@@ -48,7 +48,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Document.findByDocValidFrom", query = "SELECT d FROM Document d WHERE d.docValidFrom = :docValidFrom"),
     @NamedQuery(name = "Document.findByDocValidTo", query = "SELECT d FROM Document d WHERE d.docValidTo = :docValidTo"),
     @NamedQuery(name = "Document.findByDocDate", query = "SELECT d FROM Document d WHERE d.docDate = :docDate"),
-    @NamedQuery(name = "Document.findByDocType", query = "SELECT d FROM Document d WHERE d.docType = :docType")})
+    @NamedQuery(name = "Document.findByDocType", query = "SELECT d FROM Document d WHERE d.docType = :docType"),
+    @NamedQuery(name = "Document.findByDocisNeedReply", query = "SELECT d FROM Document d WHERE d.docisNeedReply = :docisNeedReply"),
+    @NamedQuery(name = "Document.findByDocisReply", query = "SELECT d FROM Document d WHERE d.docisReply = :docisReply")})
 public class Document implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -87,8 +89,14 @@ public class Document implements Serializable {
     private String docDate;
     @Column(name = "doc_Type")
     private Short docType;
+    @Column(name = "doc_isNeedReply")
+    private Boolean docisNeedReply;
+    @Column(name = "doc_isReply")
+    private Boolean docisReply;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "docId")
     private Collection<DocumentStorage> documentStorageCollection;
+    @OneToMany(mappedBy = "docId")
+    private Collection<DocumentDetail> documentDetailCollection;
     @JoinColumn(name = "app_Id", referencedColumnName = "app_Id")
     @ManyToOne
     private Application appId;
@@ -98,8 +106,6 @@ public class Document implements Serializable {
     @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
     @ManyToOne
     private Users userId;
-    @OneToMany(mappedBy = "docId")
-    private Collection<DocumentDetail> documentDetailCollection;
 
     public Document() {
     }
@@ -204,6 +210,22 @@ public class Document implements Serializable {
         this.docType = docType;
     }
 
+    public Boolean getDocisNeedReply() {
+        return docisNeedReply;
+    }
+
+    public void setDocisNeedReply(Boolean docisNeedReply) {
+        this.docisNeedReply = docisNeedReply;
+    }
+
+    public Boolean getDocisReply() {
+        return docisReply;
+    }
+
+    public void setDocisReply(Boolean docisReply) {
+        this.docisReply = docisReply;
+    }
+
     @XmlTransient
     @JsonIgnore
     public Collection<DocumentStorage> getDocumentStorageCollection() {
@@ -212,6 +234,16 @@ public class Document implements Serializable {
 
     public void setDocumentStorageCollection(Collection<DocumentStorage> documentStorageCollection) {
         this.documentStorageCollection = documentStorageCollection;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<DocumentDetail> getDocumentDetailCollection() {
+        return documentDetailCollection;
+    }
+
+    public void setDocumentDetailCollection(Collection<DocumentDetail> documentDetailCollection) {
+        this.documentDetailCollection = documentDetailCollection;
     }
 
     public Application getAppId() {
@@ -236,16 +268,6 @@ public class Document implements Serializable {
 
     public void setUserId(Users userId) {
         this.userId = userId;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<DocumentDetail> getDocumentDetailCollection() {
-        return documentDetailCollection;
-    }
-
-    public void setDocumentDetailCollection(Collection<DocumentDetail> documentDetailCollection) {
-        this.documentDetailCollection = documentDetailCollection;
     }
 
     @Override

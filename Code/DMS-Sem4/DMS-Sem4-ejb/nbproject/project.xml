@@ -7,8 +7,8 @@
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <explicit-platform explicit-source-supported="true"/>
             <included-library dirs="200">file.reference.apache-logging-log4j.jar</included-library>
-            <included-library dirs="200">file.reference.gson-2.2.2.jar</included-library>
             <included-library dirs="200">file.reference.ant-4.0.jar</included-library>
+            <included-library dirs="200">file.reference.gson-2.5.jar</included-library>
             <included-library dirs="200">file.reference.apache-ant-1.8.2.jar</included-library>
             <included-library dirs="200">file.reference.asm-all-repackaged.jar</included-library>
             <included-library dirs="200">file.reference.com.sun.jersey.jersey-core-1.4.0.jar</included-library>

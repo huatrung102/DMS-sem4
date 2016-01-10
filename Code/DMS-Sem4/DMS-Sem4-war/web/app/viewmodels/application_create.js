@@ -50,7 +50,7 @@
           //  dialog.close(this, { result: true, model: {appId: self.model.appId,document: self.model.Document} });
             http.post(getContextPath() + "/upload").then(function () {
                 toastr["info"](String.format(LOCALIZATION.APPLICATION.UPLOAD_FILE_REMOVED_SUCCESSED, "test"));
-
+                    self.model.Document;
             });
         }
         this.cancel = function () {
@@ -78,7 +78,7 @@
                 if (typeof $(ctl).data("kendoUpload") === 'undefined') {
                     $(ctl).kendoUpload({
                         async: {
-                          //  saveUrl: String.format("/FileAttachment/Upload?ApplicationId={0}&FileAttachmentId={1}&StageId={2}&Revision={3}", self.model.appid, $(ctl).attr("fileid"), self.model.application.StageId(), self.model.application.Revision())
+                          
                           saveUrl :getContextPath() +  "/upload"
                         },
                         multiple: false,

@@ -40,13 +40,14 @@ public class DocumentResource {
     /**
      * Creates a new instance of DocumentResource
      */
+    /*
     @POST
     @Path("save")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
     public String save(String document,String user,String detail,@Context HttpServletRequest req ) throws IOException
     {
-       /*
+       
             try {
                  DataInputStream dis = new DataInputStream(uploadStream);
                 System.out.println(dis.readByte());
@@ -55,9 +56,10 @@ public class DocumentResource {
             } catch (Exception e) {
                // break;
             }
-        */
+        
         return "";
     }
+        */
     /*
     @POST
     @Path("upload")

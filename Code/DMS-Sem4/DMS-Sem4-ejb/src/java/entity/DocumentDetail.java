@@ -7,8 +7,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,12 +19,15 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -31,18 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "DocumentDetail")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "DocumentDetail.findAll", query = "SELECT d FROM DocumentDetail d"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailId", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailId = :docDetailId"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailUserCreate", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailUserCreate = :docDetailUserCreate"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailDepCreate", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailDepCreate = :docDetailDepCreate"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailUserReceive", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailUserReceive = :docDetailUserReceive"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailDepReceive", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailDepReceive = :docDetailDepReceive"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailFileName", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailFileName = :docDetailFileName"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailCreateDate", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailCreateDate = :docDetailCreateDate"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailDescription", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailDescription = :docDetailDescription"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailIsActive", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailIsActive = :docDetailIsActive"),
-    @NamedQuery(name = "DocumentDetail.findByDocDetailUpdateDate", query = "SELECT d FROM DocumentDetail d WHERE d.docDetailUpdateDate = :docDetailUpdateDate")})
+
 public class DocumentDetail implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -80,6 +74,12 @@ public class DocumentDetail implements Serializable {
     @Column(name = "docDetail_UpdateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date docDetailUpdateDate;
+    @Column(name = "docDetail_IsUrgent")
+    private Boolean docDetailIsUrgent;
+    @Column(name = "docDetail_IsEdit")
+    private Boolean docDetailIsEdit;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "docDetailId")
+    private Collection<DocumentDepartment> documentDepartmentCollection;
     @JoinColumn(name = "act_Id", referencedColumnName = "act_Id")
     @ManyToOne
     private Action actId;
@@ -183,6 +183,32 @@ public class DocumentDetail implements Serializable {
 
     public void setDocDetailUpdateDate(Date docDetailUpdateDate) {
         this.docDetailUpdateDate = docDetailUpdateDate;
+    }
+
+    public Boolean getDocDetailIsUrgent() {
+        return docDetailIsUrgent;
+    }
+
+    public void setDocDetailIsUrgent(Boolean docDetailIsUrgent) {
+        this.docDetailIsUrgent = docDetailIsUrgent;
+    }
+
+    public Boolean getDocDetailIsEdit() {
+        return docDetailIsEdit;
+    }
+
+    public void setDocDetailIsEdit(Boolean docDetailIsEdit) {
+        this.docDetailIsEdit = docDetailIsEdit;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<DocumentDepartment> getDocumentDepartmentCollection() {
+        return documentDepartmentCollection;
+    }
+
+    public void setDocumentDepartmentCollection(Collection<DocumentDepartment> documentDepartmentCollection) {
+        this.documentDepartmentCollection = documentDepartmentCollection;
     }
 
     public Action getActId() {

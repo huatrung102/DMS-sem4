@@ -24,8 +24,11 @@ public interface DocumentDetailFacadeLocal {
     void remove(DocumentDetail documentDetail);
 
     DocumentDetail find(Object id);
+    
+    DocumentDetail getById(String id);
 
     List<DocumentDetail> findAll();
+    
 
     List<DocumentDetail> findRange(int[] range);
 

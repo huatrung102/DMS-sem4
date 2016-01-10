@@ -56,10 +56,10 @@ public class Role implements Serializable {
     @Column(name = "role_CreateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date roleCreateDate;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Collection<Users> usersCollection;
     @OneToMany(mappedBy = "roleId")
     private Collection<WorkFlow> workFlowCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    private Collection<Users> usersCollection;
 
     public Role() {
     }
@@ -102,22 +102,22 @@ public class Role implements Serializable {
 
     @XmlTransient
     @JsonIgnore
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
-    }
-
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
     public Collection<WorkFlow> getWorkFlowCollection() {
         return workFlowCollection;
     }
 
     public void setWorkFlowCollection(Collection<WorkFlow> workFlowCollection) {
         this.workFlowCollection = workFlowCollection;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<Users> getUsersCollection() {
+        return usersCollection;
+    }
+
+    public void setUsersCollection(Collection<Users> usersCollection) {
+        this.usersCollection = usersCollection;
     }
 
     @Override

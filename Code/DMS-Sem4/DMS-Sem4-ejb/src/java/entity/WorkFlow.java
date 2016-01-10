@@ -39,7 +39,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "WorkFlow.findByWorkFlowId", query = "SELECT w FROM WorkFlow w WHERE w.workFlowId = :workFlowId"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowName", query = "SELECT w FROM WorkFlow w WHERE w.workFlowName = :workFlowName"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowStep", query = "SELECT w FROM WorkFlow w WHERE w.workFlowStep = :workFlowStep"),
-    @NamedQuery(name = "WorkFlow.findByWorkFlowType", query = "SELECT w FROM WorkFlow w WHERE w.workFlowType = :workFlowType"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsAllowReturn", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsAllowReturn = :workFlowIsAllowReturn"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsAllowRemove", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsAllowRemove = :workFlowIsAllowRemove"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsAllowFinish", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsAllowFinish = :workFlowIsAllowFinish"),
@@ -48,7 +47,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsSubmit", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsSubmit = :workFlowIsSubmit"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsTransferMultiple", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsTransferMultiple = :workFlowIsTransferMultiple"),
     @NamedQuery(name = "WorkFlow.findByWorkFlowIsGenerateNumber", query = "SELECT w FROM WorkFlow w WHERE w.workFlowIsGenerateNumber = :workFlowIsGenerateNumber"),
-    @NamedQuery(name = "WorkFlow.findByWorkFlowCreateDate", query = "SELECT w FROM WorkFlow w WHERE w.workFlowCreateDate = :workFlowCreateDate")})
+    @NamedQuery(name = "WorkFlow.findByWorkFlowCreateDate", query = "SELECT w FROM WorkFlow w WHERE w.workFlowCreateDate = :workFlowCreateDate"),
+    @NamedQuery(name = "WorkFlow.findByWorkFlowChooseType", query = "SELECT w FROM WorkFlow w WHERE w.workFlowChooseType = :workFlowChooseType")})
 public class WorkFlow implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,8 +62,6 @@ public class WorkFlow implements Serializable {
     private String workFlowName;
     @Column(name = "workFlow_Step")
     private Short workFlowStep;
-    @Column(name = "workFlow_Type")
-    private Short workFlowType;
     @Basic(optional = false)
     @NotNull
     @Column(name = "workFlow_IsAllowReturn")
@@ -99,6 +97,8 @@ public class WorkFlow implements Serializable {
     @Column(name = "workFlow_CreateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date workFlowCreateDate;
+    @Column(name = "workFlow_ChooseType")
+    private Short workFlowChooseType;
     @OneToMany(mappedBy = "workFlowId")
     private Collection<DocumentDetail> documentDetailCollection;
     @JoinColumn(name = "app_Id", referencedColumnName = "app_Id")
@@ -149,14 +149,6 @@ public class WorkFlow implements Serializable {
 
     public void setWorkFlowStep(Short workFlowStep) {
         this.workFlowStep = workFlowStep;
-    }
-
-    public Short getWorkFlowType() {
-        return workFlowType;
-    }
-
-    public void setWorkFlowType(Short workFlowType) {
-        this.workFlowType = workFlowType;
     }
 
     public boolean getWorkFlowIsAllowReturn() {
@@ -229,6 +221,14 @@ public class WorkFlow implements Serializable {
 
     public void setWorkFlowCreateDate(Date workFlowCreateDate) {
         this.workFlowCreateDate = workFlowCreateDate;
+    }
+
+    public Short getWorkFlowChooseType() {
+        return workFlowChooseType;
+    }
+
+    public void setWorkFlowChooseType(Short workFlowChooseType) {
+        this.workFlowChooseType = workFlowChooseType;
     }
 
     @XmlTransient

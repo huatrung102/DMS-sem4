@@ -839,8 +839,8 @@ exists or setup the property manually. For example like this:
     <target depends="compile,-library-inclusion-in-archive-weblogic,-library-inclusion-in-archive-by-user" name="library-inclusion-in-archive"/>
     <target if="is.jars.in.ejbjar" name="-library-inclusion-in-archive-by-user">
         <copyfiles files="${file.reference.apache-logging-log4j.jar}" todir="${build.classes.dir}"/>
-        <copyfiles files="${file.reference.gson-2.2.2.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.ant-4.0.jar}" todir="${build.classes.dir}"/>
+        <copyfiles files="${file.reference.gson-2.5.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.apache-ant-1.8.2.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.asm-all-repackaged.jar}" todir="${build.classes.dir}"/>
         <copyfiles files="${file.reference.com.sun.jersey.jersey-core-1.4.0.jar}" todir="${build.classes.dir}"/>
@@ -862,8 +862,8 @@ exists or setup the property manually. For example like this:
     </target>
     <target if="is.server.weblogic" name="-library-inclusion-in-archive-weblogic">
         <basename file="${file.reference.apache-logging-log4j.jar}" property="manifest.file.reference.apache-logging-log4j.jar"/>
-        <basename file="${file.reference.gson-2.2.2.jar}" property="manifest.file.reference.gson-2.2.2.jar"/>
         <basename file="${file.reference.ant-4.0.jar}" property="manifest.file.reference.ant-4.0.jar"/>
+        <basename file="${file.reference.gson-2.5.jar}" property="manifest.file.reference.gson-2.5.jar"/>
         <basename file="${file.reference.apache-ant-1.8.2.jar}" property="manifest.file.reference.apache-ant-1.8.2.jar"/>
         <basename file="${file.reference.asm-all-repackaged.jar}" property="manifest.file.reference.asm-all-repackaged.jar"/>
         <basename file="${file.reference.com.sun.jersey.jersey-core-1.4.0.jar}" property="manifest.file.reference.com.sun.jersey.jersey-core-1.4.0.jar"/>
@@ -885,8 +885,8 @@ exists or setup the property manually. For example like this:
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
             <attribute name="Extension-List" value="jar-1 jar-2 jar-3 jar-4 jar-5 jar-6 jar-7 jar-8 jar-9 jar-10 jar-11 jar-12 jar-13 jar-14 jar-15 jar-16 jar-17 jar-18 jar-19 jar-20 jar-21 "/>
             <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.apache-logging-log4j.jar}"/>
-            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.gson-2.2.2.jar}"/>
-            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.ant-4.0.jar}"/>
+            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.ant-4.0.jar}"/>
+            <attribute name="jar-3-Extension-Name" value="${manifest.file.reference.gson-2.5.jar}"/>
             <attribute name="jar-4-Extension-Name" value="${manifest.file.reference.apache-ant-1.8.2.jar}"/>
             <attribute name="jar-5-Extension-Name" value="${manifest.file.reference.asm-all-repackaged.jar}"/>
             <attribute name="jar-6-Extension-Name" value="${manifest.file.reference.com.sun.jersey.jersey-core-1.4.0.jar}"/>
@@ -909,8 +909,8 @@ exists or setup the property manually. For example like this:
     </target>
     <target depends="compile" name="library-inclusion-in-manifest">
         <copyfiles files="${file.reference.apache-logging-log4j.jar}" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.gson-2.2.2.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.ant-4.0.jar}" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.gson-2.5.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.apache-ant-1.8.2.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.asm-all-repackaged.jar}" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.com.sun.jersey.jersey-core-1.4.0.jar}" todir="${dist.ear.dir}/lib"/>

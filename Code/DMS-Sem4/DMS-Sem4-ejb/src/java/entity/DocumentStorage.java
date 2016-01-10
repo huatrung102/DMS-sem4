@@ -11,7 +11,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,7 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "DocumentStorage")
 @XmlRootElement
-
+@NamedQueries({
+    @NamedQuery(name = "DocumentStorage.findAll", query = "SELECT d FROM DocumentStorage d"),
+    @NamedQuery(name = "DocumentStorage.findByDocStoCreateDate", query = "SELECT d FROM DocumentStorage d WHERE d.docStoCreateDate = :docStoCreateDate"),
+    @NamedQuery(name = "DocumentStorage.findByDocStoId", query = "SELECT d FROM DocumentStorage d WHERE d.docStoId = :docStoId")})
 public class DocumentStorage implements Serializable {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
@@ -46,10 +48,10 @@ public class DocumentStorage implements Serializable {
     @Column(name = "docSto_Id")
     private String docStoId;
     @JoinColumn(name = "doc_Id", referencedColumnName = "doc_Id")
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Document docId;
     @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Users userId;
 
     public DocumentStorage() {

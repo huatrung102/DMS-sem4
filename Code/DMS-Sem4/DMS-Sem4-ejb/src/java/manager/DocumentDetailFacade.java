@@ -10,6 +10,7 @@ import entity.DocumentDetail;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,13 @@ public class DocumentDetailFacade extends AbstractFacade<DocumentDetail> impleme
 
     public DocumentDetailFacade() {
         super(DocumentDetail.class);
+    }
+
+    @Override
+    public DocumentDetail getById(String docDetailId) {
+        Query q = em.createQuery("SELECT d FROM DocumentDetail d WHERE d.docDetailId=:docDetailId")
+                .setParameter("docDetailId", docDetailId);
+        return  (DocumentDetail) q.getSingleResult();
     }
     
 }

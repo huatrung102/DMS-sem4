@@ -34,16 +34,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DocumentDepartment.findAll", query = "SELECT d FROM DocumentDepartment d"),
-    @NamedQuery(name = "DocumentDepartment.findByDocDetailId", query = "SELECT d FROM DocumentDepartment d WHERE d.docDetailId = :docDetailId"),
     @NamedQuery(name = "DocumentDepartment.findByDocDepId", query = "SELECT d FROM DocumentDepartment d WHERE d.docDepId = :docDepId"),
     @NamedQuery(name = "DocumentDepartment.findByDocDepIsActive", query = "SELECT d FROM DocumentDepartment d WHERE d.docDepIsActive = :docDepIsActive")})
 public class DocumentDepartment implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 36)
-    @Column(name = "docDetail_Id")
-    private String docDetailId;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -52,30 +46,20 @@ public class DocumentDepartment implements Serializable {
     private String docDepId;
     @Column(name = "docDep_IsActive")
     private Boolean docDepIsActive;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "docDepId")
+    private Collection<DocumentStaff> documentStaffCollection;
     @JoinColumn(name = "dep_Id", referencedColumnName = "dep_Id")
     @ManyToOne(optional = false)
     private Department depId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "docDepId")
-    private Collection<DocumentStaff> documentStaffCollection;
+    @JoinColumn(name = "docDetail_Id", referencedColumnName = "docDetail_Id")
+    @ManyToOne(optional = false)
+    private DocumentDetail docDetailId;
 
     public DocumentDepartment() {
     }
 
     public DocumentDepartment(String docDepId) {
         this.docDepId = docDepId;
-    }
-
-    public DocumentDepartment(String docDepId, String docDetailId) {
-        this.docDepId = docDepId;
-        this.docDetailId = docDetailId;
-    }
-
-    public String getDocDetailId() {
-        return docDetailId;
-    }
-
-    public void setDocDetailId(String docDetailId) {
-        this.docDetailId = docDetailId;
     }
 
     public String getDocDepId() {
@@ -94,14 +78,6 @@ public class DocumentDepartment implements Serializable {
         this.docDepIsActive = docDepIsActive;
     }
 
-    public Department getDepId() {
-        return depId;
-    }
-
-    public void setDepId(Department depId) {
-        this.depId = depId;
-    }
-
     @XmlTransient
     @JsonIgnore
     public Collection<DocumentStaff> getDocumentStaffCollection() {
@@ -110,6 +86,22 @@ public class DocumentDepartment implements Serializable {
 
     public void setDocumentStaffCollection(Collection<DocumentStaff> documentStaffCollection) {
         this.documentStaffCollection = documentStaffCollection;
+    }
+
+    public Department getDepId() {
+        return depId;
+    }
+
+    public void setDepId(Department depId) {
+        this.depId = depId;
+    }
+
+    public DocumentDetail getDocDetailId() {
+        return docDetailId;
+    }
+
+    public void setDocDetailId(DocumentDetail docDetailId) {
+        this.docDetailId = docDetailId;
     }
 
     @Override

@@ -1746,7 +1746,7 @@ table.dataTable thead .sorting:after {
 .single-line {
   background-color: #FFFFFF;
   background-image: none;
-  border: 1px solid #e5e6e7;
+  border: 1px solid #dfdfdf;
   border-radius: 1px;
   color: inherit;
   display: block;
@@ -2542,8 +2542,7 @@ a.forum-item-title:hover {
 #vertical-timeline {
   position: relative;
   padding: 0;
-  margin-top: 2em;
-  margin-bottom: 2em;
+  
 }
 #vertical-timeline::before {
   content: '';
