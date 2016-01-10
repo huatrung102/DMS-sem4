@@ -125,20 +125,20 @@
             </div>
             <div class="form-horizontal" data-bind="visible: model.nvaSelected() == 1">
                 <div class="form-group" data-bind="css: $.trim(model.Users.userPassword()).length > 0  ? '' : 'has-error'">
-                    <label class="col-sm-3 control-label">Mật khẩu cũ</label>
+                    <label class="col-sm-3 control-label">Old Password</label>
                     <div class="col-sm-8">
                         <input type="password" placeholder="Enter old password" data-bind="value: model.Users.userPassword, valueUpdate: 'afterkeydown'" class="form-control">
                     </div>
                 </div>
                   <div class="form-group" data-bind="css: $.trim(model.Users.userNewPassword()).length > 0 && model.Users.userNewPassword() == model.Users.userPassword_Retype() ? '' : 'has-error'">
-                    <label class="col-sm-3 control-label">Mật khẩu mới</label>
+                    <label class="col-sm-3 control-label">New Password</label>
                     <div class="col-sm-8">
                         <input type="password" placeholder="Enter new password" data-bind="value: model.Users.userNewPassword, valueUpdate: 'afterkeydown'" class="form-control">
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group" data-bind="css: $.trim(model.Users.userPassword_Retype()).length > 0 && model.Users.userPassword_Retype() == model.Users.userPassword() ? '' : 'has-error'">
-                    <label class="col-sm-3 control-label">Nhập lại mật khẩu mới</label>
+                    <label class="col-sm-3 control-label">Retype New Password</label>
                     <div class="col-sm-8">
                         <input type="password" placeholder="Enter password retype" data-bind="value: model.Users.userPassword_Retype, valueUpdate: 'afterkeydown'" class="form-control">
                     </div>
