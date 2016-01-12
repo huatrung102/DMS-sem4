@@ -7,9 +7,11 @@
 package manager;
 
 import entity.WorkFlow;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,5 +30,19 @@ public class WorkFlowFacade extends AbstractFacade<WorkFlow> implements WorkFlow
     public WorkFlowFacade() {
         super(WorkFlow.class);
     }
+    @Override
+    public WorkFlow getObjectById(String workFlowId){
+        Query q = em.createQuery("SELECT w FROM WorkFlow w where w.workFlowId =:workFlowId")
+                .setParameter("workFlowId", workFlowId);
+        return (WorkFlow) q.getSingleResult();
+    }
     
+    @Override
+    public WorkFlow getObjectByAppId(String appId,double workFlowStep){
+        
+        Query q = em.createQuery("SELECT w FROM WorkFlow w where w.appId.appId =:appId and w.workFlowStep=:workFlowStep")
+                .setParameter("appId", appId )
+                .setParameter("workFlowStep", workFlowStep);
+        return (WorkFlow) q.getSingleResult();
+    }
 }

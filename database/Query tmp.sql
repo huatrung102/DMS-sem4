@@ -1,4 +1,6 @@
-select user_Name,
+select 
+		user_Id
+		,user_Name,
 		user_Password,
 		user_FullName,
 		user_Email,

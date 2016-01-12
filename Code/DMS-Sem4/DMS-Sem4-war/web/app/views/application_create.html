@@ -1,24 +1,24 @@
 ﻿<div class="modal-content">
     <div class="modal-header">
-        <h3><!-- ko text: LOCALIZATION.COMMON.DETAIL_TITLE --><!-- /ko --><!-- ko text: LOCALIZATION.APPLICATION.CREATE --><!-- /ko --></h3>
+        <h3 data-bind="text: Title"></h3>
     </div>
     <div class="modal-body">
         <div class="form-horizontal">            
             <div class="form-group">
 				<label class="col-sm-3 control-label">Document about</label>
                 <div class="col-sm-9">
-                    <select class="form-control" data-bind="options: model.products, optionsText: 'appName', optionsValue: 'appId', value: model.appId"></select>                    
+                    <select class="form-control" data-bind="options: model.products, optionsText: 'appName', value: model.appSelected"></select>                    
                 </div>
             </div>
             <!--vb ban hanh - den can phuc dap -->
             <div class="form-group">
             <label class="col-sm-3 control-label">Source number</label>
             <div class="col-sm-3">
-                <input type="text" data-bind="value: model.Document.docSourceNumber"  class="form-control" >               
+                <input type="text" data-bind="value: model.Document.docSourceNumber,attr: {'disabled': model.appSelected().appType == '2'}"  class="form-control" >               
             </div>
             <label class="col-sm-3 control-label">Document number</label>
             <div class="col-sm-3">
-                <input type="text" data-bind="value: model.Document.docNumber"  class="form-control" >               
+                <input type="text" data-bind="value: model.Document.docNumber,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >               
             </div>
             </div>
             <div class="form-group">
@@ -41,11 +41,11 @@
             <div class="form-group">
             <label class="col-sm-3 control-label">Valid From</label>
             <div class="col-sm-3">
-               <input type="text" data-bind="value: model.Document.docValidFrom"  class="form-control" >   
+               <input type="text" data-bind="value: model.Document.docValidFrom,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >   
             </div>
             <label class="col-sm-3 control-label">Valid To</label>
             <div class="col-sm-3">
-                <input type="text" data-bind="value: model.Document.docValidTo"  class="form-control" >               
+                <input type="text" data-bind="value: model.Document.docValidTo,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >               
             </div>
             </div>
             <div class="form-group">
@@ -53,7 +53,7 @@
               <div class="col-sm-6">
              <table class="table table-hover col-sm-6">                        
                 <tr>
-                    <td style="width: 130px" >
+                    <td style="width: 130px;display: none" >
                         <button  class="btn btn-sm btn-white">
                                <i class="fa fa-search-plus"></i>
                             </button>
@@ -66,7 +66,7 @@
                     </td>
                     <td>
                         <!-- ko if: $root.AllowEdit -->
-                        <input data-bind="attr: { filename: model.DocumentDetail.docDetailFileName}" data-url="rest/document/upload" type="file"/>
+                        <input name="file" data-bind="attr: { filename: model.DocumentDetail.docDetailFileName}" data-url="/DMS-Sem4-war/upload" type="file"/>
                         <!-- /ko -->
                         <!-- ko ifnot: $root.AllowEdit -->
                         <span data-bind="text: model.DocumentDetail.docDetailFileName"></span>

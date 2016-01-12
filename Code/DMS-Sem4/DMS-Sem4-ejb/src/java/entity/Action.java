@@ -52,7 +52,13 @@ public class Action implements Serializable {
 
     public Action() {
     }
-
+    public Action(int dump){
+        actId = 0;
+        actDescription = "";
+        actName = "";
+        documentDetailCollection = null;
+        
+    }
     public Action(Short actId) {
         this.actId = actId;
     }

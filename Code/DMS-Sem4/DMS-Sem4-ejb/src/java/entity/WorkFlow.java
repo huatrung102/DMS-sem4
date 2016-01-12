@@ -7,7 +7,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,15 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -99,18 +96,36 @@ public class WorkFlow implements Serializable {
     private Date workFlowCreateDate;
     @Column(name = "workFlow_ChooseType")
     private Short workFlowChooseType;
-    @OneToMany(mappedBy = "workFlowId")
-    private Collection<DocumentDetail> documentDetailCollection;
     @JoinColumn(name = "app_Id", referencedColumnName = "app_Id")
     @ManyToOne(optional = false)
     private Application appId;
     @JoinColumn(name = "role_Id", referencedColumnName = "role_Id")
     @ManyToOne
     private Role roleId;
-
+    @Transient
+    private String AppId;
+    @Transient
+    private String RoleId;
+    
     public WorkFlow() {
     }
-
+    public WorkFlow(int dump){
+        AppId = "";
+        RoleId = "";
+        workFlowChooseType = 0;
+        workFlowCreateDate = new Date();
+        workFlowId = "";
+        workFlowIsAllowFinish = false;
+        workFlowIsAllowRemove = false;
+        workFlowIsAllowReturn = false;
+        workFlowIsAllowUpload = false;
+        workFlowIsGenerateNumber = false;
+        workFlowIsSetViewed = false;
+        workFlowIsSubmit = false;
+        workFlowIsTransferMultiple = false;
+        workFlowName = "";
+        workFlowStep = 0;
+    }
     public WorkFlow(String workFlowId) {
         this.workFlowId = workFlowId;
     }
@@ -229,16 +244,6 @@ public class WorkFlow implements Serializable {
 
     public void setWorkFlowChooseType(Short workFlowChooseType) {
         this.workFlowChooseType = workFlowChooseType;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<DocumentDetail> getDocumentDetailCollection() {
-        return documentDetailCollection;
-    }
-
-    public void setDocumentDetailCollection(Collection<DocumentDetail> documentDetailCollection) {
-        this.documentDetailCollection = documentDetailCollection;
     }
 
     public Application getAppId() {

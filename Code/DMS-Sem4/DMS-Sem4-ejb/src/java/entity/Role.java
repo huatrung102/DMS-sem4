@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -58,8 +57,6 @@ public class Role implements Serializable {
     private Date roleCreateDate;
     @OneToMany(mappedBy = "roleId")
     private Collection<WorkFlow> workFlowCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private Collection<Users> usersCollection;
 
     public Role() {
     }
@@ -108,16 +105,6 @@ public class Role implements Serializable {
 
     public void setWorkFlowCollection(Collection<WorkFlow> workFlowCollection) {
         this.workFlowCollection = workFlowCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
-    }
-
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
     }
 
     @Override

@@ -10,7 +10,11 @@ import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import entity.Users;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -33,11 +37,11 @@ import session.WebSession;
  */
 @Path("users")
 public class UsersResource {
+    UsersFacadeLocal usersFacade = lookupUsersFacadeLocal();
 
     @Context
     private UriInfo context;
-    @EJB
-    UsersFacadeLocal userLocal;
+    
     /**
      * Creates a new instance of UsersResource
      */
@@ -50,7 +54,7 @@ public class UsersResource {
     @Path("getUserById")
     public Users getUserById(@Context HttpServletRequest req) {
         UUID userId = WebSession.getUserId();
-        return userLocal.getUserById(userId.toString());
+        return usersFacade.getUserById(userId.toString());
     }
     
     @POST
@@ -62,7 +66,7 @@ public class UsersResource {
         Users user = null;
         Gson gson = new Gson();       
         LinkedTreeMap obj = gson.fromJson(data, LinkedTreeMap.class);        
-        user = obj != null ? userLocal.login(obj.get("username").toString(),obj.get("password").toString()) : null;        
+        user = obj != null ? usersFacade.login(obj.get("username").toString(),obj.get("password").toString()) : null;        
         WebSession.addUserSession(req.getSession(true),user);
        
        return user;
@@ -86,7 +90,7 @@ public class UsersResource {
     //add to session web
     public Users isAuthenticate(String data ,@Context HttpServletRequest req) {
        Users user = WebSession.getUserSession(req.getSession());
-       user = user == null || "".equals(user.getUserId()) ? userLocal.getUserById("0BEE30CF-CA7D-4E9A-B504-38D4CEAE3327") : user;
+       user = user == null || "".equals(user.getUserId()) ? usersFacade.getUserById("0BEE30CF-CA7D-4E9A-B504-38D4CEAE3327") : user;
        return user;
        
     }
@@ -113,5 +117,15 @@ public class UsersResource {
     @PUT
     @Consumes("application/json")
     public void putJson(String content) {
+    }
+
+    private UsersFacadeLocal lookupUsersFacadeLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (UsersFacadeLocal) c.lookup("java:global/DMS-Sem4/DMS-Sem4-ejb/UsersFacade!manager.UsersFacadeLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
     }
 }

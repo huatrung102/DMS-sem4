@@ -8,7 +8,11 @@ package services;
 
 import entity.DocumentType;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -26,15 +30,15 @@ import manager.DocumentTypeFacadeLocal;
  */
 @Path("documentType")
 public class DocumentTypeResource {
-    @EJB
-    DocumentTypeFacadeLocal docTypeLocal;
+    DocumentTypeFacadeLocal documentTypeFacade = lookupDocumentTypeFacadeLocal();
+    
     
     @GET
     @Path("getAll")
     @Produces("application/json")
     public List<DocumentType> getAll() {
      //   new ObjectMapper().writeValueAsString(item);
-        return docTypeLocal.getAll();
+        return documentTypeFacade.getAll();
 
     }
     @Context
@@ -65,5 +69,15 @@ public class DocumentTypeResource {
     @PUT
     @Consumes("application/json")
     public void putJson(String content) {
+    }
+
+    private DocumentTypeFacadeLocal lookupDocumentTypeFacadeLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (DocumentTypeFacadeLocal) c.lookup("java:global/DMS-Sem4/DMS-Sem4-ejb/DocumentTypeFacade!manager.DocumentTypeFacadeLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
     }
 }

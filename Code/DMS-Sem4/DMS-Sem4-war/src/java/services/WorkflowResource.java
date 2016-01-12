@@ -6,56 +6,61 @@
 
 package services;
 
-import entity.Department;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+import entity.WorkFlow;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import manager.DepartmentFacadeLocal;
+import manager.WorkFlowFacadeLocal;
 
 /**
  * REST Web Service
  *
  * @author TrungHTH
  */
-@Path("department")
-public class DepartmentResource {
-    DepartmentFacadeLocal departmentFacade = lookupDepartmentFacadeLocal();
+@Path("workflow")
+public class WorkflowResource {
+    WorkFlowFacadeLocal workFlowFacade = lookupWorkFlowFacadeLocal();
 
     @Context
     private UriInfo context;
 
     /**
-     * Creates a new instance of DepartmentResource
+     * Creates a new instance of WorkflowResource
      */
-    public DepartmentResource() {
+    public WorkflowResource() {
     }
-    
-    
-   // @EJB
-    //DepartmentFacadeLocal depLocal;
-    
     @GET
-    @Path("getAll")
+    @Path("getById")
     @Produces("application/json")
-    public List<Department> getAll() {
-     //   new ObjectMapper().writeValueAsString(item);
-        return departmentFacade.getAll(); 
-
+    public WorkFlow getId(String workFlowId) {
+        //TODO return proper representation object
+       return workFlowFacade.getObjectById(workFlowId);
     }
-
+    @POST
+    @Path("getByAppId")
+    @Produces("application/json")
+    @Consumes("application/json")   
+    public WorkFlow getByAppId(String data) {
+       // WorkFlow workflow ;
+        Gson gson = new Gson();       
+        LinkedTreeMap obj = gson.fromJson(data, LinkedTreeMap.class); 
+        //TODO return proper representation object
+       return workFlowFacade.getObjectByAppId(obj.get("appId").toString(),(double)obj.get("workFlowStep"));
+    }
     /**
-     * Retrieves representation of an instance of services.DepartmentResource
+     * Retrieves representation of an instance of services.WorkflowResource
      * @return an instance of java.lang.String
      */
     @GET
@@ -66,7 +71,7 @@ public class DepartmentResource {
     }
 
     /**
-     * PUT method for updating or creating an instance of DepartmentResource
+     * PUT method for updating or creating an instance of WorkflowResource
      * @param content representation for the resource
      * @return an HTTP response with content of the updated or created resource.
      */
@@ -75,10 +80,10 @@ public class DepartmentResource {
     public void putJson(String content) {
     }
 
-    private DepartmentFacadeLocal lookupDepartmentFacadeLocal() {
+    private WorkFlowFacadeLocal lookupWorkFlowFacadeLocal() {
         try {
             javax.naming.Context c = new InitialContext();
-            return (DepartmentFacadeLocal) c.lookup("java:global/DMS-Sem4/DMS-Sem4-ejb/DepartmentFacade!manager.DepartmentFacadeLocal");
+            return (WorkFlowFacadeLocal) c.lookup("java:global/DMS-Sem4/DMS-Sem4-ejb/WorkFlowFacade!manager.WorkFlowFacadeLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -102,7 +102,7 @@ public class Users implements Serializable {
     @JoinColumn(name = "role_Id", referencedColumnName = "role_Id")
     @ManyToOne(optional = false)
     private Role roleId;
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Document> documentCollection;
 
     public Users() {

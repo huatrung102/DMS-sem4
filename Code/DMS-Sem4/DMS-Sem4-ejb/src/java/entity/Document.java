@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -65,9 +66,13 @@ public class Document implements Serializable {
     @Size(max = 50)
     @Column(name = "doc_SourceNumber")
     private String docSourceNumber;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "doc_UpdateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date docUpdateDate;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "doc_CreateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date docCreateDate;
@@ -76,8 +81,10 @@ public class Document implements Serializable {
     private String docContent;
     @Column(name = "doc_Status")
     private Short docStatus;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "doc_IsValid")
-    private Boolean docIsValid;
+    private boolean docIsValid;
     @Size(max = 10)
     @Column(name = "doc_ValidFrom")
     private String docValidFrom;
@@ -87,31 +94,76 @@ public class Document implements Serializable {
     @Size(max = 10)
     @Column(name = "doc_Date")
     private String docDate;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "doc_Type")
-    private Short docType;
+    private short docType;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "doc_isNeedReply")
-    private Boolean docisNeedReply;
+    private boolean docisNeedReply;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "doc_isReply")
-    private Boolean docisReply;
+    private boolean docisReply;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "docId")
     private Collection<DocumentStorage> documentStorageCollection;
     @OneToMany(mappedBy = "docId")
     private Collection<DocumentDetail> documentDetailCollection;
     @JoinColumn(name = "app_Id", referencedColumnName = "app_Id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Application appId;
     @JoinColumn(name = "docType_Id", referencedColumnName = "docType_Id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private DocumentType docTypeId;
     @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Users userId;
-
+    @Transient
+    private String AppId ;
+    @Transient
+    private String DocTypeId ;
+    @Transient
+    private String UserId ;
+    
     public Document() {
     }
-
+    public Document(int dump) {
+        AppId = "";
+        docContent = "";
+        docContent = "";
+        docCreateDate = new Date();
+        docDate = "";
+        docId = "";
+        docIsValid = false;
+        docNumber = "";
+        docSourceNumber = "";
+        docStatus = 0;
+        docType = 0;
+        DocTypeId = "";
+        docUpdateDate = new Date();
+        docValidFrom = "";
+        docValidTo = "";
+        docisNeedReply = false;
+        docisReply = false;
+        UserId = "";
+        
+        
+        
+    }
+    
     public Document(String docId) {
         this.docId = docId;
+    }
+
+    public Document(String docId, Date docUpdateDate, Date docCreateDate, boolean docIsValid, short docType, boolean docisNeedReply, boolean docisReply) {
+        this.docId = docId;
+        this.docUpdateDate = docUpdateDate;
+        this.docCreateDate = docCreateDate;
+        this.docIsValid = docIsValid;
+        this.docType = docType;
+        this.docisNeedReply = docisNeedReply;
+        this.docisReply = docisReply;
     }
 
     public String getDocId() {
@@ -170,11 +222,11 @@ public class Document implements Serializable {
         this.docStatus = docStatus;
     }
 
-    public Boolean getDocIsValid() {
+    public boolean getDocIsValid() {
         return docIsValid;
     }
 
-    public void setDocIsValid(Boolean docIsValid) {
+    public void setDocIsValid(boolean docIsValid) {
         this.docIsValid = docIsValid;
     }
 
@@ -202,27 +254,27 @@ public class Document implements Serializable {
         this.docDate = docDate;
     }
 
-    public Short getDocType() {
+    public short getDocType() {
         return docType;
     }
 
-    public void setDocType(Short docType) {
+    public void setDocType(short docType) {
         this.docType = docType;
     }
 
-    public Boolean getDocisNeedReply() {
+    public boolean getDocisNeedReply() {
         return docisNeedReply;
     }
 
-    public void setDocisNeedReply(Boolean docisNeedReply) {
+    public void setDocisNeedReply(boolean docisNeedReply) {
         this.docisNeedReply = docisNeedReply;
     }
 
-    public Boolean getDocisReply() {
+    public boolean getDocisReply() {
         return docisReply;
     }
 
-    public void setDocisReply(Boolean docisReply) {
+    public void setDocisReply(boolean docisReply) {
         this.docisReply = docisReply;
     }
 

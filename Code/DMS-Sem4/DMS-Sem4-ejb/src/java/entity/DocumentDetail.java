@@ -7,6 +7,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -91,6 +92,25 @@ public class DocumentDetail implements Serializable {
     private WorkFlow workFlowId;
 
     public DocumentDetail() {
+    }
+    public DocumentDetail(int dump){
+        actId = new Action(1);
+        docDetailCreateDate = new Date();
+        docDetailDepCreate="";
+        docDetailDepReceive="";
+        docDetailDescription="";
+        docDetailFileContent=null;
+        docDetailFileName="";
+        docDetailId="";
+        docDetailIsActive = false;
+        docDetailIsEdit = false;
+        docDetailIsUrgent = false;
+        docDetailUpdateDate = new Date();
+        docDetailUserCreate="";
+        docDetailUserReceive="";
+        docId = new Document(1);
+        documentDepartmentCollection = null;
+        workFlowId = new WorkFlow(1);
     }
 
     public DocumentDetail(String docDetailId) {

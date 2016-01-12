@@ -9,6 +9,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class DocumentType implements Serializable {
     @Size(max = 50)
     @Column(name = "docType_Name")
     private String docTypeName;
-    @OneToMany(mappedBy = "docTypeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "docTypeId")
     private Collection<Document> documentCollection;
 
     public DocumentType() {

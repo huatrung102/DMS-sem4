@@ -9,12 +9,14 @@ package manager;
 import entity.Department;
 import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author TrungHTH
  */
 @Local
+//@Remote
 public interface DepartmentFacadeLocal {
 
     void create(Department department);

@@ -24,7 +24,8 @@ public interface WorkFlowFacadeLocal {
     void remove(WorkFlow workFlow);
 
     WorkFlow find(Object id);
-
+    WorkFlow getObjectById(String workFlowId);
+    WorkFlow getObjectByAppId(String appId,double workFlowStep);
     List<WorkFlow> findAll();
 
     List<WorkFlow> findRange(int[] range);

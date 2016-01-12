@@ -65,7 +65,7 @@
         }
 
         this.app_create = function() {
-            application_create.show({ products: self.model.products }).then(function (dialogResult) {
+            application_create.show({ products: self.model.products,title: "Create Document" }).then(function (dialogResult) {
                 if(dialogResult.result)
                     http.post('rest/document/create', { ProductId: dialogResult.model.productid }).then(function () {
                         self.get_applications();

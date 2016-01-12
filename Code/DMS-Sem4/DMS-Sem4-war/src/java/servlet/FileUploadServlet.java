@@ -45,6 +45,12 @@ import ru.easybet.web.session.SessionListener;
  */
 @WebServlet(name = "FileUploadServlet", urlPatterns = {"/upload"})
 public class FileUploadServlet extends HttpServlet {
+    @EJB
+    private DocumentFacadeLocal documentFacade;
+    @EJB
+    private DocumentDetailFacadeLocal documentDetailFacade;
+    @EJB
+    private UsersFacadeLocal usersFacade;
 
     private static final Logger log = Logger.getLogger(FileUploadServlet.class);
     
@@ -53,14 +59,11 @@ public class FileUploadServlet extends HttpServlet {
     public static final String FILES_PARAM = "file";
     public static final String COMPRESS_PARAM = "compress";
     
-    @EJB
-    private DocumentFacadeLocal docLocal;
     
-    @EJB
-    private DocumentDetailFacadeLocal docDetailLocal;
     
-    @EJB
-    private UsersFacadeLocal userLocal;
+    
+    
+   
     /**
      * Handles the HTTP
      * <code>POST</code> method.
@@ -77,7 +80,7 @@ public class FileUploadServlet extends HttpServlet {
       //  Long userId = (Long) SessionListener.getSessionAttribute(request.getSession(), "userId");
      //   String userId = SessionUtils.getCurrentUserId(request).toString();
        String userId = "0bee30cf-ca7d-4e9a-b504-38d4ceae3327"; 
-        Users u = userLocal.getUserById(userId);
+        Users u = usersFacade.getUserById(userId);
 
          if(u == null) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -128,7 +131,7 @@ public class FileUploadServlet extends HttpServlet {
     }// </editor-fold>
 
     private void processFiles(String userId, List<FileItem> fileItems, boolean compress, ServletOutputStream out) throws Exception {
-        Users u = userLocal.getUserById(userId);
+        Users u = usersFacade.getUserById(userId);
         if(u == null) {
             throw new IllegalArgumentException("processFiles(): there is no user with ID="+userId);
         }

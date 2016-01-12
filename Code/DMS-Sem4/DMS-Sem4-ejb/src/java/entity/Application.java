@@ -66,8 +66,6 @@ public class Application implements Serializable {
     private Boolean appisReply;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appId")
     private Collection<WorkFlow> workFlowCollection;
-    @OneToMany(mappedBy = "appId")
-    private Collection<Document> documentCollection;
 
     public Application() {
     }
@@ -140,16 +138,6 @@ public class Application implements Serializable {
 
     public void setWorkFlowCollection(Collection<WorkFlow> workFlowCollection) {
         this.workFlowCollection = workFlowCollection;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Document> getDocumentCollection() {
-        return documentCollection;
-    }
-
-    public void setDocumentCollection(Collection<Document> documentCollection) {
-        this.documentCollection = documentCollection;
     }
 
     @Override
