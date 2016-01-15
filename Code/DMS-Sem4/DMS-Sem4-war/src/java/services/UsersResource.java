@@ -51,6 +51,16 @@ public class UsersResource {
     @GET
     @Produces("application/json")
     @Consumes("application/json")    
+    @Path("getUserTest")
+    public Users getUserTest(@Context HttpServletRequest req) {
+      //  UUID userId = WebSession.getUserId();
+        return usersFacade.getUserTest();
+    }
+    
+    
+    @GET
+    @Produces("application/json")
+    @Consumes("application/json")    
     @Path("getUserById")
     public Users getUserById(@Context HttpServletRequest req) {
         UUID userId = WebSession.getUserId();

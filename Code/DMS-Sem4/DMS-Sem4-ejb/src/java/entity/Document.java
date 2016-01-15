@@ -7,8 +7,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,6 +30,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  *
@@ -119,34 +122,35 @@ public class Document implements Serializable {
     @JoinColumn(name = "user_Id", referencedColumnName = "user_Id")
     @ManyToOne(optional = false)
     private Users userId;
-    @Transient
-    private String AppId ;
-    @Transient
-    private String DocTypeId ;
-    @Transient
-    private String UserId ;
-    
+   // @Transient
+   // private String AppId ;
+   /// @Transient
+   // private String DocTypeId ;
+   // @Transient
+   // private String UserId ;
+   
     public Document() {
     }
     public Document(int dump) {
-        AppId = "";
+       // appId = "";
+        appId = new Application(1);
         docContent = "";
         docContent = "";
-        docCreateDate = new Date();
+        docCreateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();
         docDate = "";
-        docId = "";
-        docIsValid = false;
+        docId = UUID.randomUUID().toString();
+        docIsValid = true;
         docNumber = "";
         docSourceNumber = "";
         docStatus = 0;
         docType = 0;
-        DocTypeId = "";
-        docUpdateDate = new Date();
+        docTypeId = new DocumentType(1);
+        docUpdateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();
         docValidFrom = "";
         docValidTo = "";
         docisNeedReply = false;
         docisReply = false;
-        UserId = "";
+        userId = new Users(1);
         
         
         

@@ -102,16 +102,16 @@ public class WorkFlow implements Serializable {
     @JoinColumn(name = "role_Id", referencedColumnName = "role_Id")
     @ManyToOne
     private Role roleId;
-    @Transient
-    private String AppId;
-    @Transient
-    private String RoleId;
+  //  @Transient
+  //  private String AppId;
+  //  @Transient
+  //  private String RoleId;
     
     public WorkFlow() {
     }
     public WorkFlow(int dump){
-        AppId = "";
-        RoleId = "";
+        appId = new Application(1);
+     //   RoleId = "";
         workFlowChooseType = 0;
         workFlowCreateDate = new Date();
         workFlowId = "";

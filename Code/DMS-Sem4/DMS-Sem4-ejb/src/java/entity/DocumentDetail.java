@@ -7,9 +7,12 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,7 +31,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.apache.commons.lang3.time.DateUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  *
@@ -61,9 +67,7 @@ public class DocumentDetail implements Serializable {
     @Size(max = 150)
     @Column(name = "docDetail_FileName")
     private String docDetailFileName;
-    @Lob
-    @Column(name = "docDetail_FileContent")
-    private byte[] docDetailFileContent;
+    
     @Column(name = "docDetail_CreateDate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date docDetailCreateDate;
@@ -93,19 +97,24 @@ public class DocumentDetail implements Serializable {
 
     public DocumentDetail() {
     }
-    public DocumentDetail(int dump){
+    public DocumentDetail(int dump) throws ParseException{
         actId = new Action(1);
-        docDetailCreateDate = new Date();
+        docDetailCreateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();//new Date();
+      //  DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();
+      //  new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        //new SimpleDateFormat().applyLocalizedPattern("dd/MM/yyyy");
+     //   new SimpleDateFormat().applyPattern("dd/MM/yyyy");
+     //   new SimpleDateFormat().parse("14/01/2016");
         docDetailDepCreate="";
         docDetailDepReceive="";
         docDetailDescription="";
-        docDetailFileContent=null;
+        
         docDetailFileName="";
-        docDetailId="";
-        docDetailIsActive = false;
+        docDetailId=UUID.randomUUID().toString();
+        docDetailIsActive = true;
         docDetailIsEdit = false;
         docDetailIsUrgent = false;
-        docDetailUpdateDate = new Date();
+        docDetailUpdateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();//new Date();
         docDetailUserCreate="";
         docDetailUserReceive="";
         docId = new Document(1);
@@ -165,13 +174,7 @@ public class DocumentDetail implements Serializable {
         this.docDetailFileName = docDetailFileName;
     }
 
-    public byte[] getDocDetailFileContent() {
-        return docDetailFileContent;
-    }
-
-    public void setDocDetailFileContent(byte[] docDetailFileContent) {
-        this.docDetailFileContent = docDetailFileContent;
-    }
+   
 
     public Date getDocDetailCreateDate() {
         return docDetailCreateDate;
@@ -272,7 +275,7 @@ public class DocumentDetail implements Serializable {
         if ((this.docDetailId == null && other.docDetailId != null) || (this.docDetailId != null && !this.docDetailId.equals(other.docDetailId))) {
             return false;
         }
-        return true;
+        return true; 
     }
 
     @Override

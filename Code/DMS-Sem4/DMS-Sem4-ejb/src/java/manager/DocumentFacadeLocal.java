@@ -18,7 +18,7 @@ import javax.ejb.Local;
 public interface DocumentFacadeLocal {
 
     void create(Document document);
-
+    boolean createDocument(Document document);
     void edit(Document document);
 
     void remove(Document document);

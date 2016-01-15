@@ -10,6 +10,7 @@ import entity.Document;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 /**
  *
@@ -17,7 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class DocumentFacade extends AbstractFacade<Document> implements DocumentFacadeLocal {
-    @PersistenceContext(unitName = "DMS-Sem4-ejbPU")
+    @PersistenceContext(unitName = "DMS-Sem4-ejbPU",type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override
@@ -27,6 +28,19 @@ public class DocumentFacade extends AbstractFacade<Document> implements Document
 
     public DocumentFacade() {
         super(Document.class);
+    }
+
+    @Override
+    public boolean createDocument(Document document) {
+         try {
+            if (!constraintValidationsDetected(document)) {                
+                em.persist(document);
+                em.flush();
+            }
+        } catch (Exception e) {
+        return false;     
+        }
+          return true;
     }
     
 }

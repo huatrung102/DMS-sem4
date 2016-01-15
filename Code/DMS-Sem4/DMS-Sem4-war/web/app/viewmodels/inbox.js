@@ -12,10 +12,12 @@
             documents: ko.observableArray([]),
             allow_create: true,//authenticate.createapp(),
             products: [],
+            Users: ko.observable(),
             change_view: function (view_name) {
                 self.model.ipage(0);
                 self.model.type(view_name);                
             },
+            //DocumentDetail : ko.observable(),
             application_url: function() {
                 switch (this.type()) {
                     case CONSTANT.APPLICATION_TYPE_PROCESSING:
@@ -51,10 +53,13 @@
             self.get_applications();
         }
         this.activate = function () {
-            http.get('rest/application/getAll').then(function(data) {
-                
+            http.get('rest/application/getAll').then(function(data) {                
                 self.model.products = data;
             });
+            http.get('rest/users/getUserTest').then(function(data) {                
+                self.model.Users = data;
+            });
+            
             if (typeof data.get(DATAKEY) === 'undefined')
                 data.add(DATAKEY, { type: self.model.type(), ipage: self.model.ipage() });
             else {
@@ -65,7 +70,7 @@
         }
 
         this.app_create = function() {
-            application_create.show({ products: self.model.products,title: "Create Document" }).then(function (dialogResult) {
+            application_create.show({ products: self.model.products,users: self.model.Users,title: "Create Document" }).then(function (dialogResult) {
                 if(dialogResult.result)
                     http.post('rest/document/create', { ProductId: dialogResult.model.productid }).then(function () {
                         self.get_applications();

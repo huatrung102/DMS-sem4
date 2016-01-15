@@ -1,70 +1,99 @@
 ﻿define(['plugins/dialog', 'knockout','komapping','toastr','plugins/http','glDatePicker', 'k/kendo.upload.min']
     , function (dialog, ko,komapping,toastr,http) {
-    var vm = function (param,title) {
+    var vm = function (param) {
         var self = this;
         this.AllowEdit = true;
         this.Title = param.title;
         self.model = {
             products: param.products,
+            Users : param.users,
             appSelected: ko.observable(),
+            documentTypeSelected : ko.observable(),
             documentTypeId: '',
             docDetailFileName : '',
-            Document: {
-                docId: ko.observable(),
-                docNumber: ko.observable(),
-                docSourceNumber: ko.observable(),
-                docUpdateDate: ko.observable(),
-                docCreateDate: ko.observable(),
-                docContent: ko.observable(),
-                docStatus: ko.observable(),
-                docIsValid: ko.observable(),
-                docValidFrom: ko.observable(),
-                docValidTo: ko.observable(),
-                docDate: ko.observable(),
-                docType: ko.observable(),                
-                
-            },
-            
-              WorkFlow:ko.observable(),
-             DocumentDetail : ko.observable(),
+                       
+            WorkFlow:ko.observable(),
+            DocumentDetail : ko.observable(),
             DocumentType: ko.observableArray([]),     
             
+        };
+        self.JSON = {
+            DocumentDetail : ko.observable(),
+            
         }
+        
+       // loadDefault();
         function getContextPath() {
             return window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
         }
         
         self.model.appSelected.subscribe(function(x) {
             console.log('appSelected: ' + x);
-  
+             http.post("rest/workflow/getByAppId", { appId: x.appId, workFlowStep: 1 }).then(function(data) {
+                self.model.WorkFlow = komapping.fromJS(data);
+            });     
         });
-        
+       
         this.attached = function (view) {
+            console.log('attached');
             self.view = view;
-            self.loadData();           
+                       
+        }
+        this.binding = function(){
+             console.log('binding');
+         
+            $.ajax({
+                url: 'rest/document/getDefault',                
+                async: false,
+                method: "POST",
+                success: function (data) { 
+                   self.model.DocumentDetail = komapping.fromJS(data);
+               }                
+            });
+               
+            
+        }
+       
+        this.activate = function(){
+            console.log('activate');
+            self.loadData();
+            
+            
+           // http.post("rest/document/getDefault").then(function (data) {               
+              
+           // });
         }
         this.save = function () {
           //getContextPath() +   dialog.close(this, { result: true, model: {appId: self.model.appId,document: self.model.Document} });
-            self.loadWorkFlow();
-            http.post("rest/document/getDefault").then(function (data) {               
-               self.model.DocumentDetailNext = komapping.fromJS(data);
-            });
-            http.post("rest/document/create").then(function () {
+            
+           
+            
+            
+            self.model.DocumentDetail.docDetailUserCreate = self.model.Users.userId;
+            self.model.DocumentDetail.docDetailDepCreate = self.model.Users.depId.depId;
+            //tao moi
+            self.model.DocumentDetail.actId.actId = 1;
+            
+            self.model.DocumentDetail.docId.appId = self.model.WorkFlow.appId;
+             self.model.DocumentDetail.docId.userId = self.model.Users;
+             self.model.DocumentDetail.workFlowId = komapping.toJS(self.model.WorkFlow);
+             self.model.DocumentDetail.docId.docTypeId = self.model.documentTypeSelected;
+             self.JSON.DocumentDetail = komapping.toJSON(self.model.DocumentDetail);
+            http.post("rest/document/create",{data:self.JSON.DocumentDetail}).then(function () {
                 toastr["info"](String.format(LOCALIZATION.APPLICATION.UPLOAD_FILE_REMOVED_SUCCESSED, "test"));
                     self.model.Document;
             });
+        }
+        function processDate(){
+            
+            
         }
         this.cancel = function () {
             dialog.close(this, { result: false });
         }
         this.loadWorkFlow = function(){
             //console.log('json:' +  ); 
-            http.post("rest/workflow/getByAppId", { appId: self.model.appSelected().appId, workFlowStep: 1 }).then(function(data) {
-             //   console.log('data workflow:' + JSON.stringify(data));
-                self.model.WorkFlow = komapping.fromJS(data);
-                
-             //   console.log('WorkFlow:' + JSON.stringify(self.model.WorkFlow))
-            });  
+            
             
         }
         
@@ -73,7 +102,9 @@
             self.view = view;
             self.loadCalendar();
             self.makeUploadControl();
-            
+            http.post("rest/workflow/getByAppId", { appId: self.model.appSelected.appId, workFlowStep: 1 }).then(function(data) {
+                self.model.WorkFlow = komapping.fromJS(data);
+            });
         }
         this.loadCalendar = function(){
              $(".date:enabled").each(function (idx, item) {
@@ -126,6 +157,7 @@
             });
         }
     //  /*
+         
         this.loadData = function () {
             $.ajax({
                 url: 'rest/documentType/getAll',                
@@ -135,9 +167,13 @@
                        self.model.DocumentType.push({
                        docTypeId: item.docTypeId,
                        docTypeName: item.docTypeName                      
-                       })
-                   })}                
-            })};
+                       });
+                   });
+               }                
+            })
+            
+        
+        };
      //   */
             
         

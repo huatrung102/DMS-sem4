@@ -6,6 +6,11 @@
 
 package services;
 
+import gsonjodatime.Converters;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.stream.JsonReader;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import entity.DocumentDetail;
@@ -14,12 +19,20 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -33,6 +46,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import manager.DocumentDetailFacadeLocal;
 import manager.DocumentFacadeLocal;
+import nl.gridshore.nosapi.mapping.JsonDateDeserializer;
+import org.apache.log4j.helpers.ISO8601DateFormat;
+import org.joda.time.DateTime;
 
 /**
  * REST Web Service
@@ -41,21 +57,75 @@ import manager.DocumentFacadeLocal;
  */
 @Path("document")
 public class DocumentResource {
+  
+    
     DocumentDetailFacadeLocal documentDetailFacade = lookupDocumentDetailFacadeLocal();
     DocumentFacadeLocal documentFacade = lookupDocumentFacadeLocal();
-
+    
+    
     @Context
     private UriInfo context;
-   
+    
+    public DocumentResource() {
+       
+    }
+    
     @POST
     @Path("create")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String create(String data,@Context HttpServletRequest req ) throws IOException
     {       
-       // DocumentDetail docDetail = 
+        //2016-01-13T21:10:08.696
+               
+        //Gson gson1 = Converters.registerDateTime(new GsonBuilder()).create();
+        Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            .create();
+      //  Gson gson = new GsonBuilder().registerTypeAdapter(DateTime.class, new JsonDateDeserializer()).create();
+       /*
+        Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ssX")
+            .create();
+        */
+        LinkedTreeMap obj = gson.fromJson(data, LinkedTreeMap.class);        
+        String temp = obj.get("data").toString();
+      //  obj = gson.fromJson(temp, LinkedTreeMap.class);
         
-        documentDetailFacade.create(null);
+        DocumentDetail docDetail = gson.fromJson(temp, DocumentDetail.class);
+        boolean flag = true;
+        try {
+           documentFacade.createDocument(docDetail.getDocId());
+        } 
+        catch (Exception e) {
+           flag = false;
+        } 
+        if(flag){
+            try {
+                documentDetailFacade.createDocument(docDetail);
+            } catch (Exception e) {
+                
+            }
+        }
+        
+        
+        /*
+         DocumentDetail defaultTest = new DocumentDetail(1);
+        
+        JsonReader reader = new JsonReader(new StringReader(data));
+        reader.setLenient(true);
+
+         
+        String json = gson.toJson(defaultTest);
+        DocumentDetail revert = gson.fromJson(json, DocumentDetail.class); 
+        LinkedTreeMap docDetail = gson.fromJson(data, LinkedTreeMap.class); 
+        DocumentDetail detail = gson.fromJson(data, DocumentDetail.class);
+        if(obj != null){
+        }
+        if(docDetail != null){
+        }
+        */
+     //   documentDetailFacade.create(null);
             return "";
     }
     
@@ -65,7 +135,15 @@ public class DocumentResource {
     public DocumentDetail getDefault(@Context HttpServletRequest req ) throws IOException
     {       
        // DocumentDetail docDetail = 
+        DateFormat dateFormat= new SimpleDateFormat("dd/MM/yyyy");
         
+        Date formattedDate;
+        try {
+             formattedDate = dateFormat.parse(dateFormat.format(new Date()));
+           // Date day = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).parse(new Date().toString());
+            
+        } catch (Exception e) {
+        }
        return documentDetailFacade.getDefault();
            
     }
@@ -124,8 +202,7 @@ public class DocumentResource {
             return "ok";  
     }
     */
-    public DocumentResource() {
-    }
+    
 
     /**
      * Retrieves representation of an instance of services.DocumentResource

@@ -25,7 +25,7 @@ public interface UsersFacadeLocal {
     Users login(String username,String password);
     Users find(Object id);
     Users getUserById(String userId);
-    
+    Users getUserTest();
     List<Users> findAll();
 
     List<Users> getListByDepartment(String depId);

@@ -9,6 +9,7 @@ package entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -69,9 +70,19 @@ public class Application implements Serializable {
 
     public Application() {
     }
-
+    public Application(int dump) {
+        appId = "";
+        appCreateDate = new Date();
+        appIsActive = false;
+        appIsWorkFlow = false;
+        appName = "";
+        appType = 0;
+        appisReply = false;
+        
+    }
     public Application(String appId) {
         this.appId = appId;
+        
     }
 
     public String getAppId() {

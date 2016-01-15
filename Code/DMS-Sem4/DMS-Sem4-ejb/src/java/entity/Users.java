@@ -7,6 +7,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -27,6 +28,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  *
@@ -107,7 +109,21 @@ public class Users implements Serializable {
 
     public Users() {
     }
-
+    public Users(int dump){
+        depId = new Department(1);
+        roleId = new Role(1);
+        userCreateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();
+        userDOB = "";
+        userEmail = "";
+        userFullName ="";
+        userGender = 0;
+        userId = "";
+        userName = "";
+        userPassword = "";
+        userStatus = 0;
+        userUpdateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();
+        
+    }
     public Users(String userId) {
         this.userId = userId;
     }

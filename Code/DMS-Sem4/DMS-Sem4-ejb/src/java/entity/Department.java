@@ -63,7 +63,13 @@ public class Department implements Serializable {
 
     public Department() {
     }
-
+    public Department(int dump) {
+        depCode = "";
+        depId = "";
+        depName = "";
+        depStatus = 0;
+        
+    }
     public Department(String depId) {
         this.depId = depId;
     }

@@ -7,20 +7,16 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -33,7 +29,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Action.findAll", query = "SELECT a FROM Action a"),
     @NamedQuery(name = "Action.findByActId", query = "SELECT a FROM Action a WHERE a.actId = :actId"),
     @NamedQuery(name = "Action.findByActName", query = "SELECT a FROM Action a WHERE a.actName = :actName"),
-    @NamedQuery(name = "Action.findByActDescription", query = "SELECT a FROM Action a WHERE a.actDescription = :actDescription")})
+    @NamedQuery(name = "Action.findByActDescription", query = "SELECT a FROM Action a WHERE a.actDescription = :actDescription"),
+    @NamedQuery(name = "Action.findByActStep", query = "SELECT a FROM Action a WHERE a.actStep = :actStep")})
 public class Action implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,16 +44,15 @@ public class Action implements Serializable {
     @Size(max = 150)
     @Column(name = "act_Description")
     private String actDescription;
-    @OneToMany(mappedBy = "actId")
-    private Collection<DocumentDetail> documentDetailCollection;
+    @Column(name = "act_Step")
+    private Short actStep;
 
     public Action() {
     }
     public Action(int dump){
-        actId = 0;
-        actDescription = "";
+        actId = 1;
         actName = "";
-        documentDetailCollection = null;
+        actStep = 0;
         
     }
     public Action(Short actId) {
@@ -87,14 +83,12 @@ public class Action implements Serializable {
         this.actDescription = actDescription;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public Collection<DocumentDetail> getDocumentDetailCollection() {
-        return documentDetailCollection;
+    public Short getActStep() {
+        return actStep;
     }
 
-    public void setDocumentDetailCollection(Collection<DocumentDetail> documentDetailCollection) {
-        this.documentDetailCollection = documentDetailCollection;
+    public void setActStep(Short actStep) {
+        this.actStep = actStep;
     }
 
     @Override

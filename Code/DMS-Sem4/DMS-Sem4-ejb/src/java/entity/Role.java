@@ -7,6 +7,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -24,6 +25,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  *
@@ -60,7 +62,13 @@ public class Role implements Serializable {
 
     public Role() {
     }
-
+    public Role(int dump) {
+        roleCreateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();
+        roleDescription = "";
+        roleId = "";
+        roleName = "";
+        
+    }
     public Role(String roleId) {
         this.roleId = roleId;
     }

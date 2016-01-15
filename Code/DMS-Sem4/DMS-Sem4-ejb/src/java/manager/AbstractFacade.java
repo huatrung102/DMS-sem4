@@ -6,16 +6,42 @@
 
 package manager;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 /**
  *
  * @author TrungHTH
  */
 public abstract class AbstractFacade<T> {
+    
+    
     private Class<T> entityClass;
+    protected boolean constraintValidationsDetected(T entity) {
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    Validator validator = factory.getValidator();
+    Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
+    if (constraintViolations.size() > 0) {
+      Iterator<ConstraintViolation<T>> iterator = constraintViolations.iterator();
+      while (iterator.hasNext()) {
+        ConstraintViolation<T> cv = iterator.next();
+        System.err.println(cv.getRootBeanClass().getName() + "." + cv.getPropertyPath() + " " + cv.getMessage());
 
+      }
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
     }

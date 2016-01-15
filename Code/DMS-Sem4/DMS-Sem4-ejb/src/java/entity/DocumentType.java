@@ -50,7 +50,11 @@ public class DocumentType implements Serializable {
 
     public DocumentType() {
     }
-
+    public DocumentType(int dump) {
+        docTypeId = "";
+        docTypeName = "";
+        
+    }
     public DocumentType(String docTypeId) {
         this.docTypeId = docTypeId;
     }

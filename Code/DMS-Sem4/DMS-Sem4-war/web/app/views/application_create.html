@@ -14,38 +14,38 @@
             <div class="form-group">
             <label class="col-sm-3 control-label">Source number</label>
             <div class="col-sm-3">
-                <input type="text" data-bind="value: model.Document.docSourceNumber,attr: {'disabled': model.appSelected().appType == '2'}"  class="form-control" >               
+                <input type="text" data-bind="value: model.DocumentDetail.docId.docSourceNumber,attr: {'disabled': model.appSelected().appType == '2'}"  class="form-control" >               
             </div>
             <label class="col-sm-3 control-label">Document number</label>
             <div class="col-sm-3">
-                <input type="text" data-bind="value: model.Document.docNumber,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >               
+                <input type="text" data-bind="value: model.DocumentDetail.docId.docNumber,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >               
             </div>
             </div>
             <div class="form-group">
             <label class="col-sm-3 control-label">Content</label>
             <div class="col-sm-9">
-                <textarea type="text" data-bind="value: model.Document.docContent"  class="form-control" ></textarea>               
+                <textarea type="text" data-bind="value: model.DocumentDetail.docId.docContent"  class="form-control" ></textarea>               
             </div>
             
             </div>
             <div class="form-group">
             <label class="col-sm-3 control-label">Type</label>
             <div class="col-sm-3">
-               <select class="form-control" data-bind="options: model.DocumentType, optionsText: 'docTypeName', optionsValue: 'docTypeId', value: model.documentTypeId"></select>               
+               <select class="form-control" data-bind="options: model.DocumentType, optionsText: 'docTypeName', value: model.documentTypeSelected"></select>               
             </div>
             <label class="col-sm-3 control-label">Date</label>
             <div class="col-sm-3">
-                <input type="text" data-bind="value: model.Document.docDate"  class="date form-control" >               
+                <input type="text" data-bind="value: model.DocumentDetail.docId.docDate"  class="date form-control" >               
             </div>
             </div>
             <div class="form-group">
             <label class="col-sm-3 control-label">Valid From</label>
             <div class="col-sm-3">
-               <input type="text" data-bind="value: model.Document.docValidFrom,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >   
+               <input type="text" data-bind="value: model.DocumentDetail.docId.docValidFrom,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >   
             </div>
             <label class="col-sm-3 control-label">Valid To</label>
             <div class="col-sm-3">
-                <input type="text" data-bind="value: model.Document.docValidTo,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >               
+                <input type="text" data-bind="value: model.DocumentDetail.docId.docValidTo,attr: {'disabled': model.appSelected().appType == '2'? true : false}"  class="form-control" >               
             </div>
             </div>
             <div class="form-group">
@@ -69,7 +69,7 @@
                         <input name="file" data-bind="attr: { filename: model.DocumentDetail.docDetailFileName}" data-url="/DMS-Sem4-war/upload" type="file"/>
                         <!-- /ko -->
                         <!-- ko ifnot: $root.AllowEdit -->
-                        <span data-bind="text: model.DocumentDetail.docDetailFileName"></span>
+                        <span data-bind="text: model.DocumentDetail.docDetailFileName ? 'Select File' : ''"></span>
                         <!-- /ko -->
                     </td>
                 </tr>

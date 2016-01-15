@@ -7,10 +7,16 @@
 package manager;
 
 import entity.DocumentDetail;
+import java.util.Iterator;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -18,7 +24,8 @@ import javax.persistence.Query;
  */
 @Stateless
 public class DocumentDetailFacade extends AbstractFacade<DocumentDetail> implements DocumentDetailFacadeLocal {
-    @PersistenceContext(unitName = "DMS-Sem4-ejbPU")
+    Logger logger = Logger.getLogger(getClass().getName());
+    @PersistenceContext(unitName = "DMS-Sem4-ejbPU",type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override
@@ -37,17 +44,27 @@ public class DocumentDetailFacade extends AbstractFacade<DocumentDetail> impleme
         return  (DocumentDetail) q.getSingleResult();
     }
     public DocumentDetail getDefault(){
-        return new DocumentDetail(1);
+        try {
+            return new DocumentDetail(1);
+        } catch (Exception e) {
+        }
+        return null;
     }
+    
+
     public boolean createDocument(DocumentDetail docDetail){
         try {
-             em.persist(docDetail);
-             return true;
+            if (!constraintValidationsDetected(docDetail)) {                
+              //  em.persist(docDetail);
+             DocumentDetail dump =   em.merge(docDetail);
+             em.flush();
+            }else{
+                return false;  
+            }
         } catch (Exception e) {
-            
+        return false;     
         }
-       return false;       
-        
+          return true;
     }
     
 }
