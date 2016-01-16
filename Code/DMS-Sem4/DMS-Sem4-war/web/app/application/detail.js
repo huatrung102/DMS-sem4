@@ -3,23 +3,7 @@
         var self = this;
         self.model = {
             appid: '',
-            application: null,
-            //application_url: function () {
-            //    switch (this.type()) {
-            //        case CONSTANT.APPLICATION_TYPE_PROCESSING:
-            //            {
-            //                return "Application/GetInbox";
-            //            }
-            //        case CONSTANT.APPLICATION_TYPE_NEED_ASSIGN:
-            //            {
-            //                return "Application/GetDepartmentAssign";
-            //            }
-            //        case CONSTANT.APPLICATION_TYPE_MANAGEMENT:
-            //            {
-            //                return "Application/GetDepartmentInbox";
-            //            }
-            //    }
-            //},
+            application: null,           
         }
         this.activate = function (id) {
             self.model.appid = id;

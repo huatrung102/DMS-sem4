@@ -155,7 +155,10 @@ public class DocumentDetail implements Serializable {
     }
 
     public void setDocDetailUserReceive(String docDetailUserReceive) {
-        this.docDetailUserReceive = docDetailUserReceive;
+        if("".equals(docDetailUserReceive))
+            this.docDetailUserReceive = null;
+        else
+            this.docDetailUserReceive = docDetailUserReceive;
     }
 
     public String getDocDetailDepReceive() {
@@ -163,7 +166,11 @@ public class DocumentDetail implements Serializable {
     }
 
     public void setDocDetailDepReceive(String docDetailDepReceive) {
-        this.docDetailDepReceive = docDetailDepReceive;
+         if("".equals(docDetailDepReceive))
+            this.docDetailDepReceive = null;
+        else
+            this.docDetailDepReceive = docDetailDepReceive;
+       
     }
 
     public String getDocDetailFileName() {

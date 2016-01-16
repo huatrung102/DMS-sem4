@@ -44,6 +44,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import json.entity.JsonResponse;
+import json.utility.ResponseConstants;
+import json.utility.ResponseWrapper;
 import manager.DocumentDetailFacadeLocal;
 import manager.DocumentFacadeLocal;
 import nl.gridshore.nosapi.mapping.JsonDateDeserializer;
@@ -102,6 +105,8 @@ public class DocumentResource {
         } 
         if(flag){
             try {
+                docDetail.setDocDetailDepReceive(null);
+                docDetail.setDocDetailUserReceive(null);
                 documentDetailFacade.createDocument(docDetail);
             } catch (Exception e) {
                 
@@ -126,7 +131,8 @@ public class DocumentResource {
         }
         */
      //   documentDetailFacade.create(null);
-            return "";
+             JsonResponse<String> jr = new JsonResponse<String>(ResponseConstants.OK, null, docDetail.getDocDetailId());
+            return ResponseWrapper.getJsonResponse(jr);
     }
     
     @POST

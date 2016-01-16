@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 @Stateless
 public class DocumentDetailFacade extends AbstractFacade<DocumentDetail> implements DocumentDetailFacadeLocal {
     Logger logger = Logger.getLogger(getClass().getName());
-    @PersistenceContext(unitName = "DMS-Sem4-ejbPU",type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "DMS-Sem4-ejbPU")
     private EntityManager em;
 
     @Override
@@ -56,8 +56,10 @@ public class DocumentDetailFacade extends AbstractFacade<DocumentDetail> impleme
         try {
             if (!constraintValidationsDetected(docDetail)) {                
               //  em.persist(docDetail);
-             DocumentDetail dump =   em.merge(docDetail);
-             em.flush();
+             //em.merge(docDetail);
+                
+             em.persist(docDetail);
+                em.flush();
             }else{
                 return false;  
             }

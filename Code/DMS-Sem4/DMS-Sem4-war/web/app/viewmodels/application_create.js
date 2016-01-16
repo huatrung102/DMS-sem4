@@ -1,5 +1,5 @@
-﻿define(['plugins/dialog', 'knockout','komapping','toastr','plugins/http','glDatePicker', 'k/kendo.upload.min']
-    , function (dialog, ko,komapping,toastr,http) {
+﻿define(['plugins/dialog','plugins/router', 'knockout','komapping','toastr','plugins/http','glDatePicker', 'k/kendo.upload.min']
+    , function (dialog,router, ko,komapping,toastr,http) {
     var vm = function (param) {
         var self = this;
         this.AllowEdit = true;
@@ -66,9 +66,6 @@
         this.save = function () {
           //getContextPath() +   dialog.close(this, { result: true, model: {appId: self.model.appId,document: self.model.Document} });
             
-           
-            
-            
             self.model.DocumentDetail.docDetailUserCreate = self.model.Users.userId;
             self.model.DocumentDetail.docDetailDepCreate = self.model.Users.depId.depId;
             //tao moi
@@ -79,15 +76,23 @@
              self.model.DocumentDetail.workFlowId = komapping.toJS(self.model.WorkFlow);
              self.model.DocumentDetail.docId.docTypeId = self.model.documentTypeSelected;
              self.JSON.DocumentDetail = komapping.toJSON(self.model.DocumentDetail);
-            http.post("rest/document/create",{data:self.JSON.DocumentDetail}).then(function () {
-                toastr["info"](String.format(LOCALIZATION.APPLICATION.UPLOAD_FILE_REMOVED_SUCCESSED, "test"));
-                    self.model.Document;
+            http.post("rest/document/create",{data:self.JSON.DocumentDetail}).then(function (response) {
+                dialog.close(self, { result: true, responseCode : response.responseCode,data : response.data });
+                 
+                /*
+                console.log('result' + response);
+                if(response.responseCode == 1){
+                    toastr["info"]("create successfully!!!");
+                    router.navigate("#inbox");
+                }else{
+                    toastr["error"]("create failed!!!");
+                }
+                */    
+                
+                    //self.model.Document;
             });
         }
-        function processDate(){
-            
-            
-        }
+        
         this.cancel = function () {
             dialog.close(this, { result: false });
         }
@@ -102,7 +107,8 @@
             self.view = view;
             self.loadCalendar();
             self.makeUploadControl();
-            http.post("rest/workflow/getByAppId", { appId: self.model.appSelected.appId, workFlowStep: 1 }).then(function(data) {
+            console.log('compositionComplete');
+            http.post("rest/workflow/getByAppId", { appId: self.model.appSelected().appId, workFlowStep: 1 }).then(function(data) {
                 self.model.WorkFlow = komapping.fromJS(data);
             });
         }

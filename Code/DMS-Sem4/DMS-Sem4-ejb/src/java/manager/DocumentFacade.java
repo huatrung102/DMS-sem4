@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContextType;
  */
 @Stateless
 public class DocumentFacade extends AbstractFacade<Document> implements DocumentFacadeLocal {
-    @PersistenceContext(unitName = "DMS-Sem4-ejbPU",type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "DMS-Sem4-ejbPU")
     private EntityManager em;
 
     @Override
