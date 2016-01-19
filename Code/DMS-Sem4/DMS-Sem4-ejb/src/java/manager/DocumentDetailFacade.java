@@ -43,6 +43,7 @@ public class DocumentDetailFacade extends AbstractFacade<DocumentDetail> impleme
                 .setParameter("docDetailId", docDetailId);
         return  (DocumentDetail) q.getSingleResult();
     }
+    
     public DocumentDetail getDefault(){
         try {
             return new DocumentDetail(1);

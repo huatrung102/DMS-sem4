@@ -43,4 +43,22 @@ public class DocumentFacade extends AbstractFacade<Document> implements Document
           return true;
     }
     
+    @Override
+    public boolean removeDocument(String docId) {
+        
+        Document document = find(docId);
+        if(document != null){
+            try {
+                document.setDocStatus(Short.parseShort("0"));
+            if (!constraintValidationsDetected(document)) {                
+                    em.merge(document);
+                    em.flush();
+                }
+            } catch (Exception e) {
+                return false;     
+            }
+        }
+          return true;
+    }
+    
 }

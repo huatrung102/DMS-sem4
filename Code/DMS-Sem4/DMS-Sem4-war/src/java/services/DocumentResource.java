@@ -13,7 +13,9 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.stream.JsonReader;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
+import entity.Department;
 import entity.DocumentDetail;
+import entity.Users;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -72,6 +74,36 @@ public class DocumentResource {
     public DocumentResource() {
        
     }
+    @POST
+    @Path("remove/{id}")    
+    @Produces(MediaType.APPLICATION_JSON)
+    public String remove(@PathParam("id") String id,@Context HttpServletRequest req ) throws IOException
+    { 
+       // LinkedTreeMap obj = new Gson().fromJson(id, LinkedTreeMap.class);        
+       // String temp = obj.get("data").toString();
+        boolean flag = documentFacade.removeDocument(id);
+         JsonResponse<String> jr = new JsonResponse<String>(ResponseConstants.OK, null, String.valueOf(flag));
+         return ResponseWrapper.getJsonResponse(jr);
+           
+    }
+    
+    @GET
+    @Path("getById/{id}")    
+    @Produces(MediaType.APPLICATION_JSON)
+    public DocumentDetail getById(@PathParam("id") String id,@Context HttpServletRequest req ) throws IOException
+    { 
+       // LinkedTreeMap obj = new Gson().fromJson(id, LinkedTreeMap.class);        
+       // String temp = obj.get("data").toString();
+        DocumentDetail docDetail = documentDetailFacade.getById(id);
+        if(docDetail.getDocDetailUserReceive()== null)
+            docDetail.setDocDetailUserReceive(new Users(1));
+        if(docDetail.getDocDetailDepReceive() == null)
+            docDetail.setDocDetailDepReceive(new Department(1));
+       return docDetail;
+           
+    }
+    
+    
     
     @POST
     @Path("create")

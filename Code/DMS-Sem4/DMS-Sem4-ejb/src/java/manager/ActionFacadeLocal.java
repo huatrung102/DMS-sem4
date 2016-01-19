@@ -26,6 +26,8 @@ public interface ActionFacadeLocal {
     Action find(Object id);
 
     List<Action> findAll();
+    List<Action> getAll();
+    
 
     List<Action> findRange(int[] range);
 

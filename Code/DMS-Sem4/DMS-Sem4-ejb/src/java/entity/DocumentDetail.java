@@ -45,6 +45,18 @@ import org.joda.time.format.DateTimeFormat;
 @XmlRootElement
 
 public class DocumentDetail implements Serializable {
+    @JoinColumn(name = "docDetail_DepCreate", referencedColumnName = "dep_Id")
+    @ManyToOne
+    private Department docDetailDepCreate;
+    @JoinColumn(name = "docDetail_DepReceive", referencedColumnName = "dep_Id")
+    @ManyToOne
+    private Department docDetailDepReceive;
+    @JoinColumn(name = "docDetail_UserCreate", referencedColumnName = "user_Id")
+    @ManyToOne
+    private Users docDetailUserCreate;
+    @JoinColumn(name = "docDetail_UserReceive", referencedColumnName = "user_Id")
+    @ManyToOne
+    private Users docDetailUserReceive;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -52,18 +64,8 @@ public class DocumentDetail implements Serializable {
     @Size(min = 1, max = 36)
     @Column(name = "docDetail_Id")
     private String docDetailId;
-    @Size(max = 36)
-    @Column(name = "docDetail_UserCreate")
-    private String docDetailUserCreate;
-    @Size(max = 36)
-    @Column(name = "docDetail_DepCreate")
-    private String docDetailDepCreate;
-    @Size(max = 36)
-    @Column(name = "docDetail_UserReceive")
-    private String docDetailUserReceive;
-    @Size(max = 36)
-    @Column(name = "docDetail_DepReceive")
-    private String docDetailDepReceive;
+    
+    
     @Size(max = 150)
     @Column(name = "docDetail_FileName")
     private String docDetailFileName;
@@ -100,13 +102,9 @@ public class DocumentDetail implements Serializable {
     public DocumentDetail(int dump) throws ParseException{
         actId = new Action(1);
         docDetailCreateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();//new Date();
-      //  DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();
-      //  new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        //new SimpleDateFormat().applyLocalizedPattern("dd/MM/yyyy");
-     //   new SimpleDateFormat().applyPattern("dd/MM/yyyy");
-     //   new SimpleDateFormat().parse("14/01/2016");
-        docDetailDepCreate="";
-        docDetailDepReceive="";
+     
+        docDetailDepCreate= new Department(1);
+        docDetailDepReceive=new Department(1);
         docDetailDescription="";
         
         docDetailFileName="";
@@ -115,8 +113,8 @@ public class DocumentDetail implements Serializable {
         docDetailIsEdit = false;
         docDetailIsUrgent = false;
         docDetailUpdateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();//new Date();
-        docDetailUserCreate="";
-        docDetailUserReceive="";
+        docDetailUserCreate= new Users(1);
+        docDetailUserReceive= new Users(1);
         docId = new Document(1);
         documentDepartmentCollection = null;
         workFlowId = new WorkFlow(1);
@@ -134,44 +132,6 @@ public class DocumentDetail implements Serializable {
         this.docDetailId = docDetailId;
     }
 
-    public String getDocDetailUserCreate() {
-        return docDetailUserCreate;
-    }
-
-    public void setDocDetailUserCreate(String docDetailUserCreate) {
-        this.docDetailUserCreate = docDetailUserCreate;
-    }
-
-    public String getDocDetailDepCreate() {
-        return docDetailDepCreate;
-    }
-
-    public void setDocDetailDepCreate(String docDetailDepCreate) {
-        this.docDetailDepCreate = docDetailDepCreate;
-    }
-
-    public String getDocDetailUserReceive() {
-        return docDetailUserReceive;
-    }
-
-    public void setDocDetailUserReceive(String docDetailUserReceive) {
-        if("".equals(docDetailUserReceive))
-            this.docDetailUserReceive = null;
-        else
-            this.docDetailUserReceive = docDetailUserReceive;
-    }
-
-    public String getDocDetailDepReceive() {
-        return docDetailDepReceive;
-    }
-
-    public void setDocDetailDepReceive(String docDetailDepReceive) {
-         if("".equals(docDetailDepReceive))
-            this.docDetailDepReceive = null;
-        else
-            this.docDetailDepReceive = docDetailDepReceive;
-       
-    }
 
     public String getDocDetailFileName() {
         return docDetailFileName;
@@ -288,6 +248,38 @@ public class DocumentDetail implements Serializable {
     @Override
     public String toString() {
         return "entity.DocumentDetail[ docDetailId=" + docDetailId + " ]";
+    }
+
+    public Department getDocDetailDepCreate() {
+        return docDetailDepCreate;
+    }
+
+    public void setDocDetailDepCreate(Department docDetailDepCreate) {
+        this.docDetailDepCreate = docDetailDepCreate;
+    }
+
+    public Department getDocDetailDepReceive() {
+        return docDetailDepReceive;
+    }
+
+    public void setDocDetailDepReceive(Department docDetailDepReceive) {
+        this.docDetailDepReceive = docDetailDepReceive;
+    }
+
+    public Users getDocDetailUserCreate() {
+        return docDetailUserCreate;
+    }
+
+    public void setDocDetailUserCreate(Users docDetailUserCreate) {
+        this.docDetailUserCreate = docDetailUserCreate;
+    }
+
+    public Users getDocDetailUserReceive() {
+        return docDetailUserReceive;
+    }
+
+    public void setDocDetailUserReceive(Users docDetailUserReceive) {
+        this.docDetailUserReceive = docDetailUserReceive;
     }
     
 }

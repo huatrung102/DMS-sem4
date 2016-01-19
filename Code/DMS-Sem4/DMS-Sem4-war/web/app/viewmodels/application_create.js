@@ -28,6 +28,7 @@
         }
         
         self.model.appSelected.subscribe(function(x) {
+            
             console.log('appSelected: ' + x);
              http.post("rest/workflow/getByAppId", { appId: x.appId, workFlowStep: 1 }).then(function(data) {
                 self.model.WorkFlow = komapping.fromJS(data);
@@ -66,8 +67,8 @@
         this.save = function () {
           //getContextPath() +   dialog.close(this, { result: true, model: {appId: self.model.appId,document: self.model.Document} });
             
-            self.model.DocumentDetail.docDetailUserCreate = self.model.Users.userId;
-            self.model.DocumentDetail.docDetailDepCreate = self.model.Users.depId.depId;
+            self.model.DocumentDetail.docDetailUserCreate = self.model.Users;
+            self.model.DocumentDetail.docDetailDepCreate = self.model.Users.depId;
             //tao moi
             self.model.DocumentDetail.actId.actId = 1;
             
@@ -77,7 +78,12 @@
              self.model.DocumentDetail.docId.docTypeId = self.model.documentTypeSelected;
              self.JSON.DocumentDetail = komapping.toJSON(self.model.DocumentDetail);
             http.post("rest/document/create",{data:self.JSON.DocumentDetail}).then(function (response) {
-                dialog.close(self, { result: true, responseCode : response.responseCode,data : response.data });
+                if(response.responseCode == 1){
+                    dialog.close(self, { result: true, response : response });
+                }else{
+                    toastr["error"]("create failed !!!");
+                }
+                
                  
                 /*
                 console.log('result' + response);

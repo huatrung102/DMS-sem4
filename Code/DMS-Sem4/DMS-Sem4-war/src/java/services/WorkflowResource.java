@@ -8,11 +8,14 @@ package services;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+import entity.DocumentDetail;
 import entity.WorkFlow;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -41,6 +44,19 @@ public class WorkflowResource {
      * Creates a new instance of WorkflowResource
      */
     public WorkflowResource() {
+    }
+    @POST
+    @Path("getNextStage")    
+    @Produces(MediaType.APPLICATION_JSON)
+    public WorkFlow getNextStage(String data,@Context HttpServletRequest req ) throws IOException
+    { 
+        LinkedTreeMap obj = new Gson().fromJson(data, LinkedTreeMap.class);        
+        String temp = obj.get("workFlowId").toString();
+        String step = obj.get("step").toString();
+        WorkFlow workFlow = new Gson().fromJson(temp, WorkFlow.class);  
+        return workFlowFacade.getObjectByStep(workFlow,Integer.parseInt(step));
+      // return workFlowFacade.getById(workFlowId);
+       //return null;    
     }
     @GET
     @Path("getById")

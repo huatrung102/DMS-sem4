@@ -1,13 +1,15 @@
 ﻿<div class="modal-content">
     <div class="modal-header">
-        <h3><!-- ko text: model.title --><!-- /ko --></h3>
+        <h3><!-- ko text: model.title -->Next Stage<!-- /ko --></h3>
     </div>
     <div class="modal-body">
         <div class="form-horizontal">
-            <div class="form-group" data-bind="visible: model.nextstages">
-				<label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.NEXT_STAGE --><!-- /ko --></label>
+            <div class="form-group" >
+                <label class="col-sm-3 control-label">
+                    Next Step</label>
                 <div class="col-sm-9">
-                    <select class="form-control" data-bind="options: model.nextstages, optionsText: 'Name', value: model.stage"></select>
+                    <label data-bind="text: model.workFlowNext.workFlowName" class="col-sm-3 control-label">
+                        Next Step</label>
                 </div>
             </div>
             <!-- ko if: model.stage() -->
@@ -21,7 +23,7 @@
             <!-- /ko -->
             <!-- ko if: model.stage() -->
             <div class="form-group" data-bind="visible: model.stage().Departments.length > 0">
-				<label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.DEPARTMENT_ASSIGNED --><!-- /ko --></label>
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.DEPARTMENT_ASSIGNED --><!-- /ko --></label>
                 <div class="col-sm-9">
                     <select class="form-control" data-bind="options: departmentArray, optionsText: 'Name', value: model.department"></select>
                     <!--<select class="form-control" data-bind="options: departmentArray, optionsText: 'Name', value: model.department"></select>-->
@@ -30,7 +32,7 @@
             <!-- /ko -->
             <!-- ko if: model.department() -->
             <div class="form-group" data-bind="visible: model.department().Users.length > 0">
-				<label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.USER_ASSIGNED --><!-- /ko --></label>
+                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.USER_ASSIGNED --><!-- /ko --></label>
                 <div class="col-sm-9">
                     <select class="form-control" data-bind="options: model.department().Users, optionsText: 'FullName', value: model.user"></select>
                 </div>

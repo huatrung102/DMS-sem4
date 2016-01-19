@@ -50,6 +50,10 @@ import org.joda.time.format.DateTimeFormat;
     @NamedQuery(name = "Users.findByUserStatus", query = "SELECT u FROM Users u WHERE u.userStatus = :userStatus"),
     @NamedQuery(name = "Users.findByUserEmail", query = "SELECT u FROM Users u WHERE u.userEmail = :userEmail")})
 public class Users implements Serializable {
+    @OneToMany(mappedBy = "docDetailUserCreate")
+    private Collection<DocumentDetail> documentDetailCollection;
+    @OneToMany(mappedBy = "docDetailUserReceive")
+    private Collection<DocumentDetail> documentDetailCollection1;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -287,6 +291,26 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "entity.Users[ userId=" + userId + " ]";
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<DocumentDetail> getDocumentDetailCollection() {
+        return documentDetailCollection;
+    }
+
+    public void setDocumentDetailCollection(Collection<DocumentDetail> documentDetailCollection) {
+        this.documentDetailCollection = documentDetailCollection;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<DocumentDetail> getDocumentDetailCollection1() {
+        return documentDetailCollection1;
+    }
+
+    public void setDocumentDetailCollection1(Collection<DocumentDetail> documentDetailCollection1) {
+        this.documentDetailCollection1 = documentDetailCollection1;
     }
     
 }

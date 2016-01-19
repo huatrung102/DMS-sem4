@@ -44,12 +44,12 @@
         </div>
         <div class="project-list">
             <table class="table table-hover">
-                <tbody data-bind="foreach: model.applications">
+                <tbody data-bind="foreach: model.document.process">
                 <tr >
                     <td class="project-title col-md-3">
                         <a><!-- ko text: Name --><!-- /ko --></a>
                         <br />
-                        <small>(<!-- ko text: ProductName --><!-- /ko -->)</small>
+                        <small data-bind="text: ProductName">(<!-- ko text: ProductName --><!-- /ko -->)</small>
                         <br>
                         <small><!-- ko text: CreatedDate --><!-- /ko --></small>
                         <br/>
@@ -73,7 +73,7 @@
                     </td>
                     <td class="project-actions" style="width: 80px;">
                         <button class="btn btn-outline btn-primary btn-sm" data-bind="click: $root.view_detail.bind($data, { id: Id })"><!-- ko text: LOCALIZATION.APPLICATION.VIEW --><!-- /ko --></button>
-                        <button class="btn btn-outline btn-primary btn-sm" data-bind="visible: $root.model.type() != CONSTANT.APPLICATION_TYPE_PROCESSING, click: $root.assign.bind($data, { id: Id })" ><!-- ko text: LOCALIZATION.APPLICATION.ASSIGN --><!-- /ko --></button>
+                        
                     </td>
                 </tr>
                 </tbody>

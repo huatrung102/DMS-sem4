@@ -2,12 +2,23 @@
     var vm = function () {
         var self = this;
         this.username = ko.observable("");
+        self.model = {
+            Application : {
+                appId : ko.observable(""),
+                appName : ko.observable(""),
+                
+            }
+        }
         this.password = ko.observable("");
         this.loginFailed = ko.observable(false);
         this.enableLogin = ko.observable(true);
         this.loginInput = function(d, e) {
+            function login(){
+                alert('aaaa');
+            }
             if (e.keyCode === 13) {
-                self.login();
+                this.login();
+               
             }
             return true;
         }

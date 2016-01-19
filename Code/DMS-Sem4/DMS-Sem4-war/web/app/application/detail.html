@@ -2,14 +2,13 @@
     <div class="wrapper full-height">
         <div class="row full-height">
             <div class="col-md-5">
-                <!-- ko compose: {view: 'views/application_workflow_information.html', model: model.application} --><!-- /ko -->
-                <!-- ko compose: {view: 'views/application_information.html', model: model.application} --><!-- /ko -->
+                <!-- ko compose: {view: 'views/application_workflow_information.html', model: model.DocumentDetail} --><!-- /ko -->
+                <!-- ko compose: {view: 'views/application_information.html', model: model.DocumentDetail} --><!-- /ko -->
             </div>
             <div class="col-md-7 full-height">
-                <!-- ko if: model.application.IsDisbursement -->
-                    <!-- ko compose: {view: 'views/application_disbursement.html', model: model.application} --><!-- /ko -->
+               
+                <!-- ko compose: {view: 'application_tasks.html', model: model.application} -->
                 <!-- /ko -->
-                <!-- ko compose: {view: 'views/application_tasks.html', model: model.application} --><!-- /ko -->
             </div>
         </div>
     </div>

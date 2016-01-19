@@ -37,6 +37,10 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Department.findByDepStatus", query = "SELECT d FROM Department d WHERE d.depStatus = :depStatus"),
     @NamedQuery(name = "Department.findByDepCode", query = "SELECT d FROM Department d WHERE d.depCode = :depCode")})
 public class Department implements Serializable {
+    @OneToMany(mappedBy = "docDetailDepCreate")
+    private Collection<DocumentDetail> documentDetailCollection;
+    @OneToMany(mappedBy = "docDetailDepReceive")
+    private Collection<DocumentDetail> documentDetailCollection1;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -155,6 +159,26 @@ public class Department implements Serializable {
     @Override
     public String toString() {
         return "entity.Department[ depId=" + depId + " ]";
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<DocumentDetail> getDocumentDetailCollection() {
+        return documentDetailCollection;
+    }
+
+    public void setDocumentDetailCollection(Collection<DocumentDetail> documentDetailCollection) {
+        this.documentDetailCollection = documentDetailCollection;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<DocumentDetail> getDocumentDetailCollection1() {
+        return documentDetailCollection1;
+    }
+
+    public void setDocumentDetailCollection1(Collection<DocumentDetail> documentDetailCollection1) {
+        this.documentDetailCollection1 = documentDetailCollection1;
     }
     
 }

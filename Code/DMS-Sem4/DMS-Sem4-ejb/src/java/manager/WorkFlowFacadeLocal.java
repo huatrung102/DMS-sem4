@@ -22,7 +22,7 @@ public interface WorkFlowFacadeLocal {
     void edit(WorkFlow workFlow);
 
     void remove(WorkFlow workFlow);
-
+    WorkFlow getObjectByStep(WorkFlow workFlowId,int nextStep);
     WorkFlow find(Object id);
     WorkFlow getObjectById(String workFlowId);
     WorkFlow getObjectByAppId(String appId,double workFlowStep);

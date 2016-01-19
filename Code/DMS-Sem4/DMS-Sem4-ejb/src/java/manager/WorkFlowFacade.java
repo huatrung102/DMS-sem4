@@ -31,6 +31,16 @@ public class WorkFlowFacade extends AbstractFacade<WorkFlow> implements WorkFlow
         super(WorkFlow.class);
     }
     @Override
+    public WorkFlow getObjectByStep(WorkFlow workFlow,int nextStep){
+        int step;
+        step = workFlow.getWorkFlowStep() + nextStep;
+        Query q = em.createQuery("SELECT w.workFlowStep FROM WorkFlow w where w.appId =:appId and w.workFlowStep=:nextStep")
+                .setParameter("appId", workFlow.getAppId().getAppId())
+                .setParameter("nextStep", step);
+        return (WorkFlow) q.getSingleResult();
+    }
+    
+    @Override
     public WorkFlow getObjectById(String workFlowId){
         Query q = em.createQuery("SELECT w FROM WorkFlow w where w.workFlowId =:workFlowId")
                 .setParameter("workFlowId", workFlowId);

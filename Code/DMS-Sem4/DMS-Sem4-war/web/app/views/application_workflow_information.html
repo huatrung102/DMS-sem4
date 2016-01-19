@@ -9,18 +9,36 @@
         <div class="row">
             <div class="col-md-12">
                 <dl class="dl-horizontal">
-                    <dt>Current Step</dt>                    
-                    <dd><!-- ko text: StageName --><!-- /ko --></dd>                    
-                    <dt>User send</dt>
-                    <dd>
-                        <!-- ko text: AssignedUserName --><!-- /ko --> -
-                        <!-- ko text: AssignedDepartmentName --><!-- /ko --> 
-                       
-                    </dd>
-                    <dt><!-- ko text: LOCALIZATION.APPLICATION.SEND_USER --><!-- /ko --></dt>
-                    <dd><!-- ko text: SendUserName --><!-- /ko --> - <!-- ko text: SendDepartmentName --><!-- /ko --> - <!-- ko text: SendBranchName --><!-- /ko --></dd>
-                    <dt><!-- ko text: LOCALIZATION.APPLICATION.COMMENT --><!-- /ko --></dt>
-                    <dd><!-- ko text: LastComment --><!-- /ko --></dd>
+                    
+                <dt>Current Step</dt>
+                <dd><!-- ko text: workFlowId.workFlowName --><!-- /ko --></dd>
+                <dt>User send</dt>
+                <dd>
+                    <!-- ko text: docDetailUserCreate.userFullName --><!-- /ko -->
+                    (<!-- ko text: docDetailUserCreate.userName --><!-- /ko -->) 
+                    
+
+                </dd>
+                <dt>Department Send</dt>
+                <dd>
+                   <!-- ko text: docDetailDepCreate.depName --><!-- /ko --> 
+                </dd>
+                <dt>User receive</dt>
+                <dd>
+                    <div data-bind="visible: docDetailUserReceive.userId() !== ''">
+                    <!-- ko text:  docDetailUserReceive.userFullName --><!-- /ko -->
+                    (<!-- ko text: docDetailUserReceive.userName --><!-- /ko -->) 
+                    </div>
+                </dd>
+               <dt>Department receive</dt>
+                <dd>
+                    <div data-bind="visible: docDetailDepReceive.depId() !== ''">
+                         <!-- ko text: docDetailDepReceive.depName --><!-- /ko --> 
+                    </div>
+                   
+                </dd>
+                <dt>Comment</dt>
+                <dd><!-- ko text: docDetailDescription --><!-- /ko --></dd>
                 </dl>
             </div>
         </div>

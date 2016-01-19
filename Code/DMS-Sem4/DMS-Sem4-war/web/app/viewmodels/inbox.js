@@ -70,12 +70,11 @@
         }
 
         this.app_create = function() {
-            application_create.show({ products: self.model.products,users: self.model.Users,title: "Create Document" }).then(function (dialogResult) {
-                if(dialogResult.result)
-                    http.post('rest/document/create', { ProductId: dialogResult.model.productid }).then(function () {
-                        self.get_applications();
-                        toastr["info"](LOCALIZATION.APPLICATION.CREATE_SUCCESSFUL);
-                    });
+            application_create.show({ products: self.model.products,users: self.model.Users,title: "Create Document" }).then(function (dialogResult,response) {
+                if(dialogResult.result){
+                    if(dialogResult.response.data)
+                        router.navigate(String.format('#application/detail/{0}', dialogResult.response.data));    
+                }                
             });
         }
         this.get_applications = function () {

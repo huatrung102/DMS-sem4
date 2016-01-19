@@ -24,7 +24,7 @@ public interface DocumentFacadeLocal {
     void remove(Document document);
 
     Document find(Object id);
-
+    boolean removeDocument(String docId);
     List<Document> findAll();
 
     List<Document> findRange(int[] range);
