@@ -6,35 +6,28 @@
 
 package services;
 
-import gsonjodatime.Converters;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.stream.JsonReader;
-import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.jersey.multipart.FormDataParam;
+
 import entity.Department;
 import entity.DocumentDetail;
 import entity.Users;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import entity.WorkFlow;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.ejb.EJBContext;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
+
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -45,15 +38,15 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+
 import json.entity.JsonResponse;
 import json.utility.ResponseConstants;
 import json.utility.ResponseWrapper;
+import manager.ApplicationFacadeLocal;
 import manager.DocumentDetailFacadeLocal;
 import manager.DocumentFacadeLocal;
-import nl.gridshore.nosapi.mapping.JsonDateDeserializer;
-import org.apache.log4j.helpers.ISO8601DateFormat;
-import org.joda.time.DateTime;
+import manager.WorkFlowFacadeLocal;
+
 
 /**
  * REST Web Service
@@ -62,6 +55,8 @@ import org.joda.time.DateTime;
  */
 @Path("document")
 public class DocumentResource {
+    ApplicationFacadeLocal applicationFacade = lookupApplicationFacadeLocal();
+    WorkFlowFacadeLocal workFlowFacade = lookupWorkFlowFacadeLocal();
   
     
     DocumentDetailFacadeLocal documentDetailFacade = lookupDocumentDetailFacadeLocal();
@@ -74,6 +69,30 @@ public class DocumentResource {
     public DocumentResource() {
        
     }
+    @POST
+    @Path("getNextStageDetail")    
+    @Produces(MediaType.APPLICATION_JSON)
+    public DocumentDetail getNextStageDetail(String data,@Context HttpServletRequest req ) throws IOException
+    { 
+        WorkFlow workFlowNext = null;
+        Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            .create();
+        LinkedTreeMap obj = gson.fromJson(data, LinkedTreeMap.class);        
+        String dataJson = obj.get("data").toString();
+        String nextStep = obj.get("nextStep").toString();
+        DocumentDetail docDetail = gson.fromJson(dataJson, DocumentDetail.class);
+        if(docDetail != null){
+            workFlowNext = workFlowFacade.getObjectByStep(docDetail.getWorkFlowId(),Double.valueOf(nextStep).intValue());
+            docDetail.setWorkFlowId(workFlowNext);
+        }
+     //   return null;
+       // boolean flag = documentFacade.removeDocument(id);
+     //    JsonResponse<String> jr = new JsonResponse<String>(ResponseConstants.OK, null, String.valueOf(flag));
+     //    return ResponseWrapper.getJsonResponse(jr);
+           return docDetail;
+    }
+    
     @POST
     @Path("remove/{id}")    
     @Produces(MediaType.APPLICATION_JSON)
@@ -277,6 +296,26 @@ public class DocumentResource {
         try {
             javax.naming.Context c = new InitialContext();
             return (DocumentDetailFacadeLocal) c.lookup("java:global/DMS-Sem4/DMS-Sem4-ejb/DocumentDetailFacade!manager.DocumentDetailFacadeLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private WorkFlowFacadeLocal lookupWorkFlowFacadeLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (WorkFlowFacadeLocal) c.lookup("java:global/DMS-Sem4/DMS-Sem4-ejb/WorkFlowFacade!manager.WorkFlowFacadeLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ApplicationFacadeLocal lookupApplicationFacadeLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (ApplicationFacadeLocal) c.lookup("java:global/DMS-Sem4/DMS-Sem4-ejb/ApplicationFacade!manager.ApplicationFacadeLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

@@ -64,5 +64,20 @@ public class UsersFacade extends AbstractFacade<Users> implements UsersFacadeLoc
                 .setParameter("username", "hunglq");
         return (Users) q.getSingleResult();
     }
+
+    @Override
+    public List<Users> getUserByDepAndRole(String depId, String roleId) {
+         Query q = em.createQuery("SELECT u from Users u where u.depId.depId =:depId and u.roleId.roleId =:roleId ")
+                .setParameter("depId", depId)
+                .setParameter("roleId", roleId) ;
+        return (List<Users>) q.getResultList();
+    }
+
+    @Override
+    public List<Users> getUserByRole(String roleId) {
+         Query q = em.createQuery("SELECT u from Users u where u.roleId.roleId =:roleId ")               
+                .setParameter("roleId", roleId) ;
+        return (List<Users>) q.getResultList();
+    }
     
 }

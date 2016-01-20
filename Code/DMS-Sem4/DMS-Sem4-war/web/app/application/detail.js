@@ -10,6 +10,9 @@
             action : ko.observable(),
             WorkFlow : ko.observable(),
         }
+        self.JSON = {
+            DocumentDetail : ko.observable(),
+        }
         
         
         this.activate = function (id) {           
@@ -18,13 +21,13 @@
                 async: false,
                 success: function (data) {
                     self.model.DocumentDetail = komapping.fromJS(data);
+                    self.JSON.DocumentDetail = komapping.toJSON(self.model.DocumentDetail);
                     self.model.WorkFlow = self.model.DocumentDetail.workFlowId;
                      self.loadData();
-                     self.model.action = self.getAction(1);
-                    self.model.application.submit = function () {
-                         
-                        http.get('/workFlow/getNextStage', {id: self.DocumentDetail.appId,}).then(function(data) {
-                            application_approve.show({ title: LOCALIZATION.APPLICATION.APPROVE, nextstages: data }).then(function (dialogResult) {
+                 //   self.model.action = self.getAction(actId);
+                    self.model.application.submit = function (nextStep) {                         
+                        http.post('rest/document/getNextStageDetail', {data: self.JSON.DocumentDetail,nextStep: nextStep}).then(function(data) {
+                            application_approve.show({ title: "Next Stage",DocumentDetail: self.model.DocumentDetail ,DocumentDetailNext: komapping.fromJS(data) }).then(function (dialogResult) {
                                 if (dialogResult.result) {
                                     http.post("/Application/Approve", { ApplicationId: self.model.appid, 
                                         BeforeStageId: self.model.application.StageId(), 
@@ -77,7 +80,7 @@
                         });
                     }
 
-
+                        /*
                     self.model.application.show_workflow = function() {
                         router.navigate(String.format("#application/workflow/{0}", self.model.DocumentDetail.docDetailId));
                     }
@@ -85,18 +88,26 @@
                     self.model.application.show_history = function () {
                         router.navigate(String.format("#application/history/{0}", self.model.DocumentDetail.docDetailId));
                     }
-                        
+                      */  
                     self.model.application.clickButton = function(actId){
+                        self.model.action = self.getAction(actId);
+                        if(self.model.action !== undefined){
                             switch(actId){
-                                case 2:
+                                case 2:   
                                 
+                                case 4:
+                                case 5:
+                                case 10:
+                                self.model.application.submit(self.model.action.actStep());                                
                                 break;
                                 case 3:
                                     self.model.application.remove();
                                 break;
                             }
+                        }
+                            
                     }
-                   self.model.application.workFlowId = self.model.DocumentDetail.workFlowId;
+                 //  self.model.application.DocumentDetail = self.model.DocumentDetail;
                    
                    
                 }
@@ -118,10 +129,10 @@
         this.getAction = function(actionId){
            var result = $.Enumerable.From(self.model.Action())
             .Where(function (x) { 
-                console.log('x.actId:' + x.actId);
-                return x.actId === actionId;
+                console.log('x.actId:' + x.actId());
+                return x.actId() === actionId;
                 });
-            return result;
+            return result === undefined ? null : result.ToArray()[0];
         }
         this.makeUploadControl = function () {
             var inputfiles = $(self.view).find("input[type='file']");
@@ -129,7 +140,7 @@
                 if (typeof $(ctl).data("kendoUpload") === 'undefined') {
                     $(ctl).kendoUpload({
                         async: {
-                            saveUrl: String.format("/FileAttachment/Upload?ApplicationId={0}&FileAttachmentId={1}&StageId={2}&Revision={3}", self.model.appid, $(ctl).attr("fileid"), self.model.application.StageId(), self.model.application.Revision())
+                            saveUrl: "",//String.format("/FileAttachment/Upload?ApplicationId={0}&FileAttachmentId={1}&StageId={2}&Revision={3}", self.model.appid, $(ctl).attr("fileid"), self.model.application.StageId(), self.model.application.Revision())
                         },
                         multiple: false,
                         showFileList: false,

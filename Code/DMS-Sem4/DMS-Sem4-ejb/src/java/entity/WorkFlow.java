@@ -7,6 +7,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.joda.time.format.DateTimeFormat;
 
 /**
  *
@@ -113,7 +115,7 @@ public class WorkFlow implements Serializable {
         appId = new Application(1);
      //   RoleId = "";
         workFlowChooseType = 0;
-        workFlowCreateDate = new Date();
+        workFlowCreateDate = DateTimeFormat.forPattern("dd/MM/yyyy").parseDateTime(new SimpleDateFormat("dd/MM/yyyy").format(new Date())).toDate();
         workFlowId = "";
         workFlowIsAllowFinish = false;
         workFlowIsAllowRemove = false;

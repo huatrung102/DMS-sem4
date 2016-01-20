@@ -1,6 +1,6 @@
 ﻿<div class="modal-content">
     <div class="modal-header">
-        <h3><!-- ko text: model.title -->Next Stage<!-- /ko --></h3>
+        <h3><!-- ko text: model.title --><!-- /ko --></h3>
     </div>
     <div class="modal-body">
         <div class="form-horizontal">
@@ -8,54 +8,56 @@
                 <label class="col-sm-3 control-label">
                     Next Step</label>
                 <div class="col-sm-9">
-                    <label data-bind="text: model.workFlowNext.workFlowName" class="col-sm-3 control-label">
-                        Next Step</label>
+                    <label data-bind="text: model.DocumentDetailNext.workFlowId.workFlowName" class="control-label">
+                        </label>
                 </div>
             </div>
-            <!-- ko if: model.stage() -->
-            <div class="form-group" data-bind="visible: model.stage().Positions != null && model.stage().Positions.length > 1">
-                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.POSITION_ASSIGNED --><!-- /ko --></label>
+          
+            <!-- -->
+            <!-- if: model.stage() -->
+            <div class="form-group" data-bind="visible: visibleDepartment">
+                <label class="col-sm-3 control-label">Department receive</label>
                 <div class="col-sm-9">
-                    <!--<select class="form-control" data-bind="options: model.stage().Positions, optionsText: 'Name', optionsValue: 'Id', value: model.position"></select>-->
-                    <select class="form-control" data-bind="options: model.stage().Positions, optionsText: 'Name', optionsValue: 'Id', value: model.position"></select>
+                   <label class="control-label"><!-- ko text: model.DocumentDetailNext.docDetailDepCreate.depName --><!-- /ko --></label>
                 </div>
             </div>
-            <!-- /ko -->
-            <!-- ko if: model.stage() -->
-            <div class="form-group" data-bind="visible: model.stage().Departments.length > 0">
-                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.DEPARTMENT_ASSIGNED --><!-- /ko --></label>
+            
+            <div class="form-group" data-bind="visible: visibleDepartment">
+                <label class="col-sm-3 control-label">Department receive</label>
                 <div class="col-sm-9">
-                    <select class="form-control" data-bind="options: departmentArray, optionsText: 'Name', value: model.department"></select>
+                    <select class="chosen form-control" data-bind="options: Departments,selectedOptions : model.DepartmentSelected , optionsText: 'depName'"></select>
                     <!--<select class="form-control" data-bind="options: departmentArray, optionsText: 'Name', value: model.department"></select>-->
                 </div>
             </div>
-            <!-- /ko -->
-            <!-- ko if: model.department() -->
-            <div class="form-group" data-bind="visible: model.department().Users.length > 0">
-                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.USER_ASSIGNED --><!-- /ko --></label>
+            
+            <!--  -->
+            <!-- if: model.department() -->
+            <div class="form-group" data-bind="visible: visibleUser">
+                <label class="col-sm-3 control-label">User receive</label>
                 <div class="col-sm-9">
-                    <select class="form-control" data-bind="options: model.department().Users, optionsText: 'FullName', value: model.user"></select>
+                    <select class="chosen form-control" data-bind="options: Users, optionsText: 'userFullName', selectedOptions : model.UserSelected"></select>
                 </div>
             </div>
-            <!-- /ko -->
-            <!-- ko if: model.stage() -->
+            <!-- -->
+            <!--  if: model.stage() -->
             <div class="form-group">
-                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.IS_URGENT --><!-- /ko --></label>
+                <label class="col-sm-3 control-label">Urgent</label>
                 <div class="col-sm-9">
-                    <input type="checkbox" data-bind="checked: model.urgent"/>
+                    <input type="checkbox" data-bind="checked: model.Urgent"/>
                 </div>                
             </div>
-            <!-- /ko -->
+            <!--  -->
             <div class="form-group">
-                <label class="col-sm-3 control-label"><!-- ko text: LOCALIZATION.APPLICATION.COMMENT --><!-- /ko --></label>
+                <label class="col-sm-3 control-label">
+                    Comment</label>
                 <div class="col-sm-9">
-                    <textarea class="form-control" data-bind="value: model.comment"></textarea>
+                    <textarea class="form-control" data-bind="value: model.DocumentDetailNext.docDetailDescription"></textarea>
                 </div>
             </div>
         </div>       
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" data-bind="click: save"><!-- ko text: LOCALIZATION.COMMON.ACCEPT --><!-- /ko --></button>
-        <button class="btn btn-default" data-bind="click: cancel"><!-- ko text: LOCALIZATION.COMMON.CANCEL --><!-- /ko --></button>
+        <button class="btn btn-primary" data-bind="click: save">OK</button>
+        <button class="btn btn-default" data-bind="click: cancel">Cancel</button>
     </div>
 </div>

@@ -9,6 +9,7 @@ package services;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import entity.Users;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,6 +58,26 @@ public class UsersResource {
         return usersFacade.getUserTest();
     }
     
+    @POST
+    @Produces("application/json")
+    @Consumes("application/json")    
+    @Path("getUserByDepAndRole")
+    public List<Users> getUserByDepAndRole(String data,@Context HttpServletRequest req) {
+      //  UUID userId = WebSession.getUserId();
+        LinkedTreeMap obj = new Gson().fromJson(data, LinkedTreeMap.class);       
+        
+        return usersFacade.getUserByDepAndRole(obj.get("depId").toString(), obj.get("roleId").toString());
+    }
+    
+    @POST
+    @Produces("application/json")
+    @Consumes("application/json")    
+    @Path("getUserByRole")
+    public List<Users> getUserByRole(String data,@Context HttpServletRequest req) {
+      //  UUID userId = WebSession.getUserId();
+        LinkedTreeMap obj = new Gson().fromJson(data, LinkedTreeMap.class);
+        return usersFacade.getUserByRole(obj.get("roleId").toString());
+    }
     
     @GET
     @Produces("application/json")
@@ -74,8 +95,8 @@ public class UsersResource {
     public Users login(String data ,@Context HttpServletRequest req) {
         //TODO return proper representation object
         Users user = null;
-        Gson gson = new Gson();       
-        LinkedTreeMap obj = gson.fromJson(data, LinkedTreeMap.class);        
+      //  Gson gson = new Gson();       
+        LinkedTreeMap obj = new Gson().fromJson(data, LinkedTreeMap.class);        
         user = obj != null ? usersFacade.login(obj.get("username").toString(),obj.get("password").toString()) : null;        
         WebSession.addUserSession(req.getSession(true),user);
        
